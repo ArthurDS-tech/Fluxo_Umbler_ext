@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>UTalk Atendente</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, sans-serif;
+      width: 270px;
+      background: #f4f6f9;
+      color: #333;
+    }
+
+    /* HEADER */
+    #header {
+      background: #1a73e8;
+      color: white;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    #header span { font-size: 14px; font-weight: bold; }
+    #btn-logout {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #btn-logout:hover { background: rgba(255,255,255,0.35); }
+
+    /* SEÇÃO */
+    .section { padding: 14px; }
+
+    label {
+      display: block;
+      font-size: 11px;
+      color: #666;
+      margin-bottom: 4px;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 13px;
+      margin-bottom: 10px;
+      background: white;
+    }
+    input:focus { outline: none; border-color: #1a73e8; }
+
+    .btn {
+      width: 100%;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn:disabled { opacity: 0.45; cursor: default; }
+    .btn-primary { background: #1a73e8; color: white; }
+
+    /* BADGE */
+    #status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 5px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    #status-badge.online  { background: #d4edda; color: #155724; }
+    #status-badge.offline { background: #fff3cd; color: #856404; }
+    #status-badge .dot { width: 8px; height: 8px; border-radius: 50%; }
+    #status-badge.online  .dot { background: #28a745; }
+    #status-badge.offline .dot { background: #ffc107; }
+
+    /* BOTÕES DE DISPONIBILIDADE */
+    .avail-row { display: flex; gap: 8px; }
+    .avail-row .btn { flex: 1; font-size: 12px; padding: 9px 6px; }
+    .btn-green { background: #28a745; color: white; }
+    .btn-amber { background: #e0a800; color: white; }
+
+    /* DESCRIÇÃO */
+    .hint {
+      font-size: 11px;
+      color: #777;
+      margin-top: 10px;
+      line-height: 1.5;
+      background: white;
+      border: 1px solid #dde1e7;
+      border-radius: 6px;
+      padding: 8px 10px;
+    }
+
+    /* MENSAGEM */
+    #msg {
+      font-size: 11px;
+      text-align: center;
+      padding: 6px 14px 10px;
+      min-height: 22px;
+    }
+    #msg.error { color: #dc3545; }
+    #msg.ok    { color: #28a745; }
+
+    /* LOGIN */
+    #section-login { padding: 16px; }
+    #section-login h3 { font-size: 14px; margin-bottom: 10px; color: #1a73e8; }
+    #section-login p  { font-size: 11px; color: #888; margin-bottom: 10px; line-height: 1.4; }
+
+    /* LOADING */
+    #loading { text-align: center; padding: 30px; font-size: 13px; color: #888; }
+  </style>
+</head>
+<body>
+
+  <div id="loading">Carregando...</div>
+
+  <!-- Não logado -->
+  <div id="section-login" style="display:none">
+    <h3>🔐 Login UTalk</h3>
+    <p>Cole o token de acesso gerado na sua conta Umbler Talk em Configurações → API.</p>
+    <label>Token de acesso</label>
+    <input type="password" id="input-token" placeholder="Cole o token aqui..." />
+    <label>ID da organização</label>
+    <input type="text" id="input-org" placeholder="Ex: AB_12-xyzEXAMPLE" />
+    <button class="btn btn-primary" id="btn-login">Entrar</button>
+    <div id="msg"></div>
+  </div>
+
+  <!-- Logado -->
+  <div id="section-main" style="display:none">
+    <div id="header">
+      <span id="member-name">Atendente</span>
+      <button id="btn-logout">Sair</button>
+    </div>
+
+    <div class="section">
+      <label>Meu status</label>
+      <div id="status-badge" class="offline">
+        <span class="dot"></span>
+        <span id="status-text">Carregando...</span>
+      </div>
+
+      <div class="avail-row">
+        <button class="btn btn-green" id="btn-disponivel">✔ Disponível</button>
+        <button class="btn btn-amber" id="btn-indisponivel">⏸ Indisponível</button>
+      </div>
+
+      <div class="hint" id="hint-text">
+        Selecione seu status para controlar o recebimento de novos atendimentos.
+      </div>
+    </div>
+
+    <div id="msg"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

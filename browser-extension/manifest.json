@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "UTalk Atendente",
+  "version": "2.0",
+  "description": "Controle de disponibilidade de atendentes via API Umbler Talk",
+  "permissions": ["activeTab", "storage"],
+  "host_permissions": ["https://app-utalk.umbler.com/*"],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
