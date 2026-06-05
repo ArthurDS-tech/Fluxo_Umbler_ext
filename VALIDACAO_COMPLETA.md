@@ -10,6 +10,8 @@ Revalidacao final de fila e documentacao: 2026-06-05 14:16 BRT.
 
 Migracao para colocar conversas em esperando apos transferencia: 2026-06-05 14:52 BRT.
 
+Migracao de etiquetas por atendente no fluxo de avisos: 2026-06-05 15:14 BRT.
+
 ## Resultado geral
 
 Validado com sucesso:
@@ -203,6 +205,65 @@ Cards novos:
 | Julia | `ahW-zsCLa1_pRkJi` | `aiMWaitJul000001` |
 | Bruna | `ahW-3ljj7yv7AP6i` | `aiMWaitBru000001` |
 | Kenia | `ahW-7_eIZfuAoxC5` | `aiMWaitKen000001` |
+
+## Fluxo de avisos televendas
+
+Fluxo:
+
+```text
+https://app-utalk.umbler.com/settings/chatbots/editor/aUWOP8NnXHj9QjWC
+```
+
+Titulo:
+
+```text
+*** FLUXO AVISOS TELEVENDAS ***
+```
+
+Validacao antes da migracao:
+
+- Fluxo inativo, preservado como inativo.
+- 34 cards.
+- 0 conexoes quebradas.
+- 5 cards de transferencia para grupo de atendentes.
+
+Migracao aplicada:
+
+- Depois de cada transferencia, o fluxo agora verifica qual atendente ficou com o chat.
+- Se ficou com Ana, adiciona etiqueta `Ana Paula`.
+- Se ficou com Isa, adiciona etiqueta `Isabelle`.
+- Se ficou com Julia, adiciona etiqueta `Julia`.
+- Se ficou com Bruna, adiciona etiqueta `Bruna`.
+- Se ficou com Kenia, adiciona etiqueta `Kênia`.
+- Depois da etiqueta, o fluxo volta para o mesmo card que ja seguia antes da migracao.
+
+Validacao apos salvar:
+
+- Fluxo continuou inativo.
+- Total de cards: 84.
+- Conexoes quebradas: 0.
+- Snapshot: `Adiciona etiquetas por atendente apos transferencia`.
+- Foram criados 25 cards de etiqueta de atendente: 5 transferencias x 5 atendentes possiveis.
+
+Transferencias migradas:
+
+| Card de transferencia | Comportamento |
+|---|---|
+| `aURc9U_Muiw87Klo` | Identifica atendente, etiqueta e volta para `acPtdxu8lud4ONFk` |
+| `aURfFLh15w-MSAD2` | Identifica atendente, etiqueta e volta para `acPuHJnKfac5PirK` |
+| `aUVRWxqSNap8qUS5` | Identifica atendente, etiqueta e volta para `acPuNc6qvIhVB_KA` |
+| `acPZPNfC2blZIjeQ` | Identifica atendente, etiqueta e volta para `acPZS9eSQze0hE9n` |
+| `aUU-yfYuYBCA_6KQ` | Identifica atendente, etiqueta e volta para `aUVGrPRdi6aM1kzM` |
+
+Etiquetas usadas:
+
+| Atendente | Etiqueta |
+|---|---|
+| Ana | `aRcUrulTi7VLdefG` |
+| Isa | `aRcX9elTi7VLfbiN` |
+| Julia | `aRcUv3AZQLndGPqS` |
+| Bruna | `aRcU4SUhmYerxbuc` |
+| Kenia | `aRcVICUhmYerxl6F` |
 
 ## Remarketing
 

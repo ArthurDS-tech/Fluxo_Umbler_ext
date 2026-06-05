@@ -214,6 +214,54 @@ Cards novos:
 | Bruna | `ahW-3ljj7yv7AP6i` | `aiMWaitBru000001` |
 | Kenia | `ahW-7_eIZfuAoxC5` | `aiMWaitKen000001` |
 
+## Fluxo de Avisos Televendas
+
+URL:
+
+```text
+https://app-utalk.umbler.com/settings/chatbots/editor/aUWOP8NnXHj9QjWC
+```
+
+Titulo:
+
+```text
+*** FLUXO AVISOS TELEVENDAS ***
+```
+
+Esse fluxo estava inativo e permaneceu inativo apos a migracao.
+
+Validacao apos migracao:
+
+- 84 cards.
+- 0 conexoes quebradas.
+- 5 transferencias migradas.
+- 25 cards novos para etiquetar a atendente correta.
+
+Regra aplicada:
+
+```text
+Transferir para grupo de atendentes
+        |
+        v
+Verificar qual atendente recebeu
+        |
+        v
+Adicionar etiqueta da atendente
+        |
+        v
+Voltar para o mesmo caminho original do fluxo
+```
+
+Etiquetas usadas:
+
+| Atendente | Etiqueta |
+|---|---|
+| Ana | `aRcUrulTi7VLdefG` |
+| Isa | `aRcX9elTi7VLfbiN` |
+| Julia | `aRcUv3AZQLndGPqS` |
+| Bruna | `aRcU4SUhmYerxbuc` |
+| Kenia | `aRcVICUhmYerxl6F` |
+
 ## Remarketing
 
 O motor de remarketing esta preparado dentro do `status-server/remarketing/remarketing-flow.js`.

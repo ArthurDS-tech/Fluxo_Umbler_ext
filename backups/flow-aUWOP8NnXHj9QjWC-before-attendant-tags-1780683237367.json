@@ -1,0 +1,603 @@
+{
+  "triggers": [
+    "Manual",
+    "ContactMessage"
+  ],
+  "manualTriggers": [
+    "Início"
+  ],
+  "steps": [
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "SE FECHAR, ADICIONAR ETIQUETA DE (POSITIVO FINAL 6).",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "nextStepId": "aURfG-4I-DwxWS_p",
+      "position": {
+        "x": 4500,
+        "y": 0
+      },
+      "id": "acPtdxu8lud4ONFk",
+      "createdAtUTC": "2026-03-25T14:13:11Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "ag9WpXMEEBQj4U6x",
+        "ah7So_JQCsVt28uC"
+      ],
+      "nextStepId": "aUVRxjMOTb2Wpeg0",
+      "position": {
+        "x": 3400,
+        "y": 200
+      },
+      "id": "aURc5sMr4m_1gOAO",
+      "createdAtUTC": "2025-12-18T19:58:30Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "aURc9U_Muiw87Klo",
+      "position": {
+        "x": 3800,
+        "y": 200
+      },
+      "id": "aUVRxjMOTb2Wpeg0",
+      "createdAtUTC": "2025-12-19T13:23:18Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZaZkfnFmogpzCidw",
+          "ZaZlLHFmogpzC4xO",
+          "ZoWIY_xoe7uoAAFQ",
+          "Z26n85VVIK64B6I2",
+          "ZzUQwM9nj2l-H5hc"
+        ],
+        "strategy": "RoundRobin"
+      },
+      "onlyMembersAvailable": true,
+      "nextStepId": "acPtdxu8lud4ONFk",
+      "onFail": "aURfG-4I-DwxWS_p",
+      "position": {
+        "x": 4200,
+        "y": 200
+      },
+      "id": "aURc9U_Muiw87Klo",
+      "createdAtUTC": "2025-12-18T19:58:45Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "aUkwyjt8op5R7j07",
+      "position": {
+        "x": 4800,
+        "y": 200
+      },
+      "id": "aURfG-4I-DwxWS_p",
+      "createdAtUTC": "2025-12-18T20:07:55Z"
+    },
+    {
+      "_t": "FlowchartBotManualStartedEventModel",
+      "hidden": false,
+      "triggerName": "Início",
+      "variables": [],
+      "nextStepId": "aUU0C67zys2xoEcP",
+      "position": {
+        "x": 400,
+        "y": 700
+      },
+      "id": "aURc3IqhK2HSsKit",
+      "createdAtUTC": "2025-12-18T19:58:20Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "CASO O CLIENTE RESPONDA, POR GENTILEZA, ADICIONAR INFORMAÇÃO NO SISTEMA DO PEDIDOS.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "nextStepId": "aUU7muOzTJMIYa3W",
+      "position": {
+        "x": 4450,
+        "y": 700
+      },
+      "id": "acPuHJnKfac5PirK",
+      "createdAtUTC": "2026-03-25T14:15:56Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "ag9WvHMEEBQj4dJ5"
+      ],
+      "nextStepId": "aURe7jJiTTbHt2rB",
+      "position": {
+        "x": 3400,
+        "y": 800
+      },
+      "id": "aURdXXTGUO1Y5gtI",
+      "createdAtUTC": "2025-12-18T20:00:29Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "aURfFLh15w-MSAD2",
+      "position": {
+        "x": 3750,
+        "y": 800
+      },
+      "id": "aURe7jJiTTbHt2rB",
+      "createdAtUTC": "2025-12-18T20:07:10Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZaZkfnFmogpzCidw",
+          "ZzUQwM9nj2l-H5hc",
+          "ZaZlLHFmogpzC4xO",
+          "ZoWIY_xoe7uoAAFQ",
+          "Z26n85VVIK64B6I2"
+        ],
+        "strategy": "RoundRobin"
+      },
+      "onlyMembersAvailable": true,
+      "nextStepId": "acPuHJnKfac5PirK",
+      "onFail": "aUU7muOzTJMIYa3W",
+      "position": {
+        "x": 4100,
+        "y": 800
+      },
+      "id": "aURfFLh15w-MSAD2",
+      "createdAtUTC": "2025-12-18T20:07:48Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": false,
+      "nextStepId": null,
+      "position": {
+        "x": 4850,
+        "y": 800
+      },
+      "id": "aUU7muOzTJMIYa3W",
+      "createdAtUTC": "2025-12-19T11:48:42Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 5200,
+        "y": 800
+      },
+      "id": "aUkwyjt8op5R7j07",
+      "createdAtUTC": "2025-12-22T11:51:38Z"
+    },
+    {
+      "_t": "TemplateMessageStepModel",
+      "templateId": "acU2tUtzxC530Mtc",
+      "organizationFileId": "afj5ah4MbkjJTsl4",
+      "params": [
+        "{{#Ou}} {{Contato.Proprietario}} | Cliente {{/Ou}}",
+        "*Ana Paula*",
+        "{{#Ou}} {{Contato.Veiculo}} | *Marca/Modelo* {{/Ou}}",
+        "{{#Ou}} {{Contato.Placa}} | *ABC1234* {{/Ou}}",
+        "{{#Ou}} {{Contato.Datavencimento}} | *Junho* {{/Ou}}",
+        "{{#Ou}} {{Contato.DataPagamento}} | *09/06/2026* {{/Ou}}"
+      ],
+      "options": [
+        {
+          "buttonText": "Receber informações.",
+          "stepId": "aURc5sMr4m_1gOAO",
+          "postbackText": null
+        },
+        {
+          "buttonText": "Falar em outro momento.",
+          "stepId": "aUVRFrg3U5DLKWdK",
+          "postbackText": null
+        },
+        {
+          "buttonText": "Não, obrigado.",
+          "stepId": "aURdXXTGUO1Y5gtI",
+          "postbackText": null
+        }
+      ],
+      "noWaitResponse": false,
+      "carousel": [],
+      "onResponseFail": "acPZLTWmyAkZ26v8",
+      "onTimeout": "aURdXXTGUO1Y5gtI",
+      "timeout": "05:00:00",
+      "position": {
+        "x": 1900,
+        "y": 1100
+      },
+      "id": "aURmOzsIp6gPjPB-",
+      "createdAtUTC": "2025-12-18T20:38:19Z"
+    },
+    {
+      "_t": "DayOfTheWeekStepModel",
+      "stepsForDaysOfTheWeek": [
+        "aUU0D_R8J9hI2RxG",
+        "aUU0YG9ucOvijtmT",
+        "aUU0YG9ucOvijtmT",
+        "aUU0YG9ucOvijtmT",
+        "aUU0YG9ucOvijtmT",
+        "aUU0YG9ucOvijtmT",
+        "aUU0D_R8J9hI2RxG"
+      ],
+      "timeZone": "America/Sao_Paulo",
+      "position": {
+        "x": 0,
+        "y": 1150
+      },
+      "id": "aUU0C67zys2xoEcP",
+      "createdAtUTC": "2025-12-19T11:16:27Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Global",
+      "onSuccess": "aUU0pAWuvhdGb_iE",
+      "onFail": "acbduSyGqjLbDI2X",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "SectorConditionalModel",
+              "sectors": [
+                "aSRq-Q8ELj-uto7s"
+              ],
+              "operator": "Any"
+            },
+            {
+              "_t": "TagConditionalModel",
+              "chatTags": [
+                "ZamSilkIEj5AHGzS",
+                "ZkuI5Zh3NfLcbIAR",
+                "ZbFRWygH8-Yod3Xr",
+                "ZdSnom537tdGCMtw",
+                "aG67LR9r7uYtRuW7",
+                "ahhpwygL9gMh06YL",
+                "afyOik9n3SHs62EG"
+              ],
+              "contactTags": [
+                "ZamSilkIEj5AHGzS",
+                "ZdSnom537tdGCMtw",
+                "ZbFRWygH8-Yod3Xr",
+                "ZkuI5Zh3NfLcbIAR",
+                "aG67LR9r7uYtRuW7",
+                "ahhpwygL9gMh06YL",
+                "afyOik9n3SHs62EG"
+              ],
+              "operator": "NotContains"
+            }
+          ],
+          "onSuccess": null,
+          "name": "Televendas"
+        }
+      ],
+      "position": {
+        "x": 850,
+        "y": 1150
+      },
+      "id": "acbdnIHA61TQXmof",
+      "createdAtUTC": "2026-03-27T19:42:20Z"
+    },
+    {
+      "_t": "SectorTransferActionModel",
+      "sectorId": "aSRq-Q8ELj-uto7s",
+      "strategy": "Direct",
+      "onlyAllowedMember": false,
+      "nextStepId": "aURmOzsIp6gPjPB-",
+      "onFail": null,
+      "position": {
+        "x": 1450,
+        "y": 1150
+      },
+      "id": "aUU0pAWuvhdGb_iE",
+      "createdAtUTC": "2025-12-19T11:19:00Z"
+    },
+    {
+      "_t": "TimeOfDayStepModel",
+      "ranges": [
+        {
+          "range": {
+            "start": "08:00:00",
+            "end": "18:00:00"
+          },
+          "stepId": "acbdnIHA61TQXmof"
+        },
+        {
+          "range": {
+            "start": "18:00:00",
+            "end": "08:00:00"
+          },
+          "stepId": "aUU0D_R8J9hI2RxG"
+        }
+      ],
+      "timeZone": "America/Sao_Paulo",
+      "position": {
+        "x": 450,
+        "y": 1200
+      },
+      "id": "aUU0YG9ucOvijtmT",
+      "createdAtUTC": "2025-12-19T11:17:52Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "SE FECHAR, ADICIONAR ETIQUETA DE (POSITIVO FINAL 5).",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "nextStepId": "aUVRZaR1w7Ys1gQg",
+      "position": {
+        "x": 4600,
+        "y": 1250
+      },
+      "id": "acPuNc6qvIhVB_KA",
+      "createdAtUTC": "2026-03-25T14:16:21Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "aUkwyjt8op5R7j07",
+      "position": {
+        "x": 5000,
+        "y": 1350
+      },
+      "id": "aUVRZaR1w7Ys1gQg",
+      "createdAtUTC": "2025-12-19T13:21:41Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "ag9WpXMEEBQj4U6x"
+      ],
+      "nextStepId": "aUWFvY5rViUlskhp",
+      "position": {
+        "x": 3550,
+        "y": 1400
+      },
+      "id": "aUWFOSs4mlw7hfJo",
+      "createdAtUTC": "2025-12-19T17:02:49Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "aUVRWxqSNap8qUS5",
+      "position": {
+        "x": 3900,
+        "y": 1400
+      },
+      "id": "aUWFvY5rViUlskhp",
+      "createdAtUTC": "2025-12-19T17:05:01Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "ag9XmqNkLimw27Xb"
+      ],
+      "nextStepId": "aUVRc1lRS2uJq8ZB",
+      "position": {
+        "x": 2850,
+        "y": 1450
+      },
+      "id": "aUVRFrg3U5DLKWdK",
+      "createdAtUTC": "2025-12-19T13:20:22Z"
+    },
+    {
+      "_t": "WaitingActionModel",
+      "interval": {
+        "_t": "WaitingActionFixedIntervalModel",
+        "interval": "01:00:00"
+      },
+      "nextStepId": "aUWFOSs4mlw7hfJo",
+      "contactResponseStepId": "aUWFOSs4mlw7hfJo",
+      "position": {
+        "x": 3200,
+        "y": 1450
+      },
+      "id": "aUVRc1lRS2uJq8ZB",
+      "createdAtUTC": "2025-12-19T13:21:55Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZaZkfnFmogpzCidw",
+          "ZzUQwM9nj2l-H5hc",
+          "ZaZlLHFmogpzC4xO",
+          "Z26n85VVIK64B6I2",
+          "ZoWIY_xoe7uoAAFQ"
+        ],
+        "strategy": "RoundRobin"
+      },
+      "onlyMembersAvailable": true,
+      "nextStepId": "acPuNc6qvIhVB_KA",
+      "onFail": "aUVRZaR1w7Ys1gQg",
+      "position": {
+        "x": 4250,
+        "y": 1450
+      },
+      "id": "aUVRWxqSNap8qUS5",
+      "createdAtUTC": "2025-12-19T13:21:31Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "CONTATO COM ETIQUETAS DE: POSITIVO, INTERNO, GRUPOS, DESP DE FORA, NÃO MANDAR AVISOS E PARCEIROS *NÃO VÃO RECEBER TAMPLATE DE AVISO*.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "nextStepId": null,
+      "position": {
+        "x": 1150,
+        "y": 1550
+      },
+      "id": "acbduSyGqjLbDI2X",
+      "createdAtUTC": "2026-03-27T19:42:49Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZaZkfnFmogpzCidw",
+          "ZzUQwM9nj2l-H5hc",
+          "ZaZlLHFmogpzC4xO",
+          "Z26n85VVIK64B6I2",
+          "ZoWIY_xoe7uoAAFQ"
+        ],
+        "strategy": "RoundRobin"
+      },
+      "onlyMembersAvailable": true,
+      "nextStepId": "acPZS9eSQze0hE9n",
+      "onFail": "acPZS9eSQze0hE9n",
+      "position": {
+        "x": 3250,
+        "y": 1950
+      },
+      "id": "acPZPNfC2blZIjeQ",
+      "createdAtUTC": "2026-03-25T12:46:52Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "acPZPNfC2blZIjeQ",
+      "position": {
+        "x": 2700,
+        "y": 2100
+      },
+      "id": "acPZLTWmyAkZ26v8",
+      "createdAtUTC": "2026-03-25T12:46:37Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 4000,
+        "y": 2100
+      },
+      "id": "acPZS9eSQze0hE9n",
+      "createdAtUTC": "2026-03-25T12:47:07Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [
+        "ZRwNL2tSzyaJPLwJ"
+      ],
+      "contactTags": [],
+      "nextStepId": "aUU-yfYuYBCA_6KQ",
+      "position": {
+        "x": 700,
+        "y": 2500
+      },
+      "id": "aUU0D_R8J9hI2RxG",
+      "createdAtUTC": "2025-12-19T11:16:31Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZaZkfnFmogpzCidw",
+          "ZaZlLHFmogpzC4xO",
+          "ZoWIY_xoe7uoAAFQ",
+          "Z26n85VVIK64B6I2",
+          "ZzUQwM9nj2l-H5hc"
+        ],
+        "strategy": "RoundRobin"
+      },
+      "onlyMembersAvailable": true,
+      "nextStepId": "aUVGrPRdi6aM1kzM",
+      "onFail": "aUVGrPRdi6aM1kzM",
+      "position": {
+        "x": 1050,
+        "y": 2600
+      },
+      "id": "aUU-yfYuYBCA_6KQ",
+      "createdAtUTC": "2025-12-19T12:02:17Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "*Bem-vindo(a) ao Despachante Marcelino!* 💙\n\nA Auto Fácil agora é Despachante Marcelino, mantendo o mesmo atendimento rápido e seguro para a documentação do seu veículo! 🚙💨",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "nextStepId": "aUU-5eC_rfpjN53N",
+      "position": {
+        "x": 1900,
+        "y": 2800
+      },
+      "id": "aUU-2GIeZmXv9eYJ",
+      "createdAtUTC": "2025-12-19T12:02:32Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "🕒 No momento estamos fora do nosso horário de atendimento.\nAtendemos de *segunda a sexta-feira, das 08h às 18h.*",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "nextStepId": "aUVGuTUadnp-Kw1R",
+      "position": {
+        "x": 2250,
+        "y": 2800
+      },
+      "id": "aUU-5eC_rfpjN53N",
+      "createdAtUTC": "2025-12-19T12:02:45Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 2650,
+        "y": 2800
+      },
+      "id": "aUVGuTUadnp-Kw1R",
+      "createdAtUTC": "2025-12-19T12:36:09Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "aUU-2GIeZmXv9eYJ",
+      "position": {
+        "x": 1500,
+        "y": 2850
+      },
+      "id": "aUVGrPRdi6aM1kzM",
+      "createdAtUTC": "2025-12-19T12:35:56Z"
+    }
+  ],
+  "lastSnapshotId": "aiMR2ddz8vaJcm3z",
+  "channels": [],
+  "title": "*** FLUXO AVISOS TELEVENDAS ***",
+  "order": -4,
+  "final": false,
+  "active": false,
+  "groupIds": [],
+  "updatedAtUTC": "2026-06-05T18:13:45.394Z",
+  "executionsCount": 167,
+  "executionsDateUTC": "2026-06-05T17:47:40.094Z",
+  "snapshotTitle": "Validacao sem mudanca funcional",
+  "id": "aUWOP8NnXHj9QjWC",
+  "createdAtUTC": "2025-12-19T17:41:19.481Z"
+}
