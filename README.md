@@ -150,6 +150,10 @@ O painel admin e separado do painel da atendente. Ele nao altera chats nem filas
 - proxima atendente de cada fila;
 - status disponivel/indisponivel das atendentes;
 - clientes em esperando com unidade, atendente, canal, tempo de espera, ultima mensagem e etiquetas.
+- relatorio CSV dos clientes em esperando;
+- resumo copiavel para acompanhamento;
+- impressao da tela;
+- filtro para ocultar grupos internos.
 
 O token Umbler usado no painel fica salvo somente no navegador.
 

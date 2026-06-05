@@ -16,6 +16,9 @@
       <div class="header-actions">
         <span id="last-update" class="muted">Aguardando atualizacao</span>
         <button id="btn-refresh" class="secondary" type="button">Atualizar</button>
+        <button id="btn-export" class="secondary" type="button" disabled>Exportar CSV</button>
+        <button id="btn-copy" class="secondary" type="button" disabled>Copiar resumo</button>
+        <button id="btn-print" class="secondary" type="button" disabled>Imprimir</button>
       </div>
     </header>
 
@@ -38,12 +41,17 @@
           <option value="other">Outras</option>
         </select>
       </label>
+      <label class="check-row">
+        <input id="hide-internal" type="checkbox" checked>
+        Ocultar grupos internos
+      </label>
       <button id="btn-load" class="primary" type="button">Carregar painel</button>
     </section>
 
     <p id="message" class="message" role="status" aria-live="polite"></p>
 
     <section id="summary" class="summary"></section>
+    <section id="unit-summary" class="unit-summary"></section>
 
     <section class="grid">
       <div class="panel">
@@ -74,9 +82,9 @@
             <tr>
               <th>Cliente</th>
               <th>Unidade</th>
-              <th>Atendente</th>
+              <th>Responsavel</th>
               <th>Canal</th>
-              <th>Tempo esperando</th>
+              <th>Espera</th>
               <th>Ultima mensagem</th>
               <th>Etiquetas</th>
             </tr>
