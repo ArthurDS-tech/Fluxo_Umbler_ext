@@ -92,6 +92,11 @@ input:focus {
   outline: 3px solid rgba(31, 111, 235, 0.16);
 }
 
+input[readonly] {
+  background: #f7f9fc;
+  color: var(--muted);
+}
+
 button {
   min-height: 44px;
   border: 0;

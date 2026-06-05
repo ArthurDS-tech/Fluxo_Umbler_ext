@@ -1,6 +1,7 @@
 const WAITING_KEY = "utalk_waiting_chats";
 const SESSION_KEY = "utalk_session";
 const STATUS_API = "/api/status";
+const DEFAULT_ORGANIZATION_ID = "ZQG4wFMHGHuTs59F";
 
 const state = {
   token: "",
@@ -25,12 +26,15 @@ const hintText = document.getElementById("hint-text");
 const message = document.getElementById("message");
 
 loadSavedSession();
+if (!orgInput.value) {
+  orgInput.value = DEFAULT_ORGANIZATION_ID;
+}
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const token = tokenInput.value.trim();
-  const organizationId = orgInput.value.trim();
+  const organizationId = orgInput.value.trim() || DEFAULT_ORGANIZATION_ID;
 
   if (!token || !organizationId) {
     setMessage("Preencha o token e o ID da organizacao.", "error");
@@ -64,7 +68,7 @@ logoutButton.addEventListener("click", () => {
   statusSection.hidden = true;
   logoutButton.hidden = true;
   tokenInput.value = "";
-  orgInput.value = "";
+  orgInput.value = DEFAULT_ORGANIZATION_ID;
   setMessage("");
 });
 
@@ -222,10 +226,11 @@ function loadSavedSession() {
       refreshRemoteAvailability();
     } else {
       tokenInput.value = state.token;
-      orgInput.value = state.organizationId;
+      orgInput.value = state.organizationId || DEFAULT_ORGANIZATION_ID;
     }
   } catch {
     localStorage.removeItem(SESSION_KEY);
+    orgInput.value = DEFAULT_ORGANIZATION_ID;
   }
 }
 

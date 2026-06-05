@@ -1,171 +1,247 @@
-# UTalk Atendente — Extensão de Disponibilidade
+# UTalk Atendente - Extensao de Disponibilidade
 
-Extensão para Chrome/Edge que permite às atendentes controlar manualmente sua disponibilidade para receber novos atendimentos, usando a API oficial da Umbler Talk com o próprio token da atendente. Não requer permissão de Admin.
+Extensao para Chrome/Edge e painel web simples para controlar quais atendentes podem receber novos atendimentos no fluxo da Umbler Talk.
 
----
+O sistema usa:
 
-## Como funciona
+- Extensao do navegador para a atendente marcar `Disponivel` ou `Indisponivel`.
+- Backend Railway para guardar disponibilidade e controlar a fila.
+- Fluxo Umbler para consultar a fila e transferir para a atendente correta.
+- Painel Vercel como alternativa fora da extensao.
 
+## Estado Atual
+
+Validado em 2026-06-05:
+
+- Fluxo Umbler ativo.
+- 154 cards no fluxo.
+- 0 conexoes quebradas.
+- Todas as atendentes estao disponiveis na fila.
+- Extensao com login permanente.
+- ID da organizacao ja preenchido: `ZQG4wFMHGHuTs59F`.
+- Repositorios GitHub publicados.
+
+## Como Funciona
+
+```text
+Atendente clica Indisponivel
+        |
+        v
+Extensao salva available=false no backend Railway
+        |
+        v
+Fluxo Umbler pula essa atendente nos novos contatos
+        |
+        v
+Chats atuais continuam com a mesma atendente
 ```
-Atendente clica "Indisponível"
-        │
-        ▼
-GET /v1/chats/ → busca todos os chats abertos da atendente
-        │
-        ▼
-PUT /v1/chats/{id}/ → { waiting: true } em cada chat
-        │
-        ▼
-Bot da Umbler Talk detecta chats em espera
-e redireciona novos contatos para outras atendentes
-        │
-Atendente clica "Disponível"
-        │
-        ▼
-PUT /v1/chats/{id}/ → { waiting: false } nos chats salvos
+
+Quando a atendente volta para `Disponivel`, a extensao salva `available=true` no Railway e ela volta a entrar na fila.
+
+## Ordem da Fila
+
+A ordem da fila fica no backend Railway em `status-server/server.js`:
+
+```text
+BRUNA -> ISA -> JULIA -> KENIA -> ANA
 ```
 
-- A conta nunca é desativada
-- Os chats em andamento continuam com a atendente
-- Somente novos contatos são redirecionados pelo bot
-- Funciona com token de atendente comum — sem necessidade de Admin
-- Usa o servidor de status da fila para impedir novos contatos quando a atendente fica indisponível
+IDs usados:
 
----
+| Atendente | Member ID |
+|---|---|
+| Bruna | `ZzUQwM9nj2l-H5hc` |
+| Isa | `ZaZlLHFmogpzC4xO` |
+| Julia | `ZoWIY_xoe7uoAAFQ` |
+| Kenia | `Z26n85VVIK64B6I2` |
+| Ana | `ZaZkfnFmogpzCidw` |
 
-## Estrutura
+## Sobre o 409 Conflict
 
+O `409 Conflict` que aparece no historico do fluxo **nao quebra o atendimento**.
+
+Ele e usado de forma controlada para dizer ao fluxo:
+
+```text
+Essa atendente nao deve receber agora. Pule para a proxima.
 ```
+
+Exemplo esperado:
+
+```text
+Bruna -> 409: pula para Isa
+Isa -> 409: pula para Julia
+Julia -> 409: pula para Kenia
+Kenia -> 200: transfere para Kenia
+```
+
+O cliente continua seguindo normalmente. Para remover esse texto visual do historico, seria necessario redesenhar a logica dos cards de fila na Umbler. Nao basta mudar o backend para retornar `200`, porque isso faria o fluxo transferir para a atendente errada.
+
+## Extensao
+
+Arquivos principais:
+
+```text
 browser-extension/
-├── manifest.json     Manifest V3
-├── popup.html        Interface
-└── popup.js          Lógica principal
+├── manifest.json
+├── popup.html
+├── popup.js
+└── content.js
 ```
 
----
+Tambem existe um `manifest.json` na raiz para permitir carregar a pasta inteira no Chrome.
 
-## Instalação
+### Instalar
 
-1. Abra `chrome://extensions` (ou `edge://extensions`)
-2. Ative o **Modo do desenvolvedor**
-3. Clique em **Carregar sem compactação**
-4. Se estiver usando o projeto completo baixado do GitHub, selecione a pasta raiz `Extens-o_sim_n-o_DESP-main`
-5. Se estiver usando apenas os arquivos da extensão, selecione a pasta `browser-extension`
+1. Abra `chrome://extensions`.
+2. Ative o modo do desenvolvedor.
+3. Clique em `Carregar sem compactacao`.
+4. Selecione a pasta da extensao.
 
-Nunca abra o `popup.html` diretamente no navegador. A API `chrome.storage` só funciona quando o popup é aberto pelo ícone da extensão instalada.
+Pasta pronta local:
 
----
-
-## Login
-
-### 1. Gerar o token de acesso
-
-1. Acesse [app-utalk.umbler.com](https://app-utalk.umbler.com)
-2. Vá em **Configurações → API**
-3. Gere ou copie seu token de acesso pessoal
-
-### 2. Obter o ID da organização
-
-Consulte a API com seu token:
-
-```
-GET https://app-utalk.umbler.com/api/v1/members/me/
-Authorization: Bearer SEU_TOKEN
+```text
+C:\Users\arthur.schuster\Downloads\utalk-atendente-extensao-pronta
 ```
 
-O campo `organizations[].id` contém o ID. Formato: `AB_12-xyzEXAMPLE`
+Zip local:
 
-### 3. Entrar na extensão
+```text
+C:\Users\arthur.schuster\Downloads\utalk-atendente-extensao.zip
+```
 
-1. Clique no ícone da extensão
-2. Cole o token
-3. Cole o ID da organização
-4. Clique em **Entrar**
+### Login
 
-As credenciais ficam salvas no `chrome.storage.local` da extensão. O login fica permanente enquanto a extensão estiver instalada; ao fechar o navegador ou reiniciar o computador, a atendente continua logada. Só pede login novamente se clicar em **Sair**, remover a extensão ou limpar os dados da extensão no navegador.
+A atendente precisa colar somente o token da Umbler Talk.
 
----
+O ID da organizacao ja vem preenchido:
 
-## Uso
+```text
+ZQG4wFMHGHuTs59F
+```
 
-| Botão | O que acontece |
+O login fica salvo permanentemente no `chrome.storage.local`. A extensao so pede login de novo se a atendente clicar em `Sair`, remover a extensao ou limpar os dados da extensao no navegador.
+
+## Painel Web
+
+URL publicada:
+
+```text
+https://utalk-atendente-web.vercel.app/
+```
+
+O painel usa a mesma regra da extensao e tambem mantem sessao salva no navegador.
+
+## Backend Railway
+
+URL:
+
+```text
+https://utalk-status-webhook-production.up.railway.app
+```
+
+Endpoints principais:
+
+```text
+GET /health
+GET /status?memberId=ID_DA_ATENDENTE
+POST /status
+GET /available?memberId=ID_DA_ATENDENTE
+GET /direct-available?memberId=ID_DA_ATENDENTE
+GET /queue
+POST /queue/reset
+```
+
+`/available` controla a fila circular. Quando retorna sucesso, a vez da fila avanca.
+
+`/direct-available` verifica apenas se uma atendente especifica esta disponivel, sem avancar a fila. E usado para casos como pátio/Isa ou cliente que deve voltar para uma atendente dona.
+
+## Fluxo Umbler
+
+URL:
+
+```text
+https://app-utalk.umbler.com/settings/chatbots/editor/ahWgp29Q4NlgpyeU
+```
+
+Validacoes feitas:
+
+- Fluxo ativo.
+- 154 cards.
+- 0 conexoes quebradas.
+- Gatilhos manuais de teste presentes:
+  - `Teste Codex Fila`
+  - `Teste Codex Patio`
+- Webhooks de fila presentes.
+- Transferencias para as cinco atendentes presentes.
+- Pátio direcionado para Isa.
+
+## Etiquetas de Atendente
+
+As etiquetas definem quem e a dona atual do cliente:
+
+| Atendente | Etiqueta |
 |---|---|
-| ✔ Disponível | Retira `waiting: true` dos chats que a extensão colocou em espera. A atendente volta a receber novos atendimentos. |
-| ⏸ Indisponível | Busca todos os chats abertos da atendente e aplica `waiting: true`. O bot detecta e redireciona novos contatos. Os chats atuais continuam com ela. |
+| Ana | `aRcUrulTi7VLdefG` |
+| Bruna | `aRcU4SUhmYerxbuc` |
+| Isa | `aRcX9elTi7VLfbiN` |
+| Julia | `aRcUv3AZQLndGPqS` |
+| Kenia | `aRcVICUhmYerxl6F` |
 
----
+Regra planejada:
 
-## Endpoints utilizados
+- Cliente com etiqueta da atendente volta para ela se ela estiver disponivel.
+- Se ela estiver indisponivel, cai na fila normal.
+- Cliente sem etiqueta cai na fila normal.
+- Pátio vai para Isa. Se Isa estiver indisponivel, fica no esperando dela.
 
-Todos usam `Authorization: Bearer TOKEN`. Apenas leitura e atualização de chats — sem escrita em membros ou organização.
+Mais detalhes em `FLUXO_ETIQUETAS_ATENDENTES.md`.
 
-### Validação do token / login
+## Remarketing
 
+O motor de remarketing esta preparado dentro do `status-server/remarketing/remarketing-flow.js`.
+
+Regras:
+
+- Le todas as tabelas de clientes configuradas.
+- Nao envia para cliente que ja abriu conversa depois do cadastro.
+- Usa o template aprovado `aiKrlq1GnW5qf0XK`.
+- Cliente comum entra pela fila Railway.
+- Pátio vai para Isa.
+- Nota interna nao mostra nome do cliente e nao usa a palavra `lead`.
+
+Observacao: as rotas de remarketing dependem de redeploy do Railway para ficarem publicas na URL atual.
+
+## Validacao Rapida
+
+Validar JavaScript:
+
+```bash
+node --check app.js
+node --check browser-extension/popup.js
+node --check api/status.js
+node --check api/utalk.js
+node --check status-server/server.js
+node --check status-server/remarketing/remarketing-flow.js
 ```
-GET /v1/members/me/
+
+Conferir fila:
+
+```bash
+curl -H "X-API-Key: utalk-status-2026-railway" \
+  https://utalk-status-webhook-production.up.railway.app/queue
 ```
 
-Retorna `id`, `displayName` e `emailAddress` da atendente autenticada.
+## Repositorios
 
-### Buscar chats abertos
+Projeto completo:
 
-```
-GET /v1/chats/?organizationId={org}&ChatState=Open&Members.Rule=Any&Members.Values={memberId}&Take=100
-```
-
-Retorna lista paginada `{ items: [...] }`. Filtrado por chats abertos atribuídos à atendente.
-
-### Atualizar estado do chat
-
-```
-PUT /v1/chats/{chatId}/?organizationId={org}
-Content-Type: application/json
-
-{ "waiting": true }   // indisponível — sinaliza ao bot para redirecionar
-{ "waiting": false }  // disponível — retira da fila de espera
+```text
+https://github.com/ArthurDS-tech/Fluxo_Umbler_talk.git
 ```
 
-Modelo: `UpdateChatModel`. Rate limit: 250 requisições por 5 segundos.
+Extensao separada:
 
----
-
-## Armazenamento local
-
-| Chave | Conteúdo |
-|---|---|
-| `utalk_token` | Token Bearer |
-| `utalk_org` | ID da organização |
-| `utalk_member_id` | ID do membro |
-| `utalk_name` | Nome de exibição |
-| `utalk_available` | `true` ou `false` |
-| `utalk_waiting_chats` | Array de IDs dos chats colocados em espera pela extensão |
-| `utalk_saved_at` | Data da última atualização local |
-
-`utalk_waiting_chats` é usado para restaurar exatamente os chats que foram alterados ao voltar para disponível. Os dados não têm prazo de expiração. São removidos apenas ao clicar em Sair, remover a extensão ou limpar manualmente os dados da extensão.
-
----
-
-## Permissões do manifest
-
-| Permissão | Motivo |
-|---|---|
-| `storage` | Salvar credenciais e estado localmente |
-| `activeTab` | Reservada |
-| `host_permissions: https://app-utalk.umbler.com/*` | Permitir chamadas fetch à API |
-| `host_permissions: https://utalk-status-webhook-production.up.railway.app/*` | Ler e salvar a disponibilidade na fila |
-
----
-
-## Configuração do bot na Umbler Talk
-
-Para que o redirecionamento funcione, o bot precisa estar configurado para verificar o estado `waiting` antes de atribuir um chat a uma atendente, ou usar o **WaitingFlow** nativo da plataforma.
-
-O campo `waiting: true` em um chat é reconhecido nativamente pela Umbler Talk como "aguardando redistribuição".
-
----
-
-## Requisitos
-
-- Chrome 88+ ou Edge 88+ (Manifest V3)
-- Token de acesso gerado na Umbler Talk
-- ID da organização
+```text
+https://github.com/ArthurDS-tech/Fluxo_Umbler_ext.git
+```

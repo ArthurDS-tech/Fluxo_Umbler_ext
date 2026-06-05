@@ -16,6 +16,8 @@ GET  /health
 GET  /status?memberId=ID_DA_ATENDENTE
 POST /status
 GET  /status/all
+GET  /available?memberId=ID_DA_ATENDENTE
+GET  /direct-available?memberId=ID_DA_ATENDENTE
 GET  /queue
 GET  /remarketing/health
 POST /remarketing/tick
@@ -62,7 +64,7 @@ Se `REMARKETING_WORKER_ENABLED=false`, o remarketing fica disponivel apenas para
 
 ## Como o fluxo consulta
 
-Use no card de Webhook:
+Para consultar apenas o status salvo de uma atendente:
 
 ```txt
 GET https://SEU-DOMINIO.up.railway.app/status?memberId=ID_DA_ATENDENTE
@@ -77,6 +79,27 @@ Resposta:
   "status": "available"
 }
 ```
+
+Para a fila circular do fluxo, use:
+
+```txt
+GET https://SEU-DOMINIO.up.railway.app/available?memberId=ID_DA_ATENDENTE
+```
+
+Essa rota retorna:
+
+- `200` quando a atendente pode receber e e a vez dela.
+- `409 Conflict` quando o fluxo deve pular para a proxima atendente.
+
+O `409` aparece no historico da Umbler, mas nao quebra o atendimento. Ele e o sinal usado pelo card de webhook para seguir pelo caminho de falha e testar a proxima atendente.
+
+Para casos diretos, sem avancar a fila, use:
+
+```txt
+GET https://SEU-DOMINIO.up.railway.app/direct-available?memberId=ID_DA_ATENDENTE
+```
+
+Essa rota e indicada para casos como patio/Isa ou cliente que deve voltar para uma atendente especifica se ela estiver disponivel.
 
 ## Como a extensao atualiza
 

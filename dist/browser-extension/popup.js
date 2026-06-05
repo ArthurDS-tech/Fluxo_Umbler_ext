@@ -1,7 +1,6 @@
 const API = "https://app-utalk.umbler.com/api";
 const STATUS_API = "https://utalk-status-webhook-production.up.railway.app/status";
 const STATUS_API_KEY = "utalk-status-2026-railway";
-const DEFAULT_ORGANIZATION_ID = "ZQG4wFMHGHuTs59F";
 const SESSION_KEYS = [
   "utalk_token",
   "utalk_org",
@@ -41,7 +40,7 @@ chrome.storage.local.get(
       refreshRemoteAvailability(data.utalk_member_id);
     } else {
       document.getElementById("input-token").value = data.utalk_token || "";
-      document.getElementById("input-org").value = data.utalk_org || DEFAULT_ORGANIZATION_ID;
+      document.getElementById("input-org").value = data.utalk_org || "";
       show(elLogin);
     }
   }
@@ -50,7 +49,7 @@ chrome.storage.local.get(
 // ── Login ──────────────────────────────────────────────────
 document.getElementById("btn-login").addEventListener("click", async () => {
   const token = document.getElementById("input-token").value.trim();
-  const org   = document.getElementById("input-org").value.trim() || DEFAULT_ORGANIZATION_ID;
+  const org   = document.getElementById("input-org").value.trim();
 
   if (!token || !org) {
     setMsg("Preencha o token e o ID da organização.", "error");
@@ -91,7 +90,7 @@ document.getElementById("btn-logout").addEventListener("click", () => {
   chrome.storage.local.clear(() => {
     show(elLogin);
     document.getElementById("input-token").value = "";
-    document.getElementById("input-org").value = DEFAULT_ORGANIZATION_ID;
+    document.getElementById("input-org").value = "";
     setMsg("");
   });
 });

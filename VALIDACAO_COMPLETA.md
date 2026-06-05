@@ -6,6 +6,8 @@ Ultima revalidacao: 2026-06-05 12:51 BRT.
 
 Revalidacao da integracao Railway/remarketing: 2026-06-05 12:56 BRT.
 
+Revalidacao final de fila e documentacao: 2026-06-05 14:16 BRT.
+
 ## Resultado geral
 
 Validado com sucesso:
@@ -17,6 +19,9 @@ Validado com sucesso:
 - Remarketing lendo todas as tabelas de clientes.
 - Regra de patio indo para Isa.
 - Regra comum indo pela fila das atendentes disponiveis.
+- Regra de etiqueta da atendente mapeada e documentada.
+- Todas as atendentes ativadas como disponiveis por API.
+- Comportamento `409 Conflict` documentado como pulo controlado de fila.
 
 ## Extensao e painel da atendente
 
@@ -59,13 +64,26 @@ Validacoes feitas:
 - `/status?memberId=...` respondeu disponibilidade real.
 - `/queue` respondeu a fila com chave de seguranca.
 
-Estado validado:
+Estado validado na ultima conferencia:
 
-- Bruna indisponivel.
-- Ana indisponivel.
+- Bruna disponivel.
+- Ana disponivel.
 - Isa disponivel.
 - Julia disponivel.
 - Kenia disponivel.
+
+Fila esperada:
+
+```text
+BRUNA -> ISA -> JULIA -> KENIA -> ANA
+```
+
+Observacao sobre `409 Conflict`:
+
+- O `409` no historico do fluxo nao impede o atendimento.
+- Ele e usado pelo webhook `/available` para acionar o caminho de falha do card e pular para a proxima atendente.
+- Quando a atendente correta da vez responde `200`, o fluxo transfere o atendimento e adiciona a etiqueta.
+- Exemplo validado: Bruna, Isa e Julia retornaram `409`; Kenia retornou sucesso e recebeu o atendimento.
 
 ## Remarketing na mesma aplicacao Railway do fluxo
 
@@ -139,6 +157,28 @@ Transferencias validadas:
 - Kenia: `Z26n85VVIK64B6I2`
 - Ana: `ZaZkfnFmogpzCidw`
 - Patio: Isa `ZaZlLHFmogpzC4xO`
+
+Regra de etiqueta da atendente:
+
+- O fluxo ja possui verificacoes por etiqueta de Ana, Bruna, Isa, Julia e Kenia.
+- O comportamento correto foi documentado em `FLUXO_ETIQUETAS_ATENDENTES.md`.
+- Cliente com etiqueta deve voltar para a atendente da etiqueta se ela estiver disponivel.
+- Se a atendente da etiqueta estiver indisponivel, o cliente deve cair na fila normal.
+- As etiquetas antigas de atendente devem ser removidas antes de adicionar a etiqueta da nova atendente.
+
+Situacao de aplicacao:
+
+- A leitura por API confirmou todos os cards e ids.
+- A gravacao direta por API foi bloqueada pela validacao interna da Umbler com `No initial event step was found`.
+- Por seguranca, o fluxo ativo nao foi sobrescrito por tentativa.
+- O ajuste deve ser aplicado pelo editor visual da Umbler ou por payload de editor confirmado pela plataforma.
+
+Organizacao visual dos cards:
+
+- Foi tentado um salvamento sem mudanca funcional para validar a API de edicao.
+- A Umbler recusou com erro interno `IncidentId: aiMCH4ll8KEmycea`.
+- O fluxo ativo permaneceu intacto: `updatedAtUTC` nao mudou e as conexoes continuaram com 0 referencias quebradas.
+- Portanto, a organizacao visual deve ser feita pelo editor visual da Umbler, arrastando os cards, sem alterar webhooks, textos, condicoes ou transferencias.
 
 ## Remarketing
 
