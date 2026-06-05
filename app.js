@@ -100,18 +100,12 @@ async function setAvailability(available) {
       return;
     }
 
-    if (state.waitingChats.length > 0) {
-      await Promise.allSettled(
-        state.waitingChats.map((chatId) => updateChatWaiting(chatId, false))
-      );
-    }
-
     state.available = true;
     state.waitingChats = [];
     await updateRemoteAvailability(true);
     saveSession();
     updateStatusUi();
-    setMessage("Disponivel. Chats restaurados e fluxo liberado.", "ok");
+    setMessage("Disponivel. Fila liberada. Chats que estavam em espera continuam em espera.", "ok");
   } catch (error) {
     setMessage(`Erro ao atualizar status. (${error.message})`, "error");
   } finally {

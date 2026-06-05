@@ -158,17 +158,8 @@ async function setAvailability(available) {
           );
         } else {
           // ── DISPONÍVEL ────────────────────────────────────
-          // Restaura os chats que esta extensão colocou em espera
-          const waitingIds = data[WAITING_KEY] || [];
-
-          if (waitingIds.length > 0) {
-            await Promise.allSettled(
-              waitingIds.map((id) =>
-                apiPut(`/v1/chats/${id}/`, utalk_token, utalk_org, { waiting: false })
-              )
-            );
-          }
-
+          // Libera novos atendimentos sem tirar da coluna "esperando"
+          // os chats que ja estavam aguardando resposta.
           chrome.storage.local.set({
             utalk_available: true,
             [WAITING_KEY]: [],
@@ -177,7 +168,7 @@ async function setAvailability(available) {
 
           await updateRemoteAvailability(utalk_member_id, true);
           updateBadge(true);
-          setMsg("✔ Disponível. Chats restaurados e fila liberada.", "ok");
+          setMsg("✔ Disponível. Fila liberada. Chats que estavam em espera continuam em espera.", "ok");
         }
       } catch (e) {
         setMsg(`Erro ao atualizar status. (${e.message})`, "error");
