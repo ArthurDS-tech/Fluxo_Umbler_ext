@@ -29,7 +29,7 @@ PUT /v1/chats/{id}/ → { waiting: false } nos chats salvos
 - Os chats em andamento continuam com a atendente
 - Somente novos contatos são redirecionados pelo bot
 - Funciona com token de atendente comum — sem necessidade de Admin
-- Não requer servidor externo
+- Usa o servidor de status da fila para impedir novos contatos quando a atendente fica indisponível
 
 ---
 
@@ -81,7 +81,7 @@ O campo `organizations[].id` contém o ID. Formato: `AB_12-xyzEXAMPLE`
 3. Cole o ID da organização
 4. Clique em **Entrar**
 
-As credenciais ficam salvas no `chrome.storage.local`.
+As credenciais ficam salvas no `chrome.storage.local` da extensão. O login fica permanente enquanto a extensão estiver instalada; ao fechar o navegador ou reiniciar o computador, a atendente continua logada. Só pede login novamente se clicar em **Sair**, remover a extensão ou limpar os dados da extensão no navegador.
 
 ---
 
@@ -138,8 +138,9 @@ Modelo: `UpdateChatModel`. Rate limit: 250 requisições por 5 segundos.
 | `utalk_name` | Nome de exibição |
 | `utalk_available` | `true` ou `false` |
 | `utalk_waiting_chats` | Array de IDs dos chats colocados em espera pela extensão |
+| `utalk_saved_at` | Data da última atualização local |
 
-`utalk_waiting_chats` é usado para restaurar exatamente os chats que foram alterados ao voltar para disponível. Removidos todos ao clicar em Sair.
+`utalk_waiting_chats` é usado para restaurar exatamente os chats que foram alterados ao voltar para disponível. Os dados não têm prazo de expiração. São removidos apenas ao clicar em Sair, remover a extensão ou limpar manualmente os dados da extensão.
 
 ---
 
@@ -150,6 +151,7 @@ Modelo: `UpdateChatModel`. Rate limit: 250 requisições por 5 segundos.
 | `storage` | Salvar credenciais e estado localmente |
 | `activeTab` | Reservada |
 | `host_permissions: https://app-utalk.umbler.com/*` | Permitir chamadas fetch à API |
+| `host_permissions: https://utalk-status-webhook-production.up.railway.app/*` | Ler e salvar a disponibilidade na fila |
 
 ---
 

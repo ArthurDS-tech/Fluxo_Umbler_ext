@@ -1,4 +1,15 @@
 const API = "https://app-utalk.umbler.com/api";
+const STATUS_API = "https://utalk-status-webhook-production.up.railway.app/status";
+const STATUS_API_KEY = "utalk-status-2026-railway";
+const SESSION_KEYS = [
+  "utalk_token",
+  "utalk_org",
+  "utalk_member_id",
+  "utalk_name",
+  "utalk_available",
+  "utalk_waiting_chats",
+  "utalk_saved_at"
+];
 
 // ── Elementos ──────────────────────────────────────────────
 const elLoading     = document.getElementById("loading");
@@ -20,13 +31,16 @@ if (typeof chrome === "undefined" || !chrome.storage) {
 }
 
 chrome.storage.local.get(
-  ["utalk_token", "utalk_org", "utalk_member_id", "utalk_name", "utalk_available"],
+  SESSION_KEYS,
   (data) => {
-    if (data.utalk_token && data.utalk_member_id) {
+    if (hasSavedSession(data)) {
       const available = data.utalk_available !== false;
       showMain(data.utalk_name || "Atendente");
       updateBadge(available);
+      refreshRemoteAvailability(data.utalk_member_id);
     } else {
+      document.getElementById("input-token").value = data.utalk_token || "";
+      document.getElementById("input-org").value = data.utalk_org || "";
       show(elLogin);
     }
   }
@@ -49,16 +63,20 @@ document.getElementById("btn-login").addEventListener("click", async () => {
     const me = await apiGet("/v1/members/me/", token, null);
     const name = me.displayName || me.emailAddress || "Atendente";
 
+    const available = await fetchRemoteAvailability(me.id);
+
     chrome.storage.local.set({
       utalk_token: token,
       utalk_org: org,
       utalk_member_id: me.id,
       utalk_name: name,
-      utalk_available: true,
+      utalk_available: available,
+      utalk_waiting_chats: [],
+      utalk_saved_at: new Date().toISOString(),
     });
 
     showMain(name);
-    updateBadge(true);
+    updateBadge(available);
     setMsg("");
   } catch (e) {
     setMsg(`Token inválido ou erro de conexão. (${e.message})`, "error");
@@ -96,15 +114,21 @@ async function setAvailability(available) {
 
       try {
         if (!available) {
+          await updateRemoteAvailability(utalk_member_id, false);
+
           // ── INDISPONÍVEL ──────────────────────────────────
           // Busca todos os chats abertos e atribuídos a esta atendente
           const chats = await fetchOpenChats(utalk_token, utalk_org, utalk_member_id);
 
           if (chats.length === 0) {
             // Nenhum chat aberto — apenas salva o status
-            chrome.storage.local.set({ utalk_available: false, [WAITING_KEY]: [] });
+            chrome.storage.local.set({
+              utalk_available: false,
+              [WAITING_KEY]: [],
+              utalk_saved_at: new Date().toISOString(),
+            });
             updateBadge(false);
-            setMsg("⏸ Indisponível. Você não tinha chats abertos.", "ok");
+            setMsg("⏸ Indisponível. Você não tinha chats abertos. Novos contatos serão pulados na fila.", "ok");
             return;
           }
 
@@ -124,11 +148,12 @@ async function setAvailability(available) {
           chrome.storage.local.set({
             utalk_available: false,
             [WAITING_KEY]: succeeded,
+            utalk_saved_at: new Date().toISOString(),
           });
 
           updateBadge(false);
           setMsg(
-            `⏸ Indisponível. ${succeeded.length} chat(s) colocados em espera.`,
+            `⏸ Indisponível. ${succeeded.length} chat(s) colocados em espera. Novos contatos serão pulados na fila.`,
             "ok"
           );
         } else {
@@ -147,10 +172,12 @@ async function setAvailability(available) {
           chrome.storage.local.set({
             utalk_available: true,
             [WAITING_KEY]: [],
+            utalk_saved_at: new Date().toISOString(),
           });
 
+          await updateRemoteAvailability(utalk_member_id, true);
           updateBadge(true);
-          setMsg("✔ Disponível. Chats restaurados.", "ok");
+          setMsg("✔ Disponível. Chats restaurados e fila liberada.", "ok");
         }
       } catch (e) {
         setMsg(`Erro ao atualizar status. (${e.message})`, "error");
@@ -159,6 +186,59 @@ async function setAvailability(available) {
       }
     }
   );
+}
+
+async function updateRemoteAvailability(memberId, available) {
+  if (!memberId) throw new Error("atendente não identificada");
+
+  const res = await fetch(STATUS_API, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-API-Key": STATUS_API_KEY,
+    },
+    body: JSON.stringify({ memberId, available }),
+  });
+
+  if (!res.ok) {
+    const data = await res.json().catch(() => null);
+    throw new Error(data?.error || res.status);
+  }
+
+  return res.json();
+}
+
+async function fetchRemoteAvailability(memberId) {
+  if (!memberId) throw new Error("atendente não identificada");
+
+  const url = new URL(STATUS_API);
+  url.searchParams.set("memberId", memberId);
+
+  const res = await fetch(url.toString());
+  if (!res.ok) {
+    const data = await res.json().catch(() => null);
+    throw new Error(data?.error || res.status);
+  }
+
+  const data = await res.json();
+  return data?.available === true;
+}
+
+async function refreshRemoteAvailability(memberId) {
+  try {
+    const available = await fetchRemoteAvailability(memberId);
+    chrome.storage.local.set({
+      utalk_available: available,
+      utalk_saved_at: new Date().toISOString(),
+    });
+    updateBadge(available);
+  } catch (e) {
+    setMsg(`Não foi possível confirmar o status atual. (${e.message})`, "error");
+  }
+}
+
+function hasSavedSession(data) {
+  return Boolean(data.utalk_token && data.utalk_org && data.utalk_member_id);
 }
 
 // ── Busca chats abertos da atendente ───────────────────────
@@ -179,7 +259,13 @@ async function fetchOpenChats(token, org, memberId) {
   if (!res.ok) throw new Error(res.status);
   const data = await res.json();
   // A API retorna paginado: { items: [...] } ou array direto
-  return Array.isArray(data) ? data : (data.items || []);
+  const chats = Array.isArray(data) ? data : (data.items || []);
+  return chats.filter((chat) => isChatAssignedToMember(chat, memberId));
+}
+
+function isChatAssignedToMember(chat, memberId) {
+  if (!chat || !memberId) return false;
+  return chat.organizationMember?.id === memberId;
 }
 
 // ── Helpers de UI ──────────────────────────────────────────

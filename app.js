@@ -1,4 +1,7 @@
 const WAITING_KEY = "utalk_waiting_chats";
+const SESSION_KEY = "utalk_session";
+const STATUS_API = "/api/status";
+
 const state = {
   token: "",
   organizationId: "",
@@ -43,7 +46,7 @@ form.addEventListener("submit", async (event) => {
     state.organizationId = organizationId;
     state.memberId = me.id;
     state.memberName = me.displayName || me.emailAddress || "Atendente";
-    state.available = true;
+    state.available = await fetchRemoteAvailability(me.id);
     state.waitingChats = [];
     saveSession();
     showStatus();
@@ -56,7 +59,7 @@ form.addEventListener("submit", async (event) => {
 });
 
 logoutButton.addEventListener("click", () => {
-  localStorage.removeItem("utalk_session");
+  localStorage.removeItem(SESSION_KEY);
   form.hidden = false;
   statusSection.hidden = true;
   logoutButton.hidden = true;
@@ -74,6 +77,8 @@ async function setAvailability(available) {
 
   try {
     if (!available) {
+      await updateRemoteAvailability(false);
+
       const chats = await fetchOpenChats();
       const results = await Promise.allSettled(
         chats.map((chat) => updateChatWaiting(chat.id, true))
@@ -85,7 +90,7 @@ async function setAvailability(available) {
       saveSession();
       updateStatusUi();
       setMessage(
-        `Indisponivel. ${state.waitingChats.length} chat(s) colocados em espera.`,
+        `Indisponivel. ${state.waitingChats.length} chat(s) colocados em espera. Novos contatos serao bloqueados no fluxo.`,
         "ok"
       );
       return;
@@ -99,14 +104,53 @@ async function setAvailability(available) {
 
     state.available = true;
     state.waitingChats = [];
+    await updateRemoteAvailability(true);
     saveSession();
     updateStatusUi();
-    setMessage("Disponivel. Chats restaurados.", "ok");
+    setMessage("Disponivel. Chats restaurados e fluxo liberado.", "ok");
   } catch (error) {
     setMessage(`Erro ao atualizar status. (${error.message})`, "error");
   } finally {
     setBusy(false);
   }
+}
+
+async function updateRemoteAvailability(available) {
+  if (!state.memberId) {
+    throw new Error("atendente nao identificada");
+  }
+
+  const response = await fetch(STATUS_API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      memberId: state.memberId,
+      available
+    })
+  });
+
+  const text = await response.text();
+  const data = text ? JSON.parse(text) : null;
+
+  if (!response.ok) {
+    throw new Error(data?.error || data?.detail || response.status);
+  }
+
+  return data;
+}
+
+async function fetchRemoteAvailability(memberId = state.memberId) {
+  if (!memberId) return false;
+
+  const response = await fetch(`${STATUS_API}?memberId=${encodeURIComponent(memberId)}`);
+  const text = await response.text();
+  const data = text ? JSON.parse(text) : null;
+
+  if (!response.ok) {
+    throw new Error(data?.error || data?.detail || response.status);
+  }
+
+  return data?.available === true;
 }
 
 async function fetchOpenChats() {
@@ -122,7 +166,8 @@ async function fetchOpenChats() {
     }
   });
 
-  return Array.isArray(data) ? data : data.items || [];
+  const chats = Array.isArray(data) ? data : data.items || [];
+  return chats.filter((chat) => isChatAssignedToMember(chat, state.memberId));
 }
 
 function updateChatWaiting(chatId, waiting) {
@@ -133,6 +178,11 @@ function updateChatWaiting(chatId, waiting) {
     method: "PUT",
     body: { waiting }
   });
+}
+
+function isChatAssignedToMember(chat, memberId) {
+  if (!chat || !memberId) return false;
+  return chat.organizationMember?.id === memberId;
 }
 
 async function apiRequest(payload) {
@@ -153,7 +203,7 @@ async function apiRequest(payload) {
 }
 
 function loadSavedSession() {
-  const saved = localStorage.getItem("utalk_session");
+  const saved = localStorage.getItem(SESSION_KEY);
   if (!saved) return;
 
   try {
@@ -167,26 +217,36 @@ function loadSavedSession() {
       waitingChats: Array.isArray(data[WAITING_KEY]) ? data[WAITING_KEY] : []
     });
 
-    if (state.token && state.organizationId && state.memberId) {
+    if (hasSavedSession()) {
       showStatus();
+      refreshRemoteAvailability();
+    } else {
+      tokenInput.value = state.token;
+      orgInput.value = state.organizationId;
     }
   } catch {
-    localStorage.removeItem("utalk_session");
+    localStorage.removeItem(SESSION_KEY);
   }
 }
 
 function saveSession() {
   localStorage.setItem(
-    "utalk_session",
+    SESSION_KEY,
     JSON.stringify({
+      version: 1,
       token: state.token,
       organizationId: state.organizationId,
       memberId: state.memberId,
       memberName: state.memberName,
       available: state.available,
-      [WAITING_KEY]: state.waitingChats
+      [WAITING_KEY]: state.waitingChats,
+      savedAt: new Date().toISOString()
     })
   );
+}
+
+function hasSavedSession() {
+  return Boolean(state.token && state.organizationId && state.memberId);
 }
 
 function showStatus() {
@@ -214,4 +274,14 @@ function setBusy(isBusy) {
   document.querySelectorAll("button").forEach((button) => {
     button.disabled = isBusy;
   });
+}
+
+async function refreshRemoteAvailability() {
+  try {
+    state.available = await fetchRemoteAvailability();
+    saveSession();
+    updateStatusUi();
+  } catch (error) {
+    setMessage(`Nao foi possivel confirmar o status atual. (${error.message})`, "error");
+  }
 }
