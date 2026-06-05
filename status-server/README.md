@@ -54,7 +54,7 @@ REMARKETING_CREATED_AFTER=2026-06-05T00:00:00Z
 REMARKETING_REQUIRE_CREATED_AFTER=true
 REMARKETING_CHANNEL_ID=ZwWSUqYuIZ8I3hxt
 REMARKETING_TEMPLATE_ID=aiKrlq1GnW5qf0XK
-REMARKETING_TEMPLATE_FILE_ID=
+REMARKETING_TEMPLATE_FILE_ID=aiMIVYll8KEm3xcn
 REMARKETING_TEMPLATE_PARAM_2=
 REMARKETING_SEND_PRIVATE_NOTE=true
 REMARKETING_EVENTS_TABLE=remarketing_7min_events
@@ -155,4 +155,5 @@ Regras mantidas:
 - Cadastro de patio vai somente para Isa.
 - Se o cliente ja abriu conversa depois do cadastro, nao envia mensagem.
 - O template usado e `aiKrlq1GnW5qf0XK`.
+- Esse template e de imagem, por isso o arquivo `aiMIVYll8KEm3xcn` precisa estar configurado.
 - A nota interna nao usa nome do cliente nem a palavra `lead`.

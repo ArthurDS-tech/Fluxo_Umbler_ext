@@ -338,7 +338,7 @@ function loadEnv(args) {
     createdAfter: args.createdAfter || process.env.REMARKETING_CREATED_AFTER || '',
     requireCreatedAfter: boolFrom(args.requireCreatedAfter || process.env.REMARKETING_REQUIRE_CREATED_AFTER, true),
     templateParam2: args.templateParam2 || process.env.REMARKETING_TEMPLATE_PARAM_2 || '2026',
-    templateFileId: args.templateFileId || process.env.REMARKETING_TEMPLATE_FILE_ID || '',
+    templateFileId: args.templateFileId || process.env.REMARKETING_TEMPLATE_FILE_ID || 'aiMIVYll8KEm3xcn',
     eventsTable: args.eventsTable || process.env.REMARKETING_EVENTS_TABLE || 'remarketing_7min_events',
     privateNote: boolFrom(args.privateNote || process.env.REMARKETING_SEND_PRIVATE_NOTE, true),
     execute: boolFrom(args.execute || process.env.REMARKETING_EXECUTE, false),
@@ -561,7 +561,9 @@ class SupabaseClient {
       const res = await requestJson(`${this.env.supabaseUrl}/rest/v1/${table.table}?${params}`, { headers: this.headers() });
       if (!res.ok) throw new Error(`Supabase ${table.table} status ${res.status}: ${JSON.stringify(res.data)}`);
       for (const row of Array.isArray(res.data) ? res.data : []) {
-        const rowDigits = [row.telefone_e164, row.telefone, row.whatsapp, row.whatsapp_digits].map(digitsOnly).filter(Boolean);
+        const rowDigits = [row.telefone_e164, row.telefone, row.whatsapp, row.whatsapp_digits]
+          .flatMap((value) => [digitsOnly(value), digitsOnly(normalizePhone(value))])
+          .filter(Boolean);
         if (!rowDigits.some((value) => wanted.has(value))) continue;
         const lead = normalizeLead(table, row);
         const leadMs = new Date(lead.created_at || 0).getTime();
@@ -874,6 +876,18 @@ async function processLead(lead, env, clients = {}) {
     };
   }
 
+  const sentEvent = env.force ? null : await supabase.findSentEvent(lead);
+  if (sentEvent) {
+    return {
+      lead,
+      validation: {
+        reason: 'ja_enviado_no_supabase',
+        eligible: false
+      },
+      actions: [{ action: 'skip', reason: 'ja_enviado_no_supabase', event: sentEvent }]
+    };
+  }
+
   const channelRes = await umbler.getChannel(env.channelId);
   if (!channelRes.ok) throw new Error(`Canal ${env.channelId} nao encontrado: status ${channelRes.status}`);
   const templateRes = await umbler.getTemplate(env.templateId);
@@ -918,13 +932,6 @@ async function processLead(lead, env, clients = {}) {
     result.validation.reason = 'aguardando_janela_7min';
     result.validation.dueAt = new Date(dueAtMs).toISOString();
     result.actions.push({ action: 'wait', reason: 'lead_ainda_na_janela_7min', dueAt: result.validation.dueAt });
-    return result;
-  }
-
-  const sentEvent = env.force ? null : await supabase.findSentEvent(lead);
-  if (sentEvent) {
-    result.validation.eligible = false;
-    result.actions.push({ action: 'skip', reason: 'ja_enviado_no_supabase', event: sentEvent });
     return result;
   }
 
