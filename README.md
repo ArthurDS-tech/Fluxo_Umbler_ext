@@ -49,7 +49,8 @@ browser-extension/
 1. Abra `chrome://extensions` (ou `edge://extensions`)
 2. Ative o **Modo do desenvolvedor**
 3. Clique em **Carregar sem compactação**
-4. Selecione a pasta `browser-extension`
+4. Se estiver usando o projeto completo baixado do GitHub, selecione a pasta raiz `Extens-o_sim_n-o_DESP-main`
+5. Se estiver usando apenas os arquivos da extensão, selecione a pasta `browser-extension`
 
 Nunca abra o `popup.html` diretamente no navegador. A API `chrome.storage` só funciona quando o popup é aberto pelo ícone da extensão instalada.
 
