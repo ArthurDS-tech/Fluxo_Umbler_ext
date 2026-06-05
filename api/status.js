@@ -16,6 +16,31 @@ module.exports = async function handler(req, res) {
 
   if (req.method === "GET") {
     const memberId = String(req.query?.memberId || "").trim();
+    const queueRequested = String(req.query?.queue || "").trim() === "1";
+    const allRequested = String(req.query?.all || "").trim() === "1";
+
+    if (queueRequested) {
+      const branch = String(req.query?.branch || "main").trim() || "main";
+      await proxyStatusRequest(res, {
+        url: `${statusBase}/queue?branch=${encodeURIComponent(branch)}`,
+        method: "GET",
+        headers: {
+          "X-API-Key": statusKey
+        }
+      });
+      return;
+    }
+
+    if (allRequested) {
+      await proxyStatusRequest(res, {
+        url: `${statusBase}/status/all`,
+        method: "GET",
+        headers: {
+          "X-API-Key": statusKey
+        }
+      });
+      return;
+    }
 
     if (!memberId) {
       res.status(400).json({ error: "memberId obrigatorio" });

@@ -133,6 +133,26 @@ https://utalk-atendente-web.vercel.app/
 
 O painel usa a mesma regra da extensao e tambem mantem sessao salva no navegador.
 
+## Painel Admin
+
+URL publicada:
+
+```text
+https://utalk-atendente-web.vercel.app/admin
+```
+
+O painel admin e separado do painel da atendente. Ele nao altera chats nem filas; apenas consulta e mostra:
+
+- total de chats abertos;
+- total de clientes em `esperando`;
+- contagem de esperando por unidade;
+- fila atual de Florianopolis, Sao Jose e Palhoca;
+- proxima atendente de cada fila;
+- status disponivel/indisponivel das atendentes;
+- clientes em esperando com unidade, atendente, canal, tempo de espera, ultima mensagem e etiquetas.
+
+O token Umbler usado no painel fica salvo somente no navegador.
+
 ## Backend Railway
 
 URL:

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UTalk Admin</title>
+  <link rel="stylesheet" href="/admin.css">
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <div>
+        <p class="eyebrow">UTalk Admin</p>
+        <h1>Painel de fila</h1>
+      </div>
+      <div class="header-actions">
+        <span id="last-update" class="muted">Aguardando atualizacao</span>
+        <button id="btn-refresh" class="secondary" type="button">Atualizar</button>
+      </div>
+    </header>
+
+    <section class="toolbar">
+      <label>
+        Token Umbler
+        <input id="input-token" type="password" autocomplete="off" placeholder="Cole o token de acesso">
+      </label>
+      <label>
+        Organizacao
+        <input id="input-org" type="text" value="ZQG4wFMHGHuTs59F" readonly>
+      </label>
+      <label>
+        Unidade
+        <select id="unit-filter">
+          <option value="all">Todas</option>
+          <option value="main">Florianopolis</option>
+          <option value="sj">Sao Jose</option>
+          <option value="ph">Palhoca</option>
+          <option value="other">Outras</option>
+        </select>
+      </label>
+      <button id="btn-load" class="primary" type="button">Carregar painel</button>
+    </section>
+
+    <p id="message" class="message" role="status" aria-live="polite"></p>
+
+    <section id="summary" class="summary"></section>
+
+    <section class="grid">
+      <div class="panel">
+        <div class="panel-title">
+          <h2>Filas</h2>
+          <span class="muted">ordem atual</span>
+        </div>
+        <div id="queues" class="queue-list"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">
+          <h2>Atendentes</h2>
+          <span class="muted">esperando por pessoa</span>
+        </div>
+        <div id="attendants" class="attendant-list"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title">
+        <h2>Clientes em esperando</h2>
+        <span id="waiting-count" class="muted">0 clientes</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Unidade</th>
+              <th>Atendente</th>
+              <th>Canal</th>
+              <th>Tempo esperando</th>
+              <th>Ultima mensagem</th>
+              <th>Etiquetas</th>
+            </tr>
+          </thead>
+          <tbody id="waiting-table"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="/admin.js"></script>
+</body>
+</html>
