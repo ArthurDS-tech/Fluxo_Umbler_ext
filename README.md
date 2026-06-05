@@ -148,14 +148,26 @@ GET /health
 GET /status?memberId=ID_DA_ATENDENTE
 POST /status
 GET /available?memberId=ID_DA_ATENDENTE
+GET /available?branch=sj&memberId=ID_DA_ATENDENTE
+GET /available?branch=ph&memberId=ID_DA_ATENDENTE
 GET /direct-available?memberId=ID_DA_ATENDENTE
 GET /queue
+GET /queue?branch=sj
+GET /queue?branch=ph
 POST /queue/reset
 ```
 
 `/available` controla a fila circular. Quando retorna sucesso, a vez da fila avanca.
 
 `/direct-available` verifica apenas se uma atendente especifica esta disponivel, sem avancar a fila. E usado para casos como pátio/Isa ou cliente que deve voltar para uma atendente dona.
+
+Filas por unidade:
+
+- `main`: Bruna -> Isa -> Julia -> Kenia -> Ana.
+- `sj`: Adrielli -> Micheli.
+- `ph`: Amanda -> Robson.
+
+Cada unidade tem sua propria vez da fila. Um atendimento de Sao Jose nao muda a vez de Palhoca e nao muda a vez da fila principal.
 
 ## Fluxo Umbler
 
@@ -176,6 +188,19 @@ Validacoes feitas:
 - Webhooks de fila presentes.
 - Transferencias para as cinco atendentes presentes.
 - Pátio direcionado para Isa.
+
+Fluxos duplicados para unidades:
+
+- Sao Jose: `https://app-utalk.umbler.com/settings/chatbots/editor/aiBQZyxNLsXpDDwS`
+  - Canais: `SJ - Adrielli` e `SJ - Micheli`.
+  - Fila: Adrielli -> Micheli.
+  - Etiquetas: Adrielli e Micheli.
+- Palhoca: `https://app-utalk.umbler.com/settings/chatbots/editor/aiAw0vJQCsVttEzC`
+  - Canais: `PH - Amanda` e `PH - Robson`.
+  - Fila: Amanda -> Robson.
+  - Etiquetas: Amanda e Robson.
+
+Os dois fluxos usam a mesma estrutura do fluxo principal, mas chamam o backend com `branch=sj` ou `branch=ph` para manter as filas separadas.
 
 ## Etiquetas de Atendente
 

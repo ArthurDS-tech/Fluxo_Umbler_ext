@@ -12,6 +12,8 @@ Migracao para colocar conversas em esperando apos transferencia: 2026-06-05 14:5
 
 Migracao de etiquetas por atendente no fluxo de avisos: 2026-06-05 15:14 BRT.
 
+Duplicacao dos fluxos Sao Jose e Palhoca com filas independentes: 2026-06-05 16:23 BRT.
+
 ## Resultado geral
 
 Validado com sucesso:
@@ -27,6 +29,9 @@ Validado com sucesso:
 - Todas as atendentes ativadas como disponiveis por API.
 - Comportamento `409 Conflict` documentado como pulo controlado de fila.
 - Apos transferir e adicionar etiqueta da atendente, o fluxo agora marca a conversa como `esperando`.
+- Fluxo Sao Jose ativo com fila propria Adrielli -> Micheli.
+- Fluxo Palhoca ativo com fila propria Amanda -> Robson.
+- As filas `main`, `sj` e `ph` nao interferem uma na outra.
 
 ## Extensao e painel da atendente
 
@@ -82,6 +87,21 @@ Fila esperada:
 ```text
 BRUNA -> ISA -> JULIA -> KENIA -> ANA
 ```
+
+Filas por unidade:
+
+```text
+Sao Jose: ADRIELLI -> MICHELI
+Palhoca: AMANDA -> ROBSON
+```
+
+Validacao publica das filas por unidade:
+
+- `GET /queue?branch=sj`: respondeu Adrielli e Micheli disponiveis.
+- `GET /queue?branch=ph`: respondeu Amanda e Robson disponiveis.
+- Simulacao SJ: Adrielli recebeu `200`, a fila avancou para Micheli, repetir Adrielli retornou `409`, Micheli recebeu `200`.
+- Simulacao PH: Amanda recebeu `200`, a fila avancou para Robson, repetir Amanda retornou `409`, Robson recebeu `200`.
+- Depois do teste, SJ foi resetado para Adrielli e PH foi resetado para Amanda.
 
 Observacao sobre `409 Conflict`:
 
@@ -140,6 +160,26 @@ Fluxo:
 ```text
 https://app-utalk.umbler.com/settings/chatbots/editor/ahWgp29Q4NlgpyeU
 ```
+
+Fluxos por unidade:
+
+```text
+Sao Jose: https://app-utalk.umbler.com/settings/chatbots/editor/aiBQZyxNLsXpDDwS
+Palhoca: https://app-utalk.umbler.com/settings/chatbots/editor/aiAw0vJQCsVttEzC
+```
+
+Validacao dos fluxos por unidade:
+
+- Sao Jose ativo.
+- Sao Jose com canais `SJ - Adrielli` e `SJ - Micheli`.
+- Sao Jose com 159 cards e 0 conexoes quebradas.
+- Sao Jose com webhooks `branch=sj`.
+- Sao Jose transfere e etiqueta Adrielli/Micheli.
+- Palhoca ativo.
+- Palhoca com canais `PH - Amanda` e `PH - Robson`.
+- Palhoca com 159 cards e 0 conexoes quebradas.
+- Palhoca com webhooks `branch=ph`.
+- Palhoca transfere e etiqueta Amanda/Robson.
 
 Validacoes feitas por API:
 

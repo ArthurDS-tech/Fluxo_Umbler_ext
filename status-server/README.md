@@ -17,8 +17,12 @@ GET  /status?memberId=ID_DA_ATENDENTE
 POST /status
 GET  /status/all
 GET  /available?memberId=ID_DA_ATENDENTE
+GET  /available?branch=sj&memberId=ID_DA_ATENDENTE
+GET  /available?branch=ph&memberId=ID_DA_ATENDENTE
 GET  /direct-available?memberId=ID_DA_ATENDENTE
 GET  /queue
+GET  /queue?branch=sj
+GET  /queue?branch=ph
 GET  /remarketing/health
 POST /remarketing/tick
 POST /remarketing/run-phone
@@ -92,6 +96,21 @@ Essa rota retorna:
 - `409 Conflict` quando o fluxo deve pular para a proxima atendente.
 
 O `409` aparece no historico da Umbler, mas nao quebra o atendimento. Ele e o sinal usado pelo card de webhook para seguir pelo caminho de falha e testar a proxima atendente.
+
+Para as unidades de Sao Jose e Palhoca, informe a unidade na URL:
+
+```txt
+GET https://SEU-DOMINIO.up.railway.app/available?branch=sj&memberId=ID_DA_ATENDENTE
+GET https://SEU-DOMINIO.up.railway.app/available?branch=ph&memberId=ID_DA_ATENDENTE
+```
+
+Filas configuradas:
+
+- `main`: Bruna -> Isa -> Julia -> Kenia -> Ana.
+- `sj`: Adrielli -> Micheli.
+- `ph`: Amanda -> Robson.
+
+Cada fila anda separada. Um atendimento de Palhoca nao interfere na vez de Sao Jose nem na fila principal.
 
 Para casos diretos, sem avancar a fila, use:
 

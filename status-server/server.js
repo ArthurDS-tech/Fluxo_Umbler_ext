@@ -6,19 +6,33 @@ const PORT = Number(process.env.PORT || 3000);
 const API_KEY = process.env.STATUS_API_KEY || "";
 const DATA_FILE = process.env.DATA_FILE || path.join(__dirname, "status-data.json");
 const BODY_LIMIT_BYTES = 1024 * 64;
-const QUEUE = [
+const QUEUES = {
+  main: [
   "ZzUQwM9nj2l-H5hc", // BRUNA
   "ZaZlLHFmogpzC4xO", // ISA
   "ZoWIY_xoe7uoAAFQ", // JULIA
   "Z26n85VVIK64B6I2", // KENIA
   "ZaZkfnFmogpzCidw" // ANA
-];
+  ],
+  sj: [
+    "ZrzsX_BLm_zYqujY", // ADRIELLI
+    "Zafi39QwFgY3PIe3" // MICHELI
+  ],
+  ph: [
+    "ZuGqFp5N9i3HAKOn", // AMANDA
+    "ZaWboNQwFgY3oMeT" // ROBSON
+  ]
+};
 const MEMBER_NAMES = {
   "ZzUQwM9nj2l-H5hc": "BRUNA",
   "ZaZlLHFmogpzC4xO": "ISA",
   ZoWIY_xoe7uoAAFQ: "JULIA",
   Z26n85VVIK64B6I2: "KENIA",
-  ZaZkfnFmogpzCidw: "ANA"
+  ZaZkfnFmogpzCidw: "ANA",
+  ZrzsX_BLm_zYqujY: "ADRIELLI",
+  Zafi39QwFgY3PIe3: "MICHELI",
+  ZuGqFp5N9i3HAKOn: "AMANDA",
+  ZaWboNQwFgY3oMeT: "ROBSON"
 };
 const BUSINESS_HOURS = {
   timeZone: "America/Sao_Paulo",
@@ -28,7 +42,7 @@ const BUSINESS_HOURS = {
 
 const dataStore = loadDataStore();
 const statusMap = dataStore.statuses;
-const queueState = dataStore.queue;
+const queueStates = dataStore.queues;
 let remarketing = null;
 let remarketingEnv = null;
 let remarketingRunning = false;
@@ -48,13 +62,13 @@ function loadDataStore() {
     if (parsed.statuses && typeof parsed.statuses === "object" && !Array.isArray(parsed.statuses)) {
       return {
         statuses: parsed.statuses,
-        queue: normalizeQueueState(parsed.queue)
+        queues: normalizeQueueStates(parsed.queues || parsed.queue)
       };
     }
 
     return {
       statuses: parsed,
-      queue: normalizeQueueState(null)
+      queues: normalizeQueueStates(null)
     };
   } catch (error) {
     console.warn(`[status-server] Nao foi possivel ler ${DATA_FILE}: ${error.message}`);
@@ -65,14 +79,28 @@ function loadDataStore() {
 function createEmptyDataStore() {
   return {
     statuses: {},
-    queue: normalizeQueueState(null)
+    queues: normalizeQueueStates(null)
   };
 }
 
-function normalizeQueueState(value) {
+function normalizeQueueStates(value) {
+  const source = value && typeof value === "object" && !Array.isArray(value) ? value : {};
+  const looksLikeSingleQueue =
+    Object.prototype.hasOwnProperty.call(source, "currentIndex") ||
+    Object.prototype.hasOwnProperty.call(source, "lastAssignedMemberId");
+
+  const states = {};
+  for (const branch of Object.keys(QUEUES)) {
+    states[branch] = normalizeQueueState(looksLikeSingleQueue && branch === "main" ? source : source[branch], branch);
+  }
+  return states;
+}
+
+function normalizeQueueState(value, branch = "main") {
+  const queue = getQueueForBranch(branch);
   const currentIndex = Number(value?.currentIndex);
   return {
-    currentIndex: Number.isInteger(currentIndex) && currentIndex >= 0 ? currentIndex % QUEUE.length : 0,
+    currentIndex: Number.isInteger(currentIndex) && currentIndex >= 0 ? currentIndex % queue.length : 0,
     lastAssignedMemberId: normalizeMemberId(value?.lastAssignedMemberId) || null,
     lastAssignedAtUTC: typeof value?.lastAssignedAtUTC === "string" ? value.lastAssignedAtUTC : null
   };
@@ -86,7 +114,7 @@ function saveDataStore() {
       JSON.stringify(
         {
           statuses: statusMap,
-          queue: queueState
+          queues: queueStates
         },
         null,
         2
@@ -97,12 +125,27 @@ function saveDataStore() {
   }
 }
 
-function getAvailableQueueMember() {
+function getBranchKey(value) {
+  const branch = String(value || "main").trim().toLowerCase();
+  return QUEUES[branch] ? branch : "main";
+}
+
+function getQueueForBranch(branch = "main") {
+  return QUEUES[getBranchKey(branch)];
+}
+
+function getQueueState(branch = "main") {
+  return queueStates[getBranchKey(branch)];
+}
+
+function getAvailableQueueMember(branch = "main") {
   if (!isBusinessOpen().open) return null;
 
-  for (let offset = 0; offset < QUEUE.length; offset += 1) {
-    const index = (queueState.currentIndex + offset) % QUEUE.length;
-    const memberId = QUEUE[index];
+  const queue = getQueueForBranch(branch);
+  const state = getQueueState(branch);
+  for (let offset = 0; offset < queue.length; offset += 1) {
+    const index = (state.currentIndex + offset) % queue.length;
+    const memberId = queue[index];
 
     if (statusMap[memberId] !== false) {
       return { memberId, index, offset };
@@ -142,31 +185,37 @@ function isBusinessOpen(date = new Date()) {
   };
 }
 
-function assignQueueMember(memberId, index) {
-  queueState.currentIndex = (index + 1) % QUEUE.length;
-  queueState.lastAssignedMemberId = memberId;
-  queueState.lastAssignedAtUTC = new Date().toISOString();
+function assignQueueMember(memberId, index, branch = "main") {
+  const queue = getQueueForBranch(branch);
+  const state = getQueueState(branch);
+  state.currentIndex = (index + 1) % queue.length;
+  state.lastAssignedMemberId = memberId;
+  state.lastAssignedAtUTC = new Date().toISOString();
   saveDataStore();
 }
 
-function getQueueSnapshot() {
-  const next = getAvailableQueueMember();
+function getQueueSnapshot(branch = "main") {
+  const branchKey = getBranchKey(branch);
+  const queue = getQueueForBranch(branchKey);
+  const state = getQueueState(branchKey);
+  const next = getAvailableQueueMember(branchKey);
   return {
-    order: QUEUE.map((memberId) => ({
+    branch: branchKey,
+    order: queue.map((memberId) => ({
       memberId,
       name: MEMBER_NAMES[memberId] || memberId,
       available: statusMap[memberId] !== false
     })),
-    currentIndex: queueState.currentIndex,
-    currentMemberId: QUEUE[queueState.currentIndex],
-    currentMemberName: MEMBER_NAMES[QUEUE[queueState.currentIndex]] || QUEUE[queueState.currentIndex],
+    currentIndex: state.currentIndex,
+    currentMemberId: queue[state.currentIndex],
+    currentMemberName: MEMBER_NAMES[queue[state.currentIndex]] || queue[state.currentIndex],
     nextAvailableMemberId: next?.memberId || null,
     nextAvailableMemberName: next ? MEMBER_NAMES[next.memberId] || next.memberId : null,
-    lastAssignedMemberId: queueState.lastAssignedMemberId,
-    lastAssignedMemberName: queueState.lastAssignedMemberId
-      ? MEMBER_NAMES[queueState.lastAssignedMemberId] || queueState.lastAssignedMemberId
+    lastAssignedMemberId: state.lastAssignedMemberId,
+    lastAssignedMemberName: state.lastAssignedMemberId
+      ? MEMBER_NAMES[state.lastAssignedMemberId] || state.lastAssignedMemberId
       : null,
-    lastAssignedAtUTC: queueState.lastAssignedAtUTC
+    lastAssignedAtUTC: state.lastAssignedAtUTC
   };
 }
 
@@ -393,12 +442,7 @@ const server = http.createServer(async (req, res) => {
       service: "utalk-status-server",
       remarketing: getRemarketingStatus(),
       storedMembers: Object.keys(statusMap).length,
-      queue: {
-        currentMemberId: QUEUE[queueState.currentIndex],
-        currentMemberName: MEMBER_NAMES[QUEUE[queueState.currentIndex]] || QUEUE[queueState.currentIndex],
-        lastAssignedMemberId: queueState.lastAssignedMemberId,
-        lastAssignedAtUTC: queueState.lastAssignedAtUTC
-      },
+      queues: Object.fromEntries(Object.keys(QUEUES).map((branch) => [branch, getQueueSnapshot(branch)])),
       businessHours: isBusinessOpen()
     });
     return;
@@ -423,6 +467,7 @@ const server = http.createServer(async (req, res) => {
 
   if (req.method === "GET" && url.pathname === "/available") {
     const memberId = normalizeMemberId(url.searchParams.get("memberId"));
+    const branch = getBranchKey(url.searchParams.get("branch"));
 
     if (!memberId) {
       sendJson(res, 400, { error: "memberId obrigatorio" });
@@ -430,18 +475,20 @@ const server = http.createServer(async (req, res) => {
     }
 
     const available = statusMap[memberId] !== false;
-    const inQueue = QUEUE.includes(memberId);
-    const next = getAvailableQueueMember();
+    const queue = getQueueForBranch(branch);
+    const inQueue = queue.includes(memberId);
+    const next = getAvailableQueueMember(branch);
     const isNextInQueue = Boolean(next && next.memberId === memberId);
     const businessHours = isBusinessOpen();
 
     if (businessHours.open && available && inQueue && isNextInQueue) {
-      assignQueueMember(memberId, next.index);
+      assignQueueMember(memberId, next.index, branch);
     }
 
     const canReceive = businessHours.open && (inQueue ? available && isNextInQueue : available);
     sendJson(res, canReceive ? 200 : 409, {
       memberId,
+      branch,
       available,
       name: MEMBER_NAMES[memberId] || memberId,
       canReceive,
@@ -454,7 +501,7 @@ const server = http.createServer(async (req, res) => {
           : "Atendente indisponivel.",
       status: available ? "available" : "unavailable",
       businessHours,
-      queue: getQueueSnapshot()
+      queue: getQueueSnapshot(branch)
     });
     return;
   }
@@ -533,7 +580,10 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
-    sendJson(res, 200, { statuses: statusMap, queue: getQueueSnapshot() });
+    sendJson(res, 200, {
+      statuses: statusMap,
+      queues: Object.fromEntries(Object.keys(QUEUES).map((branch) => [branch, getQueueSnapshot(branch)]))
+    });
     return;
   }
 
@@ -543,7 +593,8 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
-    sendJson(res, 200, { queue: getQueueSnapshot() });
+    const branch = getBranchKey(url.searchParams.get("branch"));
+    sendJson(res, 200, { queue: getQueueSnapshot(branch) });
     return;
   }
 
@@ -557,18 +608,21 @@ const server = http.createServer(async (req, res) => {
       const rawBody = await readBody(req);
       const payload = rawBody ? JSON.parse(rawBody) : {};
       const memberId = normalizeMemberId(payload.memberId);
-      const index = memberId ? QUEUE.indexOf(memberId) : 0;
+      const branch = getBranchKey(payload.branch);
+      const queue = getQueueForBranch(branch);
+      const state = getQueueState(branch);
+      const index = memberId ? queue.indexOf(memberId) : 0;
 
       if (memberId && index === -1) {
         sendJson(res, 400, { error: "memberId nao faz parte da fila" });
         return;
       }
 
-      queueState.currentIndex = index === -1 ? 0 : index;
-      queueState.lastAssignedMemberId = null;
-      queueState.lastAssignedAtUTC = null;
+      state.currentIndex = index === -1 ? 0 : index;
+      state.lastAssignedMemberId = null;
+      state.lastAssignedAtUTC = null;
       saveDataStore();
-      sendJson(res, 200, { queue: getQueueSnapshot() });
+      sendJson(res, 200, { queue: getQueueSnapshot(branch) });
     } catch {
       sendJson(res, 400, { error: "JSON invalido" });
     }
