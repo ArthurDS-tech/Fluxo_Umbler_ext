@@ -14,12 +14,13 @@ O sistema usa:
 Validado em 2026-06-05:
 
 - Fluxo Umbler ativo.
-- 154 cards no fluxo.
+- 159 cards no fluxo.
 - 0 conexoes quebradas.
 - Todas as atendentes estao disponiveis na fila.
 - Extensao com login permanente.
 - ID da organizacao ja preenchido: `ZQG4wFMHGHuTs59F`.
 - Repositorios GitHub publicados.
+- Conversas transferidas agora entram em `esperando` depois da etiqueta da atendente.
 
 ## Como Funciona
 
@@ -167,7 +168,7 @@ https://app-utalk.umbler.com/settings/chatbots/editor/ahWgp29Q4NlgpyeU
 Validacoes feitas:
 
 - Fluxo ativo.
-- 154 cards.
+- 159 cards.
 - 0 conexoes quebradas.
 - Gatilhos manuais de teste presentes:
   - `Teste Codex Fila`
@@ -196,6 +197,22 @@ Regra planejada:
 - Pátio vai para Isa. Se Isa estiver indisponivel, fica no esperando dela.
 
 Mais detalhes em `FLUXO_ETIQUETAS_ATENDENTES.md`.
+
+## Esperando Apos Transferencia
+
+Depois da transferencia para uma atendente, o fluxo adiciona a etiqueta da atendente e em seguida marca a conversa como `esperando`.
+
+Esse ajuste garante que a conversa apareca no esperando da atendente depois da transferencia.
+
+Cards novos:
+
+| Atendente | Etiqueta | Esperando |
+|---|---|---|
+| Ana | `ahW9pz7NmL8V5lza` | `aiMWaitAna000001` |
+| Isa | `ahW-vaPXazLflJNR` | `aiMWaitIsa000001` |
+| Julia | `ahW-zsCLa1_pRkJi` | `aiMWaitJul000001` |
+| Bruna | `ahW-3ljj7yv7AP6i` | `aiMWaitBru000001` |
+| Kenia | `ahW-7_eIZfuAoxC5` | `aiMWaitKen000001` |
 
 ## Remarketing
 

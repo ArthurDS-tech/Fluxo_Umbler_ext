@@ -8,6 +8,8 @@ Revalidacao da integracao Railway/remarketing: 2026-06-05 12:56 BRT.
 
 Revalidacao final de fila e documentacao: 2026-06-05 14:16 BRT.
 
+Migracao para colocar conversas em esperando apos transferencia: 2026-06-05 14:52 BRT.
+
 ## Resultado geral
 
 Validado com sucesso:
@@ -22,6 +24,7 @@ Validado com sucesso:
 - Regra de etiqueta da atendente mapeada e documentada.
 - Todas as atendentes ativadas como disponiveis por API.
 - Comportamento `409 Conflict` documentado como pulo controlado de fila.
+- Apos transferir e adicionar etiqueta da atendente, o fluxo agora marca a conversa como `esperando`.
 
 ## Extensao e painel da atendente
 
@@ -139,7 +142,7 @@ https://app-utalk.umbler.com/settings/chatbots/editor/ahWgp29Q4NlgpyeU
 Validacoes feitas por API:
 
 - Fluxo ativo.
-- Total de cards: 154.
+- Total de cards apos migracao: 159.
 - Conexoes quebradas: 0.
 - Gatilhos manuais de teste presentes:
   - `Teste Codex Fila`
@@ -179,6 +182,27 @@ Organizacao visual dos cards:
 - A Umbler recusou com erro interno `IncidentId: aiMCH4ll8KEmycea`.
 - O fluxo ativo permaneceu intacto: `updatedAtUTC` nao mudou e as conexoes continuaram com 0 referencias quebradas.
 - Portanto, a organizacao visual deve ser feita pelo editor visual da Umbler, arrastando os cards, sem alterar webhooks, textos, condicoes ou transferencias.
+
+Migracao aplicada para `esperando` apos transferencia:
+
+- Antes: transferencia para atendente -> adicionava etiqueta -> seguia para `ZQxNip1kTeEJ-ORl`.
+- Depois: transferencia para atendente -> adiciona etiqueta -> define `waiting=true` -> segue para `ZQxNip1kTeEJ-ORl`.
+- Foram criados 5 cards `SetWaitingStateActionModel`.
+- Validacao apos salvar:
+  - Fluxo ativo.
+  - 159 cards.
+  - 0 conexoes quebradas.
+  - Snapshot: `Migra transferencias para aguardando apos etiqueta`.
+
+Cards novos:
+
+| Atendente | Card de etiqueta | Card novo de esperando |
+|---|---|---|
+| Ana | `ahW9pz7NmL8V5lza` | `aiMWaitAna000001` |
+| Isa | `ahW-vaPXazLflJNR` | `aiMWaitIsa000001` |
+| Julia | `ahW-zsCLa1_pRkJi` | `aiMWaitJul000001` |
+| Bruna | `ahW-3ljj7yv7AP6i` | `aiMWaitBru000001` |
+| Kenia | `ahW-7_eIZfuAoxC5` | `aiMWaitKen000001` |
 
 ## Remarketing
 
