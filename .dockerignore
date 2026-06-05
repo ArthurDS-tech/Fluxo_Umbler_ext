@@ -1,0 +1,6 @@
+.git
+.vercel
+.vscode
+node_modules
+status-server/status-data.json
+npm-debug.log

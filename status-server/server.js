@@ -1,97 +1,175 @@
-/**
- * Servidor de status de disponibilidade — UTalk Atendente
- *
- * A extensão do navegador chama POST /status para atualizar o status.
- * O bot da Umbler Talk chama GET /status?memberId=xxx para consultar.
- *
- * Iniciar: node server.js
- * Porta padrão: 3000
- */
-
+const fs = require("fs");
 const http = require("http");
-const PORT = process.env.PORT || 3000;
+const path = require("path");
 
-// Armazena em memória: { [memberId]: boolean }
-// Em produção, substitua por Redis ou banco de dados.
-const statusMap = {};
+const PORT = Number(process.env.PORT || 3000);
+const API_KEY = process.env.STATUS_API_KEY || "";
+const DATA_FILE = process.env.DATA_FILE || path.join(__dirname, "status-data.json");
+const BODY_LIMIT_BYTES = 1024 * 64;
 
-const server = http.createServer((req, res) => {
-  res.setHeader("Content-Type", "application/json");
+const statusMap = loadStatusMap();
+
+function loadStatusMap() {
+  try {
+    if (!fs.existsSync(DATA_FILE)) return {};
+    const parsed = JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+  } catch (error) {
+    console.warn(`[status-server] Nao foi possivel ler ${DATA_FILE}: ${error.message}`);
+    return {};
+  }
+}
+
+function saveStatusMap() {
+  try {
+    fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
+    fs.writeFileSync(DATA_FILE, JSON.stringify(statusMap, null, 2));
+  } catch (error) {
+    console.error(`[status-server] Nao foi possivel salvar ${DATA_FILE}: ${error.message}`);
+  }
+}
+
+function sendJson(res, statusCode, body) {
+  res.writeHead(statusCode, {
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "no-store"
+  });
+  res.end(JSON.stringify(body));
+}
+
+function setCors(req, res) {
+  const requestedHeaders = req.headers["access-control-request-headers"];
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    requestedHeaders || "Content-Type, Authorization, X-API-Key"
+  );
+}
 
-  // Preflight CORS
+function hasWriteAccess(req) {
+  if (!API_KEY) return true;
+  const auth = req.headers.authorization || "";
+  const bearer = auth.startsWith("Bearer ") ? auth.slice(7) : "";
+  return req.headers["x-api-key"] === API_KEY || bearer === API_KEY;
+}
+
+function readBody(req) {
+  return new Promise((resolve, reject) => {
+    let body = "";
+
+    req.on("data", (chunk) => {
+      body += chunk;
+      if (Buffer.byteLength(body) > BODY_LIMIT_BYTES) {
+        reject(new Error("BODY_TOO_LARGE"));
+        req.destroy();
+      }
+    });
+
+    req.on("end", () => resolve(body));
+    req.on("error", reject);
+  });
+}
+
+function normalizeMemberId(value) {
+  return typeof value === "string" ? value.trim() : "";
+}
+
+const server = http.createServer(async (req, res) => {
+  setCors(req, res);
+
   if (req.method === "OPTIONS") {
     res.writeHead(204);
     res.end();
     return;
   }
 
-  const url = new URL(req.url, `http://localhost:${PORT}`);
+  const url = new URL(req.url, `http://${req.headers.host || `localhost:${PORT}`}`);
 
-  // GET /status?memberId=xxx
-  // Retorna se a atendente está disponível para receber novos chats.
-  // Use este endpoint no webhook/condição do bot da Umbler Talk.
-  if (req.method === "GET" && url.pathname === "/status") {
-    const memberId = url.searchParams.get("memberId");
-
-    if (!memberId) {
-      res.writeHead(400);
-      res.end(JSON.stringify({ error: "memberId obrigatório" }));
-      return;
-    }
-
-    // Se nunca foi definido, assume disponível
-    const available = statusMap[memberId] !== false;
-
-    res.writeHead(200);
-    res.end(JSON.stringify({ memberId, available }));
-    return;
-  }
-
-  // POST /status  body: { memberId, available }
-  // Chamado pela extensão quando a atendente muda o status.
-  if (req.method === "POST" && url.pathname === "/status") {
-    let body = "";
-    req.on("data", (chunk) => (body += chunk));
-    req.on("end", () => {
-      try {
-        const { memberId, available } = JSON.parse(body);
-
-        if (!memberId || typeof available !== "boolean") {
-          res.writeHead(400);
-          res.end(JSON.stringify({ error: "memberId e available são obrigatórios" }));
-          return;
-        }
-
-        statusMap[memberId] = available;
-        console.log(`[${new Date().toISOString()}] ${memberId} → ${available ? "disponível" : "indisponível"}`);
-
-        res.writeHead(200);
-        res.end(JSON.stringify({ memberId, available }));
-      } catch {
-        res.writeHead(400);
-        res.end(JSON.stringify({ error: "JSON inválido" }));
-      }
+  if (req.method === "GET" && (url.pathname === "/" || url.pathname === "/health")) {
+    sendJson(res, 200, {
+      ok: true,
+      service: "utalk-status-server",
+      storedMembers: Object.keys(statusMap).length
     });
     return;
   }
 
-  // GET /status/all — lista todos os status (útil para debug/admin)
-  if (req.method === "GET" && url.pathname === "/status/all") {
-    res.writeHead(200);
-    res.end(JSON.stringify(statusMap));
+  if (req.method === "GET" && url.pathname === "/status") {
+    const memberId = normalizeMemberId(url.searchParams.get("memberId"));
+
+    if (!memberId) {
+      sendJson(res, 400, { error: "memberId obrigatorio" });
+      return;
+    }
+
+    const available = statusMap[memberId] !== false;
+    sendJson(res, 200, {
+      memberId,
+      available,
+      status: available ? "available" : "unavailable"
+    });
     return;
   }
 
-  res.writeHead(404);
-  res.end(JSON.stringify({ error: "Rota não encontrada" }));
+  if (req.method === "POST" && url.pathname === "/status") {
+    if (!hasWriteAccess(req)) {
+      sendJson(res, 401, { error: "Nao autorizado" });
+      return;
+    }
+
+    try {
+      const rawBody = await readBody(req);
+      const payload = rawBody ? JSON.parse(rawBody) : {};
+      const memberId = normalizeMemberId(payload.memberId);
+      const { available } = payload;
+
+      if (!memberId || typeof available !== "boolean") {
+        sendJson(res, 400, { error: "memberId e available sao obrigatorios" });
+        return;
+      }
+
+      statusMap[memberId] = available;
+      saveStatusMap();
+
+      console.log(
+        `[${new Date().toISOString()}] ${memberId} -> ${available ? "disponivel" : "indisponivel"}`
+      );
+
+      sendJson(res, 200, {
+        memberId,
+        available,
+        status: available ? "available" : "unavailable"
+      });
+    } catch (error) {
+      if (error.message === "BODY_TOO_LARGE") {
+        sendJson(res, 413, { error: "Corpo da requisicao muito grande" });
+        return;
+      }
+
+      sendJson(res, 400, { error: "JSON invalido" });
+    }
+    return;
+  }
+
+  if (req.method === "GET" && url.pathname === "/status/all") {
+    if (!hasWriteAccess(req)) {
+      sendJson(res, 401, { error: "Nao autorizado" });
+      return;
+    }
+
+    sendJson(res, 200, { statuses: statusMap });
+    return;
+  }
+
+  sendJson(res, 404, { error: "Rota nao encontrada" });
 });
 
-server.listen(PORT, () => {
-  console.log(`Servidor de status rodando em http://localhost:${PORT}`);
-  console.log(`  GET  /status?memberId=xxx  → consulta disponibilidade`);
-  console.log(`  POST /status               → atualiza disponibilidade`);
-  console.log(`  GET  /status/all           → lista todos os status`);
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`[status-server] Rodando na porta ${PORT}`);
+  console.log("[status-server] GET  /health");
+  console.log("[status-server] GET  /status?memberId=ID_DA_ATENDENTE");
+  console.log("[status-server] POST /status");
+  console.log(`[status-server] DATA_FILE=${DATA_FILE}`);
+  console.log(`[status-server] STATUS_API_KEY=${API_KEY ? "configurada" : "nao configurada"}`);
 });

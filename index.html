@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UTalk Atendente</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <section class="panel">
+      <div class="topbar">
+        <div>
+          <p class="eyebrow">UTalk Atendente</p>
+          <h1>Disponibilidade</h1>
+        </div>
+        <button id="btn-logout" class="ghost" type="button" hidden>Sair</button>
+      </div>
+
+      <form id="credentials-form" class="stack">
+        <label for="input-token">Token de acesso</label>
+        <input id="input-token" name="token" type="password" autocomplete="off" placeholder="Cole o token da Umbler Talk">
+
+        <label for="input-org">ID da organizacao</label>
+        <input id="input-org" name="organization" type="text" autocomplete="off" placeholder="Ex: AB_12-xyzEXAMPLE">
+
+        <button id="btn-login" class="primary" type="submit">Entrar</button>
+      </form>
+
+      <section id="status-section" class="stack" hidden>
+        <div class="status-row">
+          <div>
+            <span class="label">Atendente</span>
+            <strong id="member-name">-</strong>
+          </div>
+          <div id="status-badge" class="badge online">
+            <span class="dot"></span>
+            <span id="status-text">Disponivel</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="btn-disponivel" class="success" type="button">Disponivel</button>
+          <button id="btn-indisponivel" class="warning" type="button">Indisponivel</button>
+        </div>
+
+        <p id="hint-text" class="hint">Selecione seu status para controlar novos atendimentos.</p>
+      </section>
+
+      <p id="message" class="message" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

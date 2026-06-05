@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/index.html"
+    }
+  ],
+  "env": {
+    "UTALK_API_BASE": "https://app-utalk.umbler.com/api"
+  }
+}

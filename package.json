@@ -1,0 +1,13 @@
+{
+  "name": "utalk-atendente-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pagina simples para controlar disponibilidade no UTalk",
+  "scripts": {
+    "dev": "npx vercel dev",
+    "start": "npx vercel dev"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
