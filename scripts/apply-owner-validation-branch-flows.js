@@ -12,6 +12,16 @@ const FLOWS = {
     label: "Principal",
     prefix: "MN",
     queueStart: "aiK87hUbFkASONgq",
+    channels: [
+      "ZQxHaZ4vN7FoyHm7",
+      "ZQxHphkRFwc7FJ2W",
+      "ZZRSn5wSM4RTE7KJ",
+      "ZZRSWJl_JmIQx0UE",
+      "ZQxHJhkRFwc7E0bT",
+      "ZwWSUqYuIZ8I3hxt",
+      "ZtXHk4I_xBAd46pH",
+      "ZQxHlJ4vN7FoyPqG"
+    ],
     preferred: ["cristiane", "ester", "ana", "kenia", "julia", "isa", "bruna"]
   },
   sj: {
