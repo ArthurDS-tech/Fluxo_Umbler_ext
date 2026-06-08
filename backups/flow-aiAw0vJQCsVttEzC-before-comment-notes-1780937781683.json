@@ -1,0 +1,4108 @@
+{
+  "_t": "FlowchartBotModel",
+  "triggers": [
+    "ChatCreatedByContact",
+    "Manual",
+    "ContactMessage"
+  ],
+  "manualTriggers": [
+    "Teste Codex Fila",
+    "Teste Codex Patio"
+  ],
+  "steps": [
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Fila PH: verificando se AMANDA esta disponivel e se e a vez dela receber este atendimento.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiK87P-D72HsZvJI",
+      "position": {
+        "x": 1450,
+        "y": 300
+      },
+      "id": "aiK87hUbFkASONgq",
+      "createdAtUTC": "2026-06-05T12:11:26Z"
+    },
+    {
+      "_t": "WebhookActionModel",
+      "uri": "https://utalk-status-webhook-production.up.railway.app/available?branch=ph&memberId=ZuGqFp5N9i3HAKOn",
+      "method": "Get",
+      "headers": [],
+      "responseMessageMapper": [],
+      "requestContent": null,
+      "onSuccess": "aiK87SJy0E0BnJ-H",
+      "onFail": "aiK873VOTK54HFF1",
+      "position": {
+        "x": 1800,
+        "y": 300
+      },
+      "id": "aiK87P-D72HsZvJI",
+      "createdAtUTC": "2026-06-05T12:11:24Z"
+    },
+    {
+      "_t": "WebhookActionModel",
+      "uri": "https://utalk-status-webhook-production.up.railway.app/available?branch=ph&memberId=ZaWboNQwFgY3oMeT",
+      "method": "Get",
+      "headers": [],
+      "responseMessageMapper": [],
+      "requestContent": null,
+      "onSuccess": "aiK87T820fdxp0zp",
+      "onFail": "aiK87nNL50hEdZhI",
+      "position": {
+        "x": 2450,
+        "y": 300
+      },
+      "id": "aiK87IOwZtYwPedN",
+      "createdAtUTC": "2026-06-05T12:11:24Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Fila: verificando se JULIA esta disponivel e se e a vez dela receber este atendimento.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiK87Jlvs3SmBMFu",
+      "position": {
+        "x": 2730,
+        "y": 300
+      },
+      "id": "aiK87Xpem1468xYn",
+      "createdAtUTC": "2026-06-05T12:11:25Z"
+    },
+    {
+      "_t": "WebhookActionModel",
+      "uri": "https://utalk-status-webhook-production.up.railway.app/available?memberId=ZoWIY_xoe7uoAAFQ",
+      "method": "Get",
+      "headers": [],
+      "responseMessageMapper": [],
+      "requestContent": null,
+      "onSuccess": "aiK87JD6HocvSBwQ",
+      "onFail": "aiK87eLdDNcsTN6K",
+      "position": {
+        "x": 2900,
+        "y": 300
+      },
+      "id": "aiK87Jlvs3SmBMFu",
+      "createdAtUTC": "2026-06-05T12:11:24Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Fila: verificando se KENIA esta disponivel e se e a vez dela receber este atendimento.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiK87JBdLRckTBj_",
+      "position": {
+        "x": 3230,
+        "y": 300
+      },
+      "id": "aiK87eLdDNcsTN6K",
+      "createdAtUTC": "2026-06-05T12:11:25Z"
+    },
+    {
+      "_t": "WebhookActionModel",
+      "uri": "https://utalk-status-webhook-production.up.railway.app/available?memberId=Z26n85VVIK64B6I2",
+      "method": "Get",
+      "headers": [],
+      "responseMessageMapper": [],
+      "requestContent": null,
+      "onSuccess": "aiK87v9CvNFkdiq_",
+      "onFail": "aiK87jS6bwSC8Sr1",
+      "position": {
+        "x": 3400,
+        "y": 300
+      },
+      "id": "aiK87JBdLRckTBj_",
+      "createdAtUTC": "2026-06-05T12:11:24Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Fila: verificando se ANA esta disponivel e se e a vez dela receber este atendimento.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiK87Jzbxv7Prg7A",
+      "position": {
+        "x": 3930,
+        "y": 300
+      },
+      "id": "aiK87jS6bwSC8Sr1",
+      "createdAtUTC": "2026-06-05T12:11:26Z"
+    },
+    {
+      "_t": "WebhookActionModel",
+      "uri": "https://utalk-status-webhook-production.up.railway.app/available?memberId=ZaZkfnFmogpzCidw",
+      "method": "Get",
+      "headers": [],
+      "responseMessageMapper": [],
+      "requestContent": null,
+      "onSuccess": "aiK87wpqjtl7rNvQ",
+      "onFail": "aiK87nNL50hEdZhI",
+      "position": {
+        "x": 4100,
+        "y": 300
+      },
+      "id": "aiK87Jzbxv7Prg7A",
+      "createdAtUTC": "2026-06-05T12:11:24Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Fila PH: verificando se ROBSON esta disponivel e se e a vez dela receber este atendimento.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiK87IOwZtYwPedN",
+      "position": {
+        "x": 2150,
+        "y": 350
+      },
+      "id": "aiK873VOTK54HFF1",
+      "createdAtUTC": "2026-06-05T12:11:27Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Fila PH: nenhuma atendente disponivel ou estamos fora do horario. O chat ficara em espera para ser atendido assim que possivel.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiK87Oa8RMoeBjD5",
+      "position": {
+        "x": 4400,
+        "y": 600
+      },
+      "id": "aiK87nNL50hEdZhI",
+      "createdAtUTC": "2026-06-05T12:11:26Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "No momento nao temos atendente disponivel ou estamos fora do horario de atendimento. Vou te deixar na fila para continuarmos assim que possivel.",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiK87DsUMHYfBAT3",
+      "position": {
+        "x": 4650,
+        "y": 700
+      },
+      "id": "aiK87Oa8RMoeBjD5",
+      "createdAtUTC": "2026-06-05T12:11:24Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "ahW-BwXCEP2GodSV",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZuGqFp5N9i3HAKOn"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "ahW9pz7NmL8V5lza",
+          "name": "AMANDA"
+        }
+      ],
+      "position": {
+        "x": 3450,
+        "y": 900
+      },
+      "id": "ahW9cqW2d8zkWsQv",
+      "createdAtUTC": "2026-05-26T15:34:10Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Global",
+      "onSuccess": "ahWaC_aSGnCj6KLn",
+      "onFail": "aiK87hUbFkASONgq",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "TagConditionalModel",
+              "chatTags": [],
+              "contactTags": [
+                "aRcc7SUhmYer23sK",
+                "aRcc0yUhmYer2zTn"
+              ],
+              "operator": "Equals"
+            }
+          ],
+          "onSuccess": null,
+          "name": "Cliente com etiqueta de atendente"
+        }
+      ],
+      "position": {
+        "x": 700,
+        "y": 950
+      },
+      "id": "ahWHlp-bJKqv3Z25",
+      "createdAtUTC": "2026-05-26T11:44:22Z"
+    },
+    {
+      "_t": "FlowchartBotChatStartedEventModel",
+      "nextStepId": "aiPartnerGate001",
+      "position": {
+        "x": 0,
+        "y": 1000
+      },
+      "id": "ahXq0hU7NFFBApxl",
+      "createdAtUTC": "2026-05-26T18:47:46Z"
+    },
+    {
+      "_t": "WaitingActionModel",
+      "interval": {
+        "_t": "WaitingActionFixedIntervalModel",
+        "interval": "00:00:15"
+      },
+      "nextStepId": "aJzRcMeCGBzEdwt7",
+      "contactResponseStepId": null,
+      "position": {
+        "x": 7150,
+        "y": 1050
+      },
+      "id": "aYJRlmCm1w-orjKr",
+      "createdAtUTC": "2026-02-03T19:50:46Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "ZQxNip1kTeEJ-ORl",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZaWboNQwFgY3oMeT"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "ahW-vaPXazLflJNR",
+          "name": "ROBSON"
+        }
+      ],
+      "position": {
+        "x": 3500,
+        "y": 1300
+      },
+      "id": "ahW-BwXCEP2GodSV",
+      "createdAtUTC": "2026-05-26T15:36:39Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "ahW-YP11MSh8gMNG",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZoWIY_xoe7uoAAFQ"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "ahW-zsCLa1_pRkJi",
+          "name": "JULIA"
+        }
+      ],
+      "position": {
+        "x": 4000,
+        "y": 1350
+      },
+      "id": "ahW-KRs3M-rqYbki",
+      "createdAtUTC": "2026-05-26T15:37:13Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 7650,
+        "y": 1400
+      },
+      "id": "aJzRcMeCGBzEdwt7",
+      "createdAtUTC": "2025-08-13T17:54:56Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "ahW-pJ774Zwemqz8",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZzUQwM9nj2l-H5hc"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "ahW-3ljj7yv7AP6i",
+          "name": "BRUNA"
+        }
+      ],
+      "position": {
+        "x": 4450,
+        "y": 1500
+      },
+      "id": "ahW-YP11MSh8gMNG",
+      "createdAtUTC": "2026-05-26T15:38:08Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "ZQxNip1kTeEJ-ORl",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "Z26n85VVIK64B6I2"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "ahW-7_eIZfuAoxC5",
+          "name": "KENIA"
+        }
+      ],
+      "position": {
+        "x": 4750,
+        "y": 1500
+      },
+      "id": "ahW-pJ774Zwemqz8",
+      "createdAtUTC": "2026-05-26T15:39:16Z"
+    },
+    {
+      "_t": "CommentBlockModel",
+      "comment": "fLUXO PARA MENINAS DO BALCÃO PRECISA MANUAL PARA PRIMEIRO CONTATO",
+      "position": {
+        "x": 5150,
+        "y": 1600
+      },
+      "id": "ahXsQ09kw_FZj1m6",
+      "createdAtUTC": "2026-05-26T18:53:55Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "AMANDA esta disponivel e e a proxima da fila PH. O atendimento sera transferido para ela.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiK87AHIIuZpfCJu",
+      "position": {
+        "x": 1850,
+        "y": 1800
+      },
+      "id": "aiK87SJy0E0BnJ-H",
+      "createdAtUTC": "2026-06-05T12:11:25Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZuGqFp5N9i3HAKOn"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": false,
+      "nextStepId": "ahW9cqW2d8zkWsQv",
+      "onFail": "aiK873VOTK54HFF1",
+      "position": {
+        "x": 2150,
+        "y": 1800
+      },
+      "id": "aiK87AHIIuZpfCJu",
+      "createdAtUTC": "2026-06-05T12:11:24Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "ROBSON esta disponivel e e a proxima da fila PH. O atendimento sera transferido para ela.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiK87BN40gyOkrd9",
+      "position": {
+        "x": 2450,
+        "y": 1800
+      },
+      "id": "aiK87T820fdxp0zp",
+      "createdAtUTC": "2026-06-05T12:11:25Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZaWboNQwFgY3oMeT"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": false,
+      "nextStepId": "ahW9cqW2d8zkWsQv",
+      "onFail": "aiK87nNL50hEdZhI",
+      "position": {
+        "x": 2750,
+        "y": 1800
+      },
+      "id": "aiK87BN40gyOkrd9",
+      "createdAtUTC": "2026-06-05T12:11:24Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "JULIA esta disponivel e e a proxima da fila. O atendimento sera transferido para ela.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiK87CIpcQ-sfeuM",
+      "position": {
+        "x": 3030,
+        "y": 1800
+      },
+      "id": "aiK87JD6HocvSBwQ",
+      "createdAtUTC": "2026-06-05T12:11:24Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZoWIY_xoe7uoAAFQ"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": false,
+      "nextStepId": "ahW9cqW2d8zkWsQv",
+      "onFail": "aiK87eLdDNcsTN6K",
+      "position": {
+        "x": 3200,
+        "y": 1800
+      },
+      "id": "aiK87CIpcQ-sfeuM",
+      "createdAtUTC": "2026-06-05T12:11:24Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "KENIA esta disponivel e e a proxima da fila. O atendimento sera transferido para ela.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiK87PLzP4hqjTiV",
+      "position": {
+        "x": 3480,
+        "y": 1800
+      },
+      "id": "aiK87v9CvNFkdiq_",
+      "createdAtUTC": "2026-06-05T12:11:26Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "Z26n85VVIK64B6I2"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": false,
+      "nextStepId": "ahW9cqW2d8zkWsQv",
+      "onFail": "aiK87jS6bwSC8Sr1",
+      "position": {
+        "x": 3650,
+        "y": 1800
+      },
+      "id": "aiK87PLzP4hqjTiV",
+      "createdAtUTC": "2026-06-05T12:11:24Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "ANA esta disponivel e e a proxima da fila. O atendimento sera transferido para ela.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiK87CSj5guy84E0",
+      "position": {
+        "x": 3930,
+        "y": 1800
+      },
+      "id": "aiK87wpqjtl7rNvQ",
+      "createdAtUTC": "2026-06-05T12:11:27Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZaZkfnFmogpzCidw"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": false,
+      "nextStepId": "ahW9cqW2d8zkWsQv",
+      "onFail": "aiK87nNL50hEdZhI",
+      "position": {
+        "x": 4100,
+        "y": 1800
+      },
+      "id": "aiK87CSj5guy84E0",
+      "createdAtUTC": "2026-06-05T12:11:24Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 4550,
+        "y": 1800
+      },
+      "id": "aiK87DsUMHYfBAT3",
+      "createdAtUTC": "2026-06-05T12:11:24Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcc7SUhmYer23sK"
+      ],
+      "nextStepId": "aiMWaitAna000001",
+      "position": {
+        "x": 3500,
+        "y": 1950
+      },
+      "id": "ahW9pz7NmL8V5lza",
+      "createdAtUTC": "2026-05-26T15:35:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcc0yUhmYer2zTn"
+      ],
+      "nextStepId": "aiMWaitIsa000001",
+      "position": {
+        "x": 3900,
+        "y": 1950
+      },
+      "id": "ahW-vaPXazLflJNR",
+      "createdAtUTC": "2026-05-26T15:39:41Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcUv3AZQLndGPqS"
+      ],
+      "nextStepId": "aiMWaitJul000001",
+      "position": {
+        "x": 4250,
+        "y": 1950
+      },
+      "id": "ahW-zsCLa1_pRkJi",
+      "createdAtUTC": "2026-05-26T15:39:58Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcU4SUhmYerxbuc"
+      ],
+      "nextStepId": "aiMWaitBru000001",
+      "position": {
+        "x": 4550,
+        "y": 1950
+      },
+      "id": "ahW-3ljj7yv7AP6i",
+      "createdAtUTC": "2026-05-26T15:40:14Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcVICUhmYerxl6F"
+      ],
+      "nextStepId": "aiMWaitKen000001",
+      "position": {
+        "x": 4850,
+        "y": 1950
+      },
+      "id": "ahW-7_eIZfuAoxC5",
+      "createdAtUTC": "2026-05-26T15:40:31Z"
+    },
+    {
+      "_t": "WaitingActionModel",
+      "interval": {
+        "_t": "WaitingActionFixedIntervalModel",
+        "interval": "00:00:15"
+      },
+      "nextStepId": "aJzc5wA5gCZ6caZK",
+      "contactResponseStepId": null,
+      "position": {
+        "x": 8000,
+        "y": 1950
+      },
+      "id": "aYJLECsA2cDpzRsg",
+      "createdAtUTC": "2026-02-03T19:22:56Z"
+    },
+    {
+      "_t": "WaitingActionModel",
+      "interval": {
+        "_t": "WaitingActionFixedIntervalModel",
+        "interval": "00:00:15"
+      },
+      "nextStepId": "aJzFqOapUVlKWMCX",
+      "contactResponseStepId": null,
+      "position": {
+        "x": 8750,
+        "y": 2000
+      },
+      "id": "aYJLJszCsdPkE3RL",
+      "createdAtUTC": "2026-02-03T19:23:18Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [],
+        "strategy": "LastMemberFromSameChat"
+      },
+      "onlyMembersAvailable": true,
+      "nextStepId": "ahW9cqW2d8zkWsQv",
+      "onFail": "aiK87hUbFkASONgq",
+      "position": {
+        "x": 3350,
+        "y": 2150
+      },
+      "id": "ahXTwnkpJhoXda9W",
+      "createdAtUTC": "2026-05-26T17:09:22Z"
+    },
+    {
+      "_t": "WaitingActionModel",
+      "interval": {
+        "_t": "WaitingActionFixedIntervalModel",
+        "interval": "00:00:15"
+      },
+      "nextStepId": "aJzcIvaHnILH6P4K",
+      "contactResponseStepId": null,
+      "position": {
+        "x": 5800,
+        "y": 2150
+      },
+      "id": "aYJK4Rl7AnPzeb9G",
+      "createdAtUTC": "2026-02-03T19:22:09Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 9050,
+        "y": 2150
+      },
+      "id": "aJzFqOapUVlKWMCX",
+      "createdAtUTC": "2025-08-13T17:04:40Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 6200,
+        "y": 2250
+      },
+      "id": "aJzcIvaHnILH6P4K",
+      "createdAtUTC": "2025-08-13T18:40:34Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 8350,
+        "y": 2300
+      },
+      "id": "aJzc5wA5gCZ6caZK",
+      "createdAtUTC": "2025-08-13T18:43:51Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Obrigada pelas informações! 😊\n\nEstamos realizando o seu orçamento, aguarde um momento.",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aYJLJszCsdPkE3RL",
+      "position": {
+        "x": 8450,
+        "y": 2400
+      },
+      "id": "Zyy2_4u_CnLAuz-h",
+      "createdAtUTC": "2024-11-07T12:47:59Z"
+    },
+    {
+      "_t": "DayOfTheWeekStepModel",
+      "stepsForDaysOfTheWeek": [
+        "ZRwPosmZwrE6RF1Y",
+        "ZQxNjmbf51jnM7pd",
+        "ZQxNjmbf51jnM7pd",
+        "ZQxNjmbf51jnM7pd",
+        "ZQxNjmbf51jnM7pd",
+        "ZQxNjmbf51jnM7pd",
+        "ZRwPosmZwrE6RF1Y"
+      ],
+      "timeZone": "America/Sao_Paulo",
+      "position": {
+        "x": 1550,
+        "y": 2500
+      },
+      "id": "ZQxNip1kTeEJ-ORl",
+      "createdAtUTC": "2023-09-21T14:04:58Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [
+        "ZQtOAZ4vN7FoFcXM"
+      ],
+      "contactTags": [],
+      "nextStepId": "Zyy1o8cdF3iyveWL",
+      "position": {
+        "x": 6250,
+        "y": 2500
+      },
+      "id": "ZQxMLwEh9vmoZ9j0",
+      "createdAtUTC": "2023-09-21T13:59:11Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Ótimo, vamos agilizar o licenciamento do seu veículo! 🚗💨",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "Zyy2efav3yxYXuhP",
+      "position": {
+        "x": 6600,
+        "y": 2500
+      },
+      "id": "Zyy1o8cdF3iyveWL",
+      "createdAtUTC": "2024-11-07T12:42:11Z"
+    },
+    {
+      "_t": "RegexStepModel",
+      "options": [
+        {
+          "target": "Content",
+          "pattern": ".*",
+          "stepId": "Zyy3crPG0BEaxA5r"
+        }
+      ],
+      "text": "Por favor, me informe a *placa e modelo* do veículo para começarmos.",
+      "canUseLastMessage": false,
+      "sendMessage": true,
+      "onResponseFail": "aYJRlmCm1w-orjKr",
+      "onTimeout": "aYJRlmCm1w-orjKr",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 7000,
+        "y": 2500
+      },
+      "id": "Zyy2efav3yxYXuhP",
+      "createdAtUTC": "2024-11-07T12:45:45Z"
+    },
+    {
+      "_t": "OptionsStepModel",
+      "options": [
+        {
+          "text": "Sim, está em meu nome",
+          "stepId": "Zyy2_4u_CnLAuz-h"
+        },
+        {
+          "text": "Não, tenho procuração",
+          "stepId": "Zyy2_4u_CnLAuz-h"
+        },
+        {
+          "text": "Outra resposta",
+          "stepId": "Zyy2_4u_CnLAuz-h"
+        }
+      ],
+      "text": "Você é o proprietário do veículo?",
+      "defaultNextStep": "aYJLECsA2cDpzRsg",
+      "messageType": "Text",
+      "onResponseFail": null,
+      "onTimeout": "aYJLECsA2cDpzRsg",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 7650,
+        "y": 2500
+      },
+      "id": "Zyy3crPG0BEaxA5r",
+      "createdAtUTC": "2024-11-07T12:49:54Z"
+    },
+    {
+      "_t": "TimeOfDayStepModel",
+      "ranges": [
+        {
+          "range": {
+            "start": "08:00:00",
+            "end": "18:00:00"
+          },
+          "stepId": "Z3L7pqqwWl_AScZK"
+        },
+        {
+          "range": {
+            "start": "18:00:00",
+            "end": "08:00:00"
+          },
+          "stepId": "ZRwPosmZwrE6RF1Y"
+        }
+      ],
+      "timeZone": "America/Sao_Paulo",
+      "position": {
+        "x": 2800,
+        "y": 2750
+      },
+      "id": "ZQxNjmbf51jnM7pd",
+      "createdAtUTC": "2023-09-21T14:05:02Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 8600,
+        "y": 2800
+      },
+      "id": "aJzd4AoNnNGYjkvX",
+      "createdAtUTC": "2025-08-13T18:48:00Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 9050,
+        "y": 2900
+      },
+      "id": "aJzd_wI0wcOD8Hog",
+      "createdAtUTC": "2025-08-13T18:48:31Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 9450,
+        "y": 2900
+      },
+      "id": "aJzeG9AkiBhdnwgK",
+      "createdAtUTC": "2025-08-13T18:48:59Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "*Bem-vindo(a) ao Despachante Marcelino!* 💙\n\nA Auto Fácil agora é Despachante Marcelino, mantendo o mesmo atendimento rápido e seguro para a documentação do seu veículo! 🚙💨",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aJyOIwq6j7Jt90s1",
+      "position": {
+        "x": 3250,
+        "y": 2950
+      },
+      "id": "Z3L7pqqwWl_AScZK",
+      "createdAtUTC": "2024-12-30T19:59:34Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "ZQxLFV8gPUaF4IYO",
+      "position": {
+        "x": 3700,
+        "y": 2950
+      },
+      "id": "aJyOIwq6j7Jt90s1",
+      "createdAtUTC": "2025-08-13T13:07:47Z"
+    },
+    {
+      "_t": "OptionsStepModel",
+      "options": [
+        {
+          "text": "Veiculo Apreendido / Blitz",
+          "stepId": "ad6QJ0twTehiw-RX"
+        },
+        {
+          "text": "Licenciamento",
+          "stepId": "ZQxMLwEh9vmoZ9j0"
+        },
+        {
+          "text": "Transferência",
+          "stepId": "ZQxMRdn1MGlR5qOz"
+        },
+        {
+          "text": "Primeiro Emplacamento",
+          "stepId": "ZQxMWE7OMhJdv1RH"
+        },
+        {
+          "text": "ATPV - Intenção de Venda",
+          "stepId": "aAFQqipgjD0wxUql"
+        },
+        {
+          "text": "Outros assuntos",
+          "stepId": "ZRwQWUI8NZYY72-X"
+        }
+      ],
+      "text": "📝 Selecione o número do serviço que você precisa, estamos prontos para ajudar!",
+      "defaultNextStep": "aYJK4Rl7AnPzeb9G",
+      "messageType": "Text",
+      "onResponseFail": null,
+      "onTimeout": "aYJK4Rl7AnPzeb9G",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 4150,
+        "y": 2950
+      },
+      "id": "ZQxLFV8gPUaF4IYO",
+      "createdAtUTC": "2023-09-21T13:54:29Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [
+        "ZQxMEp4vN7Fo1UCR"
+      ],
+      "contactTags": [],
+      "nextStepId": "ZyyugKm-Ay2w-_R9",
+      "position": {
+        "x": 6250,
+        "y": 2950
+      },
+      "id": "ZQxMRdn1MGlR5qOz",
+      "createdAtUTC": "2023-09-21T13:59:33Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Ótimo, vamos agilizar o processo de transferência do seu veículo! 🚗💨",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "ZyyzWK-7tTFiSSsF",
+      "position": {
+        "x": 6600,
+        "y": 3100
+      },
+      "id": "ZyyugKm-Ay2w-_R9",
+      "createdAtUTC": "2024-11-07T12:11:44Z"
+    },
+    {
+      "_t": "RegexStepModel",
+      "options": [
+        {
+          "target": "Content",
+          "pattern": ".*",
+          "stepId": "Z2BUUkcPtR34_l3O"
+        }
+      ],
+      "text": "Por favor, me informe a *placa* do veículo para começarmos.",
+      "canUseLastMessage": false,
+      "sendMessage": true,
+      "onResponseFail": "aYJRlmCm1w-orjKr",
+      "onTimeout": "aYJRlmCm1w-orjKr",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 6850,
+        "y": 3150
+      },
+      "id": "ZyyzWK-7tTFiSSsF",
+      "createdAtUTC": "2024-11-07T12:32:24Z"
+    },
+    {
+      "_t": "RegexStepModel",
+      "options": [
+        {
+          "target": "Content",
+          "pattern": ".*",
+          "stepId": "Zyy0PLDyPL3dtZky"
+        }
+      ],
+      "text": "Agora, por favor, me informe qual é o *modelo* do seu veículo.",
+      "canUseLastMessage": false,
+      "sendMessage": true,
+      "onResponseFail": "aJzd4AoNnNGYjkvX",
+      "onTimeout": "aJzd4AoNnNGYjkvX",
+      "timeout": "00:05:00",
+      "position": {
+        "x": 7800,
+        "y": 3150
+      },
+      "id": "Z2BSZDkn3Sws1XLO",
+      "createdAtUTC": "2024-12-16T16:16:36Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Perfeito, placa recebida! 👍",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "Z2BSZDkn3Sws1XLO",
+      "position": {
+        "x": 7500,
+        "y": 3200
+      },
+      "id": "Z2BUUkcPtR34_l3O",
+      "createdAtUTC": "2024-12-16T16:24:50Z"
+    },
+    {
+      "_t": "RegexStepModel",
+      "options": [
+        {
+          "target": "Content",
+          "pattern": ".*",
+          "stepId": "ZyywbIQHrpKzPzBW"
+        }
+      ],
+      "text": "Ótimo! Agora, preciso saber: em qual município será realizada a transferência?",
+      "canUseLastMessage": false,
+      "sendMessage": true,
+      "onResponseFail": "aJzd_wI0wcOD8Hog",
+      "onTimeout": "aJzd_wI0wcOD8Hog",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 8250,
+        "y": 3200
+      },
+      "id": "Zyy0PLDyPL3dtZky",
+      "createdAtUTC": "2024-11-07T12:36:12Z"
+    },
+    {
+      "_t": "OptionsStepModel",
+      "options": [
+        {
+          "text": "Sim",
+          "stepId": "Zyyw7q-7Ev7qsKti"
+        },
+        {
+          "text": "Não",
+          "stepId": "Zyyw7q-7Ev7qsKti"
+        }
+      ],
+      "text": "Para continuar o processo de transferência, o veículo já está no município indicado para realizar a vistoria?",
+      "defaultNextStep": "aJzeG9AkiBhdnwgK",
+      "messageType": "List",
+      "onResponseFail": null,
+      "onTimeout": "aJzeG9AkiBhdnwgK",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 8700,
+        "y": 3200
+      },
+      "id": "ZyywbIQHrpKzPzBW",
+      "createdAtUTC": "2024-11-07T12:19:56Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Obrigada pelas informações! 😊\n\nEstamos realizando o seu orçamento, aguarde um momento.",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aYJRlmCm1w-orjKr",
+      "position": {
+        "x": 9100,
+        "y": 3200
+      },
+      "id": "Zyyw7q-7Ev7qsKti",
+      "createdAtUTC": "2024-11-07T12:22:06Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [
+        "acPUHi5DsZyBDaKQ"
+      ],
+      "contactTags": [],
+      "nextStepId": "ad6Qku2LS3KaeHCt",
+      "position": {
+        "x": 4950,
+        "y": 3250
+      },
+      "id": "ad6QJ0twTehiw-RX",
+      "createdAtUTC": "2026-04-14T19:06:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Ótimo, vamos agilizar o seu atendimento! 🚗💨",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "ad6Q_gf1VeZ3BHbe",
+      "position": {
+        "x": 5300,
+        "y": 3250
+      },
+      "id": "ad6Qku2LS3KaeHCt",
+      "createdAtUTC": "2026-04-14T19:08:02Z"
+    },
+    {
+      "_t": "RegexStepModel",
+      "options": [
+        {
+          "target": "Content",
+          "pattern": ".*",
+          "stepId": "ad6RXY_i2qH7cwXc"
+        }
+      ],
+      "text": "Por favor, me informe a *placa* e o *modelo* do veículo para começarmos.",
+      "canUseLastMessage": false,
+      "sendMessage": true,
+      "onResponseFail": "aYJRlmCm1w-orjKr",
+      "onTimeout": "aYJRlmCm1w-orjKr",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 5700,
+        "y": 3300
+      },
+      "id": "ad6Q_gf1VeZ3BHbe",
+      "createdAtUTC": "2026-04-14T19:09:50Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Perfeito, placa recebida! \nVocê já será atendido.",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "ad6RxTjqXh6zswWQ",
+      "position": {
+        "x": 6000,
+        "y": 3350
+      },
+      "id": "ad6RXY_i2qH7cwXc",
+      "createdAtUTC": "2026-04-14T19:11:25Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "aiK88M491E4pqw_R",
+      "position": {
+        "x": 6050,
+        "y": 3600
+      },
+      "id": "ad6RxTjqXh6zswWQ",
+      "createdAtUTC": "2026-04-14T19:13:09Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZuGqFp5N9i3HAKOn"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": false,
+      "nextStepId": "ahW9cqW2d8zkWsQv",
+      "onFail": "aiK87Oa8RMoeBjD5",
+      "position": {
+        "x": 6350,
+        "y": 3600
+      },
+      "id": "aiAZGW-g2SQ--RJ1",
+      "createdAtUTC": "2026-06-03T12:07:53Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [
+        "ZQtTChkRFwc7bQfN"
+      ],
+      "contactTags": [],
+      "nextStepId": "Zyy50FOxPrngTzAP",
+      "position": {
+        "x": 6700,
+        "y": 3800
+      },
+      "id": "ZQxMWE7OMhJdv1RH",
+      "createdAtUTC": "2023-09-21T13:59:52Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Parabéns pela aquisição ✨\nVamos agilizar o emplacamento do seu veículo! 🚗💨",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "Zyy6kpUTmSlMgsdE",
+      "position": {
+        "x": 7100,
+        "y": 3800
+      },
+      "id": "Zyy50FOxPrngTzAP",
+      "createdAtUTC": "2024-11-07T13:00:00Z"
+    },
+    {
+      "_t": "RegexStepModel",
+      "options": [
+        {
+          "target": "Content",
+          "pattern": ".*",
+          "stepId": "Zyy8jcWL1xwOW9jy"
+        }
+      ],
+      "text": "Em qual município o veículo será emplacado?",
+      "canUseLastMessage": false,
+      "sendMessage": true,
+      "onResponseFail": "aYJRlmCm1w-orjKr",
+      "onTimeout": "aYJRlmCm1w-orjKr",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 7450,
+        "y": 3800
+      },
+      "id": "Zyy6kpUTmSlMgsdE",
+      "createdAtUTC": "2024-11-07T13:03:14Z"
+    },
+    {
+      "_t": "OptionsStepModel",
+      "options": [
+        {
+          "text": "Na loja",
+          "stepId": "Zyy7T8oDu1bsAfKc"
+        },
+        {
+          "text": "Chegando na loja",
+          "stepId": "Zyy7T8oDu1bsAfKc"
+        },
+        {
+          "text": "Na minha casa",
+          "stepId": "Zyy7T8oDu1bsAfKc"
+        },
+        {
+          "text": "Em outro estado",
+          "stepId": "Zyy7T8oDu1bsAfKc"
+        }
+      ],
+      "text": "Certo. \nOnde esta o veículo neste momento?",
+      "defaultNextStep": "aYJRlmCm1w-orjKr",
+      "messageType": "Text",
+      "onResponseFail": null,
+      "onTimeout": "aYJRlmCm1w-orjKr",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 8450,
+        "y": 3800
+      },
+      "id": "Zyy8jcWL1xwOW9jy",
+      "createdAtUTC": "2024-11-07T13:11:41Z"
+    },
+    {
+      "_t": "RegexStepModel",
+      "options": [
+        {
+          "target": "Content",
+          "pattern": ".*",
+          "stepId": "Zyy9W2InaB5w4O0y"
+        }
+      ],
+      "text": "Certo.\nAgora preciso saber qual o modelo?",
+      "canUseLastMessage": false,
+      "sendMessage": true,
+      "onResponseFail": "aYJRlmCm1w-orjKr",
+      "onTimeout": "aYJRlmCm1w-orjKr",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 8900,
+        "y": 3800
+      },
+      "id": "Zyy7T8oDu1bsAfKc",
+      "createdAtUTC": "2024-11-07T13:06:23Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Obrigada pelas informações! 😊\n\nEstamos realizando o seu orçamento, aguarde um momento.",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aYJRlmCm1w-orjKr",
+      "position": {
+        "x": 9300,
+        "y": 3800
+      },
+      "id": "Zyy9W2InaB5w4O0y",
+      "createdAtUTC": "2024-11-07T13:15:07Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZoWIY_xoe7uoAAFQ"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": true,
+      "nextStepId": "ZQxNip1kTeEJ-ORl",
+      "onFail": "aiK87hUbFkASONgq",
+      "position": {
+        "x": 3100,
+        "y": 3950
+      },
+      "id": "ahWk6yUqKdaVPnMh",
+      "createdAtUTC": "2026-05-26T13:49:31Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZaZkfnFmogpzCidw"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": true,
+      "nextStepId": "ZQxNip1kTeEJ-ORl",
+      "onFail": "aiK87hUbFkASONgq",
+      "position": {
+        "x": 3500,
+        "y": 3950
+      },
+      "id": "ahW8nz66vqgQvLxj",
+      "createdAtUTC": "2026-05-26T15:30:39Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "Z26n85VVIK64B6I2"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": true,
+      "nextStepId": "ZQxNip1kTeEJ-ORl",
+      "onFail": "aiK87hUbFkASONgq",
+      "position": {
+        "x": 2650,
+        "y": 4000
+      },
+      "id": "ahWk2T5ON65czcCB",
+      "createdAtUTC": "2026-05-26T13:49:13Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZaZlLHFmogpzC4xO"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": true,
+      "nextStepId": "ZQxNip1kTeEJ-ORl",
+      "onFail": "aiK87hUbFkASONgq",
+      "position": {
+        "x": 3850,
+        "y": 4000
+      },
+      "id": "ahW886q8kG9k9xOe",
+      "createdAtUTC": "2026-05-26T15:32:03Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZzUQwM9nj2l-H5hc"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": true,
+      "nextStepId": "ZQxNip1kTeEJ-ORl",
+      "onFail": "aiK87hUbFkASONgq",
+      "position": {
+        "x": 4200,
+        "y": 4000
+      },
+      "id": "ahW9AGS85W6tXU7z",
+      "createdAtUTC": "2026-05-26T15:32:16Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [
+        "ZQxMAZ4vN7Fo1Rmf"
+      ],
+      "contactTags": [],
+      "nextStepId": "aAFQ9jMSgGxhDqBK",
+      "position": {
+        "x": 6300,
+        "y": 4100
+      },
+      "id": "aAFQqipgjD0wxUql",
+      "createdAtUTC": "2025-04-17T19:04:10Z"
+    },
+    {
+      "_t": "OptionsStepModel",
+      "options": [
+        {
+          "text": "Sou o vendedor  (atual proprietário do veículo)",
+          "stepId": "aAFQ36V2NtJf9NR4"
+        },
+        {
+          "text": "Sou o comprador",
+          "stepId": "aAFQ36V2NtJf9NR4"
+        },
+        {
+          "text": "Sou um terceiro (não sou o vendedor nem o comprador)",
+          "stepId": "aAkRCQ6Q1XcTcr2v"
+        }
+      ],
+      "text": "🚗 Vamos te ajudar com a ATPV - Intenção de Venda.\n\nPor favor, selecione uma das opções abaixo para continuarmos:",
+      "defaultNextStep": "aJzfB_hJV3XyshbR",
+      "messageType": "Text",
+      "onResponseFail": null,
+      "onTimeout": "aJzfB_hJV3XyshbR",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 6700,
+        "y": 4100
+      },
+      "id": "aAFQ9jMSgGxhDqBK",
+      "createdAtUTC": "2025-04-17T19:05:26Z"
+    },
+    {
+      "_t": "RegexStepModel",
+      "options": [
+        {
+          "target": "Content",
+          "pattern": ".*",
+          "stepId": "aAFQ36V2NtJf9NR4"
+        }
+      ],
+      "text": "🧾 Entendido! Para continuarmos, por favor informe qual é a sua relação com o vendedor (ex: irmão, cunhado, amigo, procurador, etc.).",
+      "canUseLastMessage": false,
+      "sendMessage": true,
+      "onResponseFail": "aYJRlmCm1w-orjKr",
+      "onTimeout": "aYJRlmCm1w-orjKr",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 7400,
+        "y": 4400
+      },
+      "id": "aAkRCQ6Q1XcTcr2v",
+      "createdAtUTC": "2025-04-23T16:10:49Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "🚗 Perfeito! Vamos seguir com a emissão da ATPV - Intenção de Venda.\n\nAgora preciso dos documentos abaixo para darmos andamento:\n\n📸 Do vendedor:\n➡️ Último documento do veículo (CRLV/Licenciamento) – foto ou PDF legível\n➡️ RG/CPF ou CNH – foto ou PDF legível\n➡️ Procuração (se houver) – foto ou PDF legível\n➡️ E-mail \n➡️ Valor da venda \n\n📸 Do comprador:\n➡️ RG/CPF ou CNH – foto ou PDF legível\n➡️ Comprovante de residência atualizado (até 90 dias) – foto ou PDF legível\n➡️ E-mail",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aAFRU97JGbK-qFpc",
+      "position": {
+        "x": 7900,
+        "y": 4400
+      },
+      "id": "aAFQ36V2NtJf9NR4",
+      "createdAtUTC": "2025-04-17T19:05:03Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "A gente cuida da *comunicação de venda*, que é essencial para proteger o vendedor após a entrega do veículo, e também emitimos o *certificado digital* pra você assinar tudo de casa, com segurança e praticidade!\n\n📌 Caso queira incluir esses serviços ou saber os valores, é só me avisar por aqui.\nEstamos prontos para te ajudar no que precisar! 😊",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aJzPscliUGhrHynh",
+      "position": {
+        "x": 8200,
+        "y": 4400
+      },
+      "id": "aAFRU97JGbK-qFpc",
+      "createdAtUTC": "2025-04-17T19:06:59Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiK87hUbFkASONgq",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "SectorConditionalModel",
+              "sectors": [
+                "aSRq-Q8ELj-uto7s"
+              ],
+              "operator": "Any"
+            },
+            {
+              "_t": "TagConditionalModel",
+              "chatTags": [],
+              "contactTags": [
+                "aRcc0yUhmYer2zTn"
+              ],
+              "operator": "Equals"
+            }
+          ],
+          "onSuccess": "aiOPH02OWNERMsg1",
+          "name": "ROBSON"
+        }
+      ],
+      "position": {
+        "x": 2610,
+        "y": 4550
+      },
+      "id": "ahWctr3Avs_ml00G",
+      "createdAtUTC": "2026-05-26T13:14:30Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "ahW83cXHup_5iJWn",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "SectorConditionalModel",
+              "sectors": [
+                "aSRq-Q8ELj-uto7s"
+              ],
+              "operator": "Any"
+            },
+            {
+              "_t": "TagConditionalModel",
+              "chatTags": [],
+              "contactTags": [
+                "aRcXvSUhmYerzXRL"
+              ],
+              "operator": "Equals"
+            }
+          ],
+          "onSuccess": "aiOPH03OWNERMsg1",
+          "name": "ESTER"
+        }
+      ],
+      "position": {
+        "x": 2970,
+        "y": 4550
+      },
+      "id": "ahW8pF8vO5JoX83a",
+      "createdAtUTC": "2026-05-26T15:30:44Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "ahW9FnK4-0jVxYZy",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "SectorConditionalModel",
+              "sectors": [
+                "aSRq-Q8ELj-uto7s"
+              ],
+              "operator": "Any"
+            },
+            {
+              "_t": "TagConditionalModel",
+              "chatTags": [],
+              "contactTags": [
+                "aRcc7SUhmYer23sK"
+              ],
+              "operator": "Equals"
+            }
+          ],
+          "onSuccess": "aiOPH04OWNERMsg1",
+          "name": "AMANDA"
+        }
+      ],
+      "position": {
+        "x": 3330,
+        "y": 4550
+      },
+      "id": "ahW83cXHup_5iJWn",
+      "createdAtUTC": "2026-05-26T15:31:41Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiOwnCond000001X",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "SectorConditionalModel",
+              "sectors": [
+                "aSRq-Q8ELj-uto7s"
+              ],
+              "operator": "Any"
+            },
+            {
+              "_t": "TagConditionalModel",
+              "chatTags": [],
+              "contactTags": [
+                "aRcc0yUhmYer2zTn"
+              ],
+              "operator": "Equals"
+            }
+          ],
+          "onSuccess": "aiOPH05OWNERMsg1",
+          "name": "ROBSON"
+        }
+      ],
+      "position": {
+        "x": 3690,
+        "y": 4550
+      },
+      "id": "ahW9FnK4-0jVxYZy",
+      "createdAtUTC": "2026-05-26T15:32:38Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "ahWctr3Avs_ml00G",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "SectorConditionalModel",
+              "sectors": [
+                "aSRq-Q8ELj-uto7s"
+              ],
+              "operator": "Any"
+            },
+            {
+              "_t": "TagConditionalModel",
+              "chatTags": [],
+              "contactTags": [
+                "aRcc7SUhmYer23sK"
+              ],
+              "operator": "Equals"
+            }
+          ],
+          "onSuccess": "aiOPH01OWNERMsg1",
+          "name": "AMANDA"
+        }
+      ],
+      "position": {
+        "x": 2250,
+        "y": 4550
+      },
+      "id": "ahWaC_aSGnCj6KLn",
+      "createdAtUTC": "2026-05-26T13:03:07Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 8800,
+        "y": 4550
+      },
+      "id": "aJzPscliUGhrHynh",
+      "createdAtUTC": "2025-08-13T17:47:29Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [
+        "ZRwQzGtSzyaJRhjF"
+      ],
+      "contactTags": [],
+      "nextStepId": "ZRwYMVDdcOH2ukkD",
+      "position": {
+        "x": 6350,
+        "y": 4750
+      },
+      "id": "ZRwQWUI8NZYY72-X",
+      "createdAtUTC": "2023-10-03T13:00:09Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Adicionar manualmente etiqueta referente ao serviço que o cliente deseja.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "Zyy-w1q1xDvReqe4",
+      "position": {
+        "x": 6700,
+        "y": 4800
+      },
+      "id": "ZRwYMVDdcOH2ukkD",
+      "createdAtUTC": "2023-10-03T13:33:37Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Entendido! 😊\n\nVocê escolheu outros assuntos. Como podemos te ajudar?\n\nConte um pouco mais sobre o que você precisa e nossa equipe irá te atender prontamente! 💙",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aYJO026g1tMAcVwO",
+      "position": {
+        "x": 7050,
+        "y": 4800
+      },
+      "id": "Zyy-w1q1xDvReqe4",
+      "createdAtUTC": "2024-11-07T13:21:07Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 8450,
+        "y": 4800
+      },
+      "id": "aJzfB_hJV3XyshbR",
+      "createdAtUTC": "2025-08-13T18:52:55Z"
+    },
+    {
+      "_t": "WaitingActionModel",
+      "interval": {
+        "_t": "WaitingActionFixedIntervalModel",
+        "interval": "00:00:15"
+      },
+      "nextStepId": "aJzPu1_x_NiVCMq1",
+      "contactResponseStepId": null,
+      "position": {
+        "x": 7000,
+        "y": 5200
+      },
+      "id": "aYJO026g1tMAcVwO",
+      "createdAtUTC": "2026-02-03T19:38:59Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 7400,
+        "y": 5300
+      },
+      "id": "aJzPu1_x_NiVCMq1",
+      "createdAtUTC": "2025-08-13T17:47:39Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 6650,
+        "y": 5950
+      },
+      "id": "aJzigMI5fa_raifl",
+      "createdAtUTC": "2025-08-13T19:07:44Z"
+    },
+    {
+      "_t": "RegexStepModel",
+      "options": [
+        {
+          "target": "Content",
+          "pattern": ".*",
+          "stepId": "ZyzzroqPcdk6tZ6D"
+        }
+      ],
+      "text": "Por favor, me informe a *placa e modelo* do veículo para começarmos.",
+      "canUseLastMessage": false,
+      "sendMessage": true,
+      "onResponseFail": "aJzigMI5fa_raifl",
+      "onTimeout": "aJzigMI5fa_raifl",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 6800,
+        "y": 6150
+      },
+      "id": "ZyzzjK9zHLE0xwbX",
+      "createdAtUTC": "2024-11-07T17:06:20Z"
+    },
+    {
+      "_t": "OptionsStepModel",
+      "options": [
+        {
+          "text": "Sim, está em meu nome",
+          "stepId": "Zyzz8bhS5qz13iB4"
+        },
+        {
+          "text": "Não, tenho procuração",
+          "stepId": "Zyzz8bhS5qz13iB4"
+        },
+        {
+          "text": "Outra resposta",
+          "stepId": "Zyzz8bhS5qz13iB4"
+        }
+      ],
+      "text": "Você é o proprietário do veículo?",
+      "defaultNextStep": "aJzigMI5fa_raifl",
+      "messageType": "Text",
+      "onResponseFail": null,
+      "onTimeout": "aJzigMI5fa_raifl",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 7150,
+        "y": 6150
+      },
+      "id": "ZyzzroqPcdk6tZ6D",
+      "createdAtUTC": "2024-11-07T17:06:54Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Agradecemos pelas informações fornecidas! \n\n😊 Nosso horário de atendimento é de segunda a sexta, das 08h às 18h. \nNossa equipe dará sequência ao seu pedido assim que estivermos disponíveis. Fique tranquilo(a), entraremos em contato assim que possível. Agradecemos pela compreensão e até breve!",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aJzREdt2ce7sjL1U",
+      "position": {
+        "x": 7550,
+        "y": 6150
+      },
+      "id": "Zyzz8bhS5qz13iB4",
+      "createdAtUTC": "2024-11-07T17:08:01Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 7900,
+        "y": 6150
+      },
+      "id": "aJzREdt2ce7sjL1U",
+      "createdAtUTC": "2025-08-13T17:53:21Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 7800,
+        "y": 6500
+      },
+      "id": "aJzi4WPp2YJHBb46",
+      "createdAtUTC": "2025-08-13T19:09:21Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [
+        "ZQtOAZ4vN7FoFcXM"
+      ],
+      "contactTags": [],
+      "nextStepId": "Zyzy52bwnaBAHdE0",
+      "position": {
+        "x": 6050,
+        "y": 6550
+      },
+      "id": "ZRwYmqDjdZGo7K4o",
+      "createdAtUTC": "2023-10-03T13:35:22Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Ótimo, vamos agilizar o licenciamento do seu veículo! 🚗💨",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "ZyzzjK9zHLE0xwbX",
+      "position": {
+        "x": 6400,
+        "y": 6550
+      },
+      "id": "Zyzy52bwnaBAHdE0",
+      "createdAtUTC": "2024-11-07T17:03:35Z"
+    },
+    {
+      "_t": "RegexStepModel",
+      "options": [
+        {
+          "target": "Content",
+          "pattern": ".*",
+          "stepId": "Z2BXGhNDJ_-INZ9n"
+        }
+      ],
+      "text": "Agora, por favor, me informe qual é o *modelo* do seu veículo.",
+      "canUseLastMessage": false,
+      "sendMessage": true,
+      "onResponseFail": "aJzi4WPp2YJHBb46",
+      "onTimeout": "aJzi4WPp2YJHBb46",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 7550,
+        "y": 6750
+      },
+      "id": "Zyz2kaK04yssJzte",
+      "createdAtUTC": "2024-11-07T17:19:13Z"
+    },
+    {
+      "_t": "RegexStepModel",
+      "options": [
+        {
+          "target": "Content",
+          "pattern": ".*",
+          "stepId": "Zyz2yWi5FrQgQsaN"
+        }
+      ],
+      "text": "Ótimo! Agora, preciso saber: em qual município será realizada a transferência?",
+      "canUseLastMessage": false,
+      "sendMessage": true,
+      "onResponseFail": "aJzi4WPp2YJHBb46",
+      "onTimeout": "aJzi4WPp2YJHBb46",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 7900,
+        "y": 6750
+      },
+      "id": "Z2BXGhNDJ_-INZ9n",
+      "createdAtUTC": "2024-12-16T16:36:42Z"
+    },
+    {
+      "_t": "OptionsStepModel",
+      "options": [
+        {
+          "text": "Sim",
+          "stepId": "Zyz3ILcjpP3Fn0Su"
+        },
+        {
+          "text": "Não",
+          "stepId": "Zyz3ILcjpP3Fn0Su"
+        }
+      ],
+      "text": "Para continuar o processo de transferência, o veículo já está no município indicado para realizar a vistoria?",
+      "defaultNextStep": "aJzi4WPp2YJHBb46",
+      "messageType": "List",
+      "onResponseFail": null,
+      "onTimeout": "aJzi4WPp2YJHBb46",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 8250,
+        "y": 6750
+      },
+      "id": "Zyz2yWi5FrQgQsaN",
+      "createdAtUTC": "2024-11-07T17:20:09Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Agradecemos pelas informações fornecidas! \n\n😊 Nosso horário de atendimento é de segunda a sexta, das 08h às 18h. \nNossa equipe dará sequência ao seu pedido assim que estivermos disponíveis. Fique tranquilo(a), entraremos em contato assim que possível. Agradecemos pela compreensão e até breve!",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aJzi4WPp2YJHBb46",
+      "position": {
+        "x": 8650,
+        "y": 6750
+      },
+      "id": "Zyz3ILcjpP3Fn0Su",
+      "createdAtUTC": "2024-11-07T17:21:36Z"
+    },
+    {
+      "_t": "RegexStepModel",
+      "options": [
+        {
+          "target": "Content",
+          "pattern": ".*",
+          "stepId": "Z2BWEsiTm0Ga3Elz"
+        }
+      ],
+      "text": "Por favor, me informe a *placa* do veículo para começarmos.",
+      "canUseLastMessage": false,
+      "sendMessage": true,
+      "onResponseFail": "aJzi4WPp2YJHBb46",
+      "onTimeout": "aJzi4WPp2YJHBb46",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 6800,
+        "y": 6800
+      },
+      "id": "Zyz2PPkyCEXak52k",
+      "createdAtUTC": "2024-11-07T17:17:48Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Perfeito, placa recebida! 👍",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "Zyz2kaK04yssJzte",
+      "position": {
+        "x": 7150,
+        "y": 6850
+      },
+      "id": "Z2BWEsiTm0Ga3Elz",
+      "createdAtUTC": "2024-12-16T16:32:18Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [
+        "ZQxMEp4vN7Fo1UCR"
+      ],
+      "contactTags": [],
+      "nextStepId": "Zyz1yethtZ9Xzygu",
+      "position": {
+        "x": 6050,
+        "y": 6950
+      },
+      "id": "ZRwYpBFUDtLXeq5o",
+      "createdAtUTC": "2023-10-03T13:35:32Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Ótimo, vamos agilizar o processo de transferência do seu veículo! 🚗💨",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "Zyz2PPkyCEXak52k",
+      "position": {
+        "x": 6400,
+        "y": 6950
+      },
+      "id": "Zyz1yethtZ9Xzygu",
+      "createdAtUTC": "2024-11-07T17:15:53Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 5450,
+        "y": 7100
+      },
+      "id": "aJzgFgUPkEdl-9hk",
+      "createdAtUTC": "2025-08-13T18:57:26Z"
+    },
+    {
+      "_t": "OptionsStepModel",
+      "options": [
+        {
+          "text": "Na loja",
+          "stepId": "Zyz42J1H7VBLMKL9"
+        },
+        {
+          "text": "Chegando na loja",
+          "stepId": "Zyz42J1H7VBLMKL9"
+        },
+        {
+          "text": "Na minha casa",
+          "stepId": "Zyz42J1H7VBLMKL9"
+        },
+        {
+          "text": "Em outro estado",
+          "stepId": "Zyz42J1H7VBLMKL9"
+        }
+      ],
+      "text": "Certo. \nOnde esta o veículo neste momento?",
+      "defaultNextStep": "aJzjWBlDNCScSWKu",
+      "messageType": "Text",
+      "onResponseFail": null,
+      "onTimeout": "aJzjWBlDNCScSWKu",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 7050,
+        "y": 7350
+      },
+      "id": "Zyz4hDG9Xv3soi7j",
+      "createdAtUTC": "2024-11-07T17:27:32Z"
+    },
+    {
+      "_t": "RegexStepModel",
+      "options": [
+        {
+          "target": "Content",
+          "pattern": ".*",
+          "stepId": "Zyz4-woOPSkv_4qa"
+        }
+      ],
+      "text": "Certo.\nAgora preciso saber qual o modelo?",
+      "canUseLastMessage": false,
+      "sendMessage": true,
+      "onResponseFail": "aJzjWBlDNCScSWKu",
+      "onTimeout": "aJzjWBlDNCScSWKu",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 7500,
+        "y": 7350
+      },
+      "id": "Zyz42J1H7VBLMKL9",
+      "createdAtUTC": "2024-11-07T17:28:56Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Agradecemos pelas informações fornecidas! \n\n😊 Nosso horário de atendimento é de segunda a sexta, das 08h às 18h. \nNossa equipe dará sequência ao seu pedido assim que estivermos disponíveis. Fique tranquilo(a), entraremos em contato assim que possível. Agradecemos pela compreensão e até breve!",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aJzjWBlDNCScSWKu",
+      "position": {
+        "x": 7900,
+        "y": 7350
+      },
+      "id": "Zyz4-woOPSkv_4qa",
+      "createdAtUTC": "2024-11-07T17:29:31Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [
+        "ZQtTChkRFwc7bQfN"
+      ],
+      "contactTags": [],
+      "nextStepId": "Zyz4FL3QLk6aBO4d",
+      "position": {
+        "x": 6050,
+        "y": 7400
+      },
+      "id": "ZRwYvzBU-Cw_lodA",
+      "createdAtUTC": "2023-10-03T13:35:59Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Parabéns pela aquisição ✨\nVamos agilizar o emplacamento do seu veículo! 🚗💨",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "Zyz4OQYv1ugp-0J4",
+      "position": {
+        "x": 6350,
+        "y": 7400
+      },
+      "id": "Zyz4FL3QLk6aBO4d",
+      "createdAtUTC": "2024-11-07T17:25:40Z"
+    },
+    {
+      "_t": "RegexStepModel",
+      "options": [
+        {
+          "target": "Content",
+          "pattern": ".*",
+          "stepId": "Zyz4hDG9Xv3soi7j"
+        }
+      ],
+      "text": "Em qual município o veículo será emplacado?",
+      "canUseLastMessage": false,
+      "sendMessage": true,
+      "onResponseFail": "aJzjWBlDNCScSWKu",
+      "onTimeout": "aJzjWBlDNCScSWKu",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 6700,
+        "y": 7400
+      },
+      "id": "Zyz4OQYv1ugp-0J4",
+      "createdAtUTC": "2024-11-07T17:26:17Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 8300,
+        "y": 7400
+      },
+      "id": "aJzjWBlDNCScSWKu",
+      "createdAtUTC": "2025-08-13T19:11:20Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [
+        "ZRwNL2tSzyaJPLwJ"
+      ],
+      "contactTags": [],
+      "nextStepId": "aSWSVI1OqaFqOGYE",
+      "position": {
+        "x": 3600,
+        "y": 7600
+      },
+      "id": "ZRwPosmZwrE6RF1Y",
+      "createdAtUTC": "2023-10-03T12:57:06Z"
+    },
+    {
+      "_t": "SetWaitingFlowActionModel",
+      "hasWaitingFlow": true,
+      "nextStepId": "ZRwPmQZ6QRepttE7",
+      "position": {
+        "x": 4000,
+        "y": 7600
+      },
+      "id": "aSWSVI1OqaFqOGYE",
+      "createdAtUTC": "2025-11-25T11:26:12Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "*Bem-vindo(a) ao Despachante Marcelino!* 💙\n\nA Auto Fácil agora é Despachante Marcelino, mantendo o mesmo atendimento rápido e seguro para a documentação do seu veículo! 🚙💨",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "Z_k568u-rK4E_HXi",
+      "position": {
+        "x": 4450,
+        "y": 7600
+      },
+      "id": "ZRwPmQZ6QRepttE7",
+      "createdAtUTC": "2023-10-03T12:56:57Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "🕒 No momento estamos fora do nosso horário de atendimento.\nAtendemos de *segunda a sexta-feira, das 08h às 18h.*",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "Z_k3dkQ11EbHyMnr",
+      "position": {
+        "x": 4800,
+        "y": 7600
+      },
+      "id": "Z_k568u-rK4E_HXi",
+      "createdAtUTC": "2025-04-11T15:48:59Z"
+    },
+    {
+      "_t": "RegexStepModel",
+      "options": [
+        {
+          "target": "Content",
+          "pattern": ".*",
+          "stepId": "ZRwPwTCqbD8e1t-1"
+        }
+      ],
+      "text": "Podemos deixar suas informações registradas para agilizar o atendimento assim que estivermos de volta!\n\n*Qual é o seu nome, por favor?*  😊",
+      "canUseLastMessage": false,
+      "sendMessage": true,
+      "onResponseFail": "aJzgFgUPkEdl-9hk",
+      "onTimeout": "aJzgFgUPkEdl-9hk",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 5200,
+        "y": 7600
+      },
+      "id": "Z_k3dkQ11EbHyMnr",
+      "createdAtUTC": "2025-04-11T15:38:30Z"
+    },
+    {
+      "_t": "OptionsStepModel",
+      "options": [
+        {
+          "text": "Veículo Apreendido",
+          "stepId": "afskWPIHzFfmoRAc"
+        },
+        {
+          "text": "Licenciamento",
+          "stepId": "ZRwYmqDjdZGo7K4o"
+        },
+        {
+          "text": "Transferência",
+          "stepId": "ZRwYpBFUDtLXeq5o"
+        },
+        {
+          "text": "Primeiro Emplacamento",
+          "stepId": "ZRwYvzBU-Cw_lodA"
+        },
+        {
+          "text": "ATPV - Intenção de Venda",
+          "stepId": "aAE6qCVUaU1mql_Q"
+        },
+        {
+          "text": "Outros assuntos",
+          "stepId": "ZRwY3Xf9-INctLqD"
+        }
+      ],
+      "text": "👉 Como poderemos te ajudar?\n\nEscolha uma opção abaixo, *daremos prioridade ao seu atendimento assim que estivermos de volta.*",
+      "defaultNextStep": "aJzgFgUPkEdl-9hk",
+      "messageType": "Text",
+      "onResponseFail": null,
+      "onTimeout": "aJzgFgUPkEdl-9hk",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 5550,
+        "y": 7600
+      },
+      "id": "ZRwPwTCqbD8e1t-1",
+      "createdAtUTC": "2023-10-03T12:57:37Z"
+    },
+    {
+      "_t": "OptionsStepModel",
+      "options": [
+        {
+          "text": "Sou o *vendedor* (atual proprietário do veículo)",
+          "stepId": "aAFGoCLj6E6OMBne"
+        },
+        {
+          "text": "Sou o *comprador*",
+          "stepId": "aAFGoCLj6E6OMBne"
+        },
+        {
+          "text": "Sou um terceiro (não sou o vendedor nem o comprador)",
+          "stepId": "aAkSsF2wT2ytZBup"
+        }
+      ],
+      "text": "🚗 Vamos te ajudar com a ATPV - Intenção de Venda.\n\nPor favor, selecione uma das opções abaixo para continuarmos:",
+      "defaultNextStep": "aJzjkYby6tLGXc63",
+      "messageType": "Text",
+      "onResponseFail": null,
+      "onTimeout": "aJzjkYby6tLGXc63",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 6300,
+        "y": 7800
+      },
+      "id": "aAE7tk72QoVs3FOw",
+      "createdAtUTC": "2025-04-17T17:34:46Z"
+    },
+    {
+      "_t": "RegexStepModel",
+      "options": [
+        {
+          "target": "Content",
+          "pattern": ".*",
+          "stepId": "aAFGoCLj6E6OMBne"
+        }
+      ],
+      "text": "🧾 Entendido! Para continuarmos, por favor informe qual é a sua relação com o vendedor (ex: irmão, cunhado, amigo, procurador, etc.).",
+      "canUseLastMessage": false,
+      "sendMessage": true,
+      "onResponseFail": "aJzjkYby6tLGXc63",
+      "onTimeout": "aJzjkYby6tLGXc63",
+      "timeout": "00:05:00",
+      "position": {
+        "x": 6900,
+        "y": 7950
+      },
+      "id": "aAkSsF2wT2ytZBup",
+      "createdAtUTC": "2025-04-23T16:17:52Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "🚗 Perfeito! Vamos seguir com a emissão da ATPV - Intenção de Venda.\n\nAgora preciso dos documentos abaixo para darmos andamento:\n\n📸 Do vendedor:\n➡️ Último documento do veículo (CRLV/Licenciamento) – foto ou PDF legível\n➡️ RG/CPF ou CNH – foto ou PDF legível\n➡️ Procuração (se houver) – foto ou PDF legível\n➡️ E-mail \n➡️ Valor da venda \n\n📸 Do comprador:\n➡️ RG/CPF ou CNH – foto ou PDF legível\n➡️ Comprovante de residência atualizado (até 90 dias) – foto ou PDF legível\n➡️ E-mail",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aAFHaQ1TWEH3yB-b",
+      "position": {
+        "x": 7400,
+        "y": 7950
+      },
+      "id": "aAFGoCLj6E6OMBne",
+      "createdAtUTC": "2025-04-17T18:21:20Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "A gente cuida da *comunicação de venda*, que é essencial para proteger o vendedor após a entrega do veículo, e também emitimos o *certificado digital* pra você assinar tudo de casa, com segurança e praticidade!\n\n📌 Caso queira incluir esses serviços ou saber os valores, é só me avisar por aqui.\nEstamos prontos para te ajudar no que precisar! 😊",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aAFJ4xGdz6i0OSwG",
+      "position": {
+        "x": 7750,
+        "y": 7950
+      },
+      "id": "aAFHaQ1TWEH3yB-b",
+      "createdAtUTC": "2025-04-17T18:24:41Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Agradecemos pelas informações fornecidas! \n\n😊 Nosso horário de atendimento é de segunda a sexta, das 08h às 18h. \nNossa equipe dará sequência ao seu pedido assim que estivermos disponíveis. Fique tranquilo(a), entraremos em contato assim que possível. Agradecemos pela compreensão e até breve!",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aJzjkYby6tLGXc63",
+      "position": {
+        "x": 8100,
+        "y": 7950
+      },
+      "id": "aAFJ4xGdz6i0OSwG",
+      "createdAtUTC": "2025-04-17T18:35:15Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [
+        "ZQxMAZ4vN7Fo1Rmf"
+      ],
+      "contactTags": [],
+      "nextStepId": "aAE7tk72QoVs3FOw",
+      "position": {
+        "x": 5950,
+        "y": 8000
+      },
+      "id": "aAE6qCVUaU1mql_Q",
+      "createdAtUTC": "2025-04-17T17:30:16Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 8550,
+        "y": 8050
+      },
+      "id": "aJzjkYby6tLGXc63",
+      "createdAtUTC": "2025-08-13T19:12:17Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [
+        "ZRwQzGtSzyaJRhjF"
+      ],
+      "contactTags": [],
+      "nextStepId": "ZRwaG1T_wvnGnlge",
+      "position": {
+        "x": 5950,
+        "y": 8250
+      },
+      "id": "ZRwY3Xf9-INctLqD",
+      "createdAtUTC": "2023-10-03T13:36:29Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Adicionar manualmente etiqueta referente ao serviço que o cliente deseja.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "Zyz6ohKH-AcvmE1v",
+      "position": {
+        "x": 6300,
+        "y": 8450
+      },
+      "id": "ZRwaG1T_wvnGnlge",
+      "createdAtUTC": "2023-10-03T13:41:47Z"
+    },
+    {
+      "_t": "RegexStepModel",
+      "options": [
+        {
+          "target": "Content",
+          "pattern": ".*",
+          "stepId": "aW57q_OyFagFOiy6"
+        }
+      ],
+      "text": "Entendido! 😊\n\nVocê escolheu outros assuntos. Como podemos te ajudar?\n\nConte um pouco mais sobre o que você precisa e nossa equipe irá te atender prontamente! 💙",
+      "canUseLastMessage": false,
+      "sendMessage": true,
+      "onResponseFail": "aJzj2wQnckABnwe-",
+      "onTimeout": "aJzj2wQnckABnwe-",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 6650,
+        "y": 8450
+      },
+      "id": "Zyz6ohKH-AcvmE1v",
+      "createdAtUTC": "2024-11-07T17:36:34Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [
+        "acPUHi5DsZyBDaKQ"
+      ],
+      "contactTags": [],
+      "nextStepId": "afskY8a0mfzoipOD",
+      "position": {
+        "x": 5950,
+        "y": 8500
+      },
+      "id": "afskWPIHzFfmoRAc",
+      "createdAtUTC": "2026-05-06T11:22:00Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Agradecemos pelas informações fornecidas! \n\n😊 Nosso horário de atendimento é de segunda a sexta, das 08h às 18h. \nNossa equipe dará sequência ao seu pedido assim que estivermos disponíveis. Fique tranquilo(a), entraremos em contato assim que possível. Agradecemos pela compreensão e até breve!",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aJzj2wQnckABnwe-",
+      "position": {
+        "x": 7450,
+        "y": 8650
+      },
+      "id": "Zyz6tZMLCt3xApKb",
+      "createdAtUTC": "2024-11-07T17:36:53Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "Zyz6tZMLCt3xApKb",
+      "position": {
+        "x": 7050,
+        "y": 8700
+      },
+      "id": "aW57q_OyFagFOiy6",
+      "createdAtUTC": "2026-01-19T18:44:59Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Ótimo, para agilizar o seu atendimento! 🚗💨",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "afskcldO0zlHaMaC",
+      "position": {
+        "x": 6250,
+        "y": 8750
+      },
+      "id": "afskY8a0mfzoipOD",
+      "createdAtUTC": "2026-05-06T11:22:11Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 7800,
+        "y": 8900
+      },
+      "id": "aJzj2wQnckABnwe-",
+      "createdAtUTC": "2025-08-13T19:13:31Z"
+    },
+    {
+      "_t": "RegexStepModel",
+      "options": [
+        {
+          "target": "Content",
+          "pattern": ".*",
+          "stepId": "afskm-wwjlakomNl"
+        }
+      ],
+      "text": "Por favor, me informe a *placa* e o *modelo* do veículo para começarmos.",
+      "canUseLastMessage": false,
+      "sendMessage": true,
+      "onResponseFail": "aYJRlmCm1w-orjKr",
+      "onTimeout": "aYJRlmCm1w-orjKr",
+      "timeout": "00:02:00",
+      "position": {
+        "x": 6650,
+        "y": 9150
+      },
+      "id": "afskcldO0zlHaMaC",
+      "createdAtUTC": "2026-05-06T11:22:26Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Perfeito, placa recebida!\n\n😊 Nosso horário de atendimento é de segunda a sexta, das 08h às 18h. \nNossa equipe dará sequência ao seu pedido assim que estivermos disponíveis. Fique tranquilo(a), entraremos em contato assim que possível. Agradecemos pela compreensão e até breve!",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "afskqL7LLDsSYNdY",
+      "position": {
+        "x": 7050,
+        "y": 9350
+      },
+      "id": "afskm-wwjlakomNl",
+      "createdAtUTC": "2026-05-06T11:23:07Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 7400,
+        "y": 9350
+      },
+      "id": "afskqL7LLDsSYNdY",
+      "createdAtUTC": "2026-05-06T11:23:20Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Patio PH: verificando se AMANDA pode receber este atendimento de veiculo apreendido.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiK88FM_cnR7OJXg",
+      "position": {
+        "x": 6100,
+        "y": 3520
+      },
+      "id": "aiK88M491E4pqw_R",
+      "createdAtUTC": "2026-06-05T12:11:28Z"
+    },
+    {
+      "_t": "WebhookActionModel",
+      "uri": "https://utalk-status-webhook-production.up.railway.app/direct-available?memberId=ZuGqFp5N9i3HAKOn",
+      "method": "Get",
+      "headers": [],
+      "responseMessageMapper": [],
+      "requestContent": null,
+      "onSuccess": "aiK88ZLTFAPGzT39",
+      "onFail": "aiK88wnkTWQCWImS",
+      "position": {
+        "x": 6350,
+        "y": 3520
+      },
+      "id": "aiK88FM_cnR7OJXg",
+      "createdAtUTC": "2026-06-05T12:11:28Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Patio PH: AMANDA esta disponivel. O atendimento sera transferido para ela.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiAZGW-g2SQ--RJ1",
+      "position": {
+        "x": 6600,
+        "y": 3520
+      },
+      "id": "aiK88ZLTFAPGzT39",
+      "createdAtUTC": "2026-06-05T12:11:29Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Patio PH: AMANDA nao esta disponivel agora ou estamos fora do horario. Mesmo assim, o chat ficara em espera para AMANDA.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiAZGW-g2SQ--RJ1",
+      "position": {
+        "x": 6600,
+        "y": 3740
+      },
+      "id": "aiK88wnkTWQCWImS",
+      "createdAtUTC": "2026-06-05T12:11:31Z"
+    },
+    {
+      "_t": "FlowchartBotManualStartedEventModel",
+      "hidden": true,
+      "triggerName": "Teste Codex Fila",
+      "variables": [],
+      "nextStepId": "aiPartnerGate001",
+      "position": {
+        "x": 900,
+        "y": 50
+      },
+      "id": "aiK89TesteFila01",
+      "createdAtUTC": "2026-06-05T12:11:33Z"
+    },
+    {
+      "_t": "FlowchartBotManualStartedEventModel",
+      "hidden": true,
+      "triggerName": "Teste Codex Patio",
+      "variables": [],
+      "nextStepId": "ad6RxTjqXh6zswWQ",
+      "position": {
+        "x": 900,
+        "y": 0
+      },
+      "id": "aiK89TestePatio1",
+      "createdAtUTC": "2026-06-05T12:11:33Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "ZQxNip1kTeEJ-ORl",
+      "position": {
+        "x": 3500,
+        "y": 2125
+      },
+      "id": "aiMWaitAna000001",
+      "createdAtUTC": "2026-06-05T18:33:14Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "ZQxNip1kTeEJ-ORl",
+      "position": {
+        "x": 3900,
+        "y": 2125
+      },
+      "id": "aiMWaitIsa000001",
+      "createdAtUTC": "2026-06-05T18:33:14Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "ZQxNip1kTeEJ-ORl",
+      "position": {
+        "x": 4250,
+        "y": 2125
+      },
+      "id": "aiMWaitJul000001",
+      "createdAtUTC": "2026-06-05T18:33:14Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "ZQxNip1kTeEJ-ORl",
+      "position": {
+        "x": 4550,
+        "y": 2125
+      },
+      "id": "aiMWaitBru000001",
+      "createdAtUTC": "2026-06-05T18:33:14Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "ZQxNip1kTeEJ-ORl",
+      "position": {
+        "x": 4850,
+        "y": 2125
+      },
+      "id": "aiMWaitKen000001",
+      "createdAtUTC": "2026-06-05T18:33:14Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiOwnCond000002X",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "SectorConditionalModel",
+              "sectors": [
+                "aSRq-Q8ELj-uto7s"
+              ],
+              "operator": "Any"
+            },
+            {
+              "_t": "TagConditionalModel",
+              "chatTags": [],
+              "contactTags": [
+                "aRcXOulTi7VLe25M"
+              ],
+              "operator": "Equals"
+            }
+          ],
+          "onSuccess": "aiOPH06OWNERMsg1",
+          "name": "ADRIELLI"
+        }
+      ],
+      "position": {
+        "x": 4050,
+        "y": 4550
+      },
+      "id": "aiOwnCond000001X",
+      "createdAtUTC": "2026-06-06T05:31:08Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiOwnCond000003X",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "SectorConditionalModel",
+              "sectors": [
+                "aSRq-Q8ELj-uto7s"
+              ],
+              "operator": "Any"
+            },
+            {
+              "_t": "TagConditionalModel",
+              "chatTags": [],
+              "contactTags": [
+                "aRcXlpId9HOMVvSO"
+              ],
+              "operator": "Equals"
+            }
+          ],
+          "onSuccess": "aiOPH07OWNERMsg1",
+          "name": "MICHELI MAIA"
+        }
+      ],
+      "position": {
+        "x": 4410,
+        "y": 4550
+      },
+      "id": "aiOwnCond000002X",
+      "createdAtUTC": "2026-06-06T05:31:08Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiOwnCond000004X",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "SectorConditionalModel",
+              "sectors": [
+                "aSRq-Q8ELj-uto7s"
+              ],
+              "operator": "Any"
+            },
+            {
+              "_t": "TagConditionalModel",
+              "chatTags": [],
+              "contactTags": [
+                "aRcUrulTi7VLdefG"
+              ],
+              "operator": "Equals"
+            }
+          ],
+          "onSuccess": "aiOPH08OWNERMsg1",
+          "name": "ANA"
+        }
+      ],
+      "position": {
+        "x": 4770,
+        "y": 4550
+      },
+      "id": "aiOwnCond000003X",
+      "createdAtUTC": "2026-06-06T05:31:08Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiOwnCond000005X",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "SectorConditionalModel",
+              "sectors": [
+                "aSRq-Q8ELj-uto7s"
+              ],
+              "operator": "Any"
+            },
+            {
+              "_t": "TagConditionalModel",
+              "chatTags": [],
+              "contactTags": [
+                "aRcX9elTi7VLfbiN"
+              ],
+              "operator": "Equals"
+            }
+          ],
+          "onSuccess": "aiOPH09OWNERMsg1",
+          "name": "ISA"
+        }
+      ],
+      "position": {
+        "x": 5130,
+        "y": 4550
+      },
+      "id": "aiOwnCond000004X",
+      "createdAtUTC": "2026-06-06T05:31:08Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Cliente ja esta com etiqueta AMANDA. Vou verificar se esta disponivel para receber este atendimento.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH01OWNERWeb1",
+      "position": {
+        "x": 2250,
+        "y": 5050
+      },
+      "id": "aiOPH01OWNERMsg1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "WebhookActionModel",
+      "uri": "https://utalk-status-webhook-production.up.railway.app/direct-available?memberId=ZuGqFp5N9i3HAKOn",
+      "method": "Get",
+      "headers": [],
+      "responseMessageMapper": [],
+      "requestContent": null,
+      "onSuccess": "aiOPH01OWNEROkay",
+      "onFail": "ahWctr3Avs_ml00G",
+      "position": {
+        "x": 2600,
+        "y": 5050
+      },
+      "id": "aiOPH01OWNERWeb1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "AMANDA esta disponivel. O atendimento volta para a responsavel da etiqueta.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH01OWNERTran",
+      "position": {
+        "x": 2950,
+        "y": 5050
+      },
+      "id": "aiOPH01OWNEROkay",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZuGqFp5N9i3HAKOn"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": false,
+      "nextStepId": "aiMWaitAna000001",
+      "onFail": "ahWctr3Avs_ml00G",
+      "position": {
+        "x": 3300,
+        "y": 5050
+      },
+      "id": "aiOPH01OWNERTran",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Cliente ja esta com etiqueta ROBSON. Vou verificar se esta disponivel para receber este atendimento.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH02OWNERWeb1",
+      "position": {
+        "x": 2250,
+        "y": 5310
+      },
+      "id": "aiOPH02OWNERMsg1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "WebhookActionModel",
+      "uri": "https://utalk-status-webhook-production.up.railway.app/direct-available?memberId=ZaWboNQwFgY3oMeT",
+      "method": "Get",
+      "headers": [],
+      "responseMessageMapper": [],
+      "requestContent": null,
+      "onSuccess": "aiOPH02OWNEROkay",
+      "onFail": "aiK87hUbFkASONgq",
+      "position": {
+        "x": 2600,
+        "y": 5310
+      },
+      "id": "aiOPH02OWNERWeb1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "ROBSON esta disponivel. O atendimento volta para a responsavel da etiqueta.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH02OWNERTran",
+      "position": {
+        "x": 2950,
+        "y": 5310
+      },
+      "id": "aiOPH02OWNEROkay",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZaWboNQwFgY3oMeT"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": false,
+      "nextStepId": "aiMWaitIsa000001",
+      "onFail": "aiK87hUbFkASONgq",
+      "position": {
+        "x": 3300,
+        "y": 5310
+      },
+      "id": "aiOPH02OWNERTran",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Cliente ja esta com etiqueta ESTER. Vou verificar se esta disponivel para receber este atendimento.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH03OWNERWeb1",
+      "position": {
+        "x": 2250,
+        "y": 5570
+      },
+      "id": "aiOPH03OWNERMsg1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "WebhookActionModel",
+      "uri": "https://utalk-status-webhook-production.up.railway.app/direct-available?memberId=ZyJUBxlZDTR81qdF",
+      "method": "Get",
+      "headers": [],
+      "responseMessageMapper": [],
+      "requestContent": null,
+      "onSuccess": "aiOPH03OWNEROkay",
+      "onFail": "ahW83cXHup_5iJWn",
+      "position": {
+        "x": 2600,
+        "y": 5570
+      },
+      "id": "aiOPH03OWNERWeb1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "ESTER esta disponivel. O atendimento volta para a responsavel da etiqueta.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH03OWNERTran",
+      "position": {
+        "x": 2950,
+        "y": 5570
+      },
+      "id": "aiOPH03OWNEROkay",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZyJUBxlZDTR81qdF"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": false,
+      "nextStepId": "aiMWaitAna000001",
+      "onFail": "ahW83cXHup_5iJWn",
+      "position": {
+        "x": 3300,
+        "y": 5570
+      },
+      "id": "aiOPH03OWNERTran",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Cliente ja esta com etiqueta AMANDA. Vou verificar se esta disponivel para receber este atendimento.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH04OWNERWeb1",
+      "position": {
+        "x": 2250,
+        "y": 5830
+      },
+      "id": "aiOPH04OWNERMsg1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "WebhookActionModel",
+      "uri": "https://utalk-status-webhook-production.up.railway.app/direct-available?memberId=ZuGqFp5N9i3HAKOn",
+      "method": "Get",
+      "headers": [],
+      "responseMessageMapper": [],
+      "requestContent": null,
+      "onSuccess": "aiOPH04OWNEROkay",
+      "onFail": "ahW9FnK4-0jVxYZy",
+      "position": {
+        "x": 2600,
+        "y": 5830
+      },
+      "id": "aiOPH04OWNERWeb1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "AMANDA esta disponivel. O atendimento volta para a responsavel da etiqueta.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH04OWNERTran",
+      "position": {
+        "x": 2950,
+        "y": 5830
+      },
+      "id": "aiOPH04OWNEROkay",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZuGqFp5N9i3HAKOn"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": false,
+      "nextStepId": "aiMWaitAna000001",
+      "onFail": "ahW9FnK4-0jVxYZy",
+      "position": {
+        "x": 3300,
+        "y": 5830
+      },
+      "id": "aiOPH04OWNERTran",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Cliente ja esta com etiqueta ROBSON. Vou verificar se esta disponivel para receber este atendimento.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH05OWNERWeb1",
+      "position": {
+        "x": 2250,
+        "y": 6090
+      },
+      "id": "aiOPH05OWNERMsg1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "WebhookActionModel",
+      "uri": "https://utalk-status-webhook-production.up.railway.app/direct-available?memberId=ZaWboNQwFgY3oMeT",
+      "method": "Get",
+      "headers": [],
+      "responseMessageMapper": [],
+      "requestContent": null,
+      "onSuccess": "aiOPH05OWNEROkay",
+      "onFail": "aiOwnCond000001X",
+      "position": {
+        "x": 2600,
+        "y": 6090
+      },
+      "id": "aiOPH05OWNERWeb1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "ROBSON esta disponivel. O atendimento volta para a responsavel da etiqueta.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH05OWNERTran",
+      "position": {
+        "x": 2950,
+        "y": 6090
+      },
+      "id": "aiOPH05OWNEROkay",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZaWboNQwFgY3oMeT"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": false,
+      "nextStepId": "aiMWaitIsa000001",
+      "onFail": "aiOwnCond000001X",
+      "position": {
+        "x": 3300,
+        "y": 6090
+      },
+      "id": "aiOPH05OWNERTran",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Cliente ja esta com etiqueta ADRIELLI. Vou verificar se esta disponivel para receber este atendimento.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH06OWNERWeb1",
+      "position": {
+        "x": 2250,
+        "y": 6350
+      },
+      "id": "aiOPH06OWNERMsg1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "WebhookActionModel",
+      "uri": "https://utalk-status-webhook-production.up.railway.app/direct-available?memberId=ZrzsX_BLm_zYqujY",
+      "method": "Get",
+      "headers": [],
+      "responseMessageMapper": [],
+      "requestContent": null,
+      "onSuccess": "aiOPH06OWNEROkay",
+      "onFail": "aiOwnCond000002X",
+      "position": {
+        "x": 2600,
+        "y": 6350
+      },
+      "id": "aiOPH06OWNERWeb1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "ADRIELLI esta disponivel. O atendimento volta para a responsavel da etiqueta.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH06OWNERTran",
+      "position": {
+        "x": 2950,
+        "y": 6350
+      },
+      "id": "aiOPH06OWNEROkay",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZrzsX_BLm_zYqujY"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": false,
+      "nextStepId": "aiMWaitAna000001",
+      "onFail": "aiOwnCond000002X",
+      "position": {
+        "x": 3300,
+        "y": 6350
+      },
+      "id": "aiOPH06OWNERTran",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Cliente ja esta com etiqueta MICHELI MAIA. Vou verificar se esta disponivel para receber este atendimento.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH07OWNERWeb1",
+      "position": {
+        "x": 2250,
+        "y": 6610
+      },
+      "id": "aiOPH07OWNERMsg1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "WebhookActionModel",
+      "uri": "https://utalk-status-webhook-production.up.railway.app/direct-available?memberId=Z5e_UnhziN5VdCCp",
+      "method": "Get",
+      "headers": [],
+      "responseMessageMapper": [],
+      "requestContent": null,
+      "onSuccess": "aiOPH07OWNEROkay",
+      "onFail": "aiOwnCond000003X",
+      "position": {
+        "x": 2600,
+        "y": 6610
+      },
+      "id": "aiOPH07OWNERWeb1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "MICHELI MAIA esta disponivel. O atendimento volta para a responsavel da etiqueta.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH07OWNERTran",
+      "position": {
+        "x": 2950,
+        "y": 6610
+      },
+      "id": "aiOPH07OWNEROkay",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "Z5e_UnhziN5VdCCp"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": false,
+      "nextStepId": "aiMWaitIsa000001",
+      "onFail": "aiOwnCond000003X",
+      "position": {
+        "x": 3300,
+        "y": 6610
+      },
+      "id": "aiOPH07OWNERTran",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Cliente ja esta com etiqueta ANA. Vou verificar se esta disponivel para receber este atendimento.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH08OWNERWeb1",
+      "position": {
+        "x": 2250,
+        "y": 6870
+      },
+      "id": "aiOPH08OWNERMsg1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "WebhookActionModel",
+      "uri": "https://utalk-status-webhook-production.up.railway.app/direct-available?memberId=ZaZkfnFmogpzCidw",
+      "method": "Get",
+      "headers": [],
+      "responseMessageMapper": [],
+      "requestContent": null,
+      "onSuccess": "aiOPH08OWNEROkay",
+      "onFail": "aiOwnCond000004X",
+      "position": {
+        "x": 2600,
+        "y": 6870
+      },
+      "id": "aiOPH08OWNERWeb1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "ANA esta disponivel. O atendimento volta para a responsavel da etiqueta.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH08OWNERTran",
+      "position": {
+        "x": 2950,
+        "y": 6870
+      },
+      "id": "aiOPH08OWNEROkay",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZaZkfnFmogpzCidw"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": false,
+      "nextStepId": "aiMWaitAna000001",
+      "onFail": "aiOwnCond000004X",
+      "position": {
+        "x": 3300,
+        "y": 6870
+      },
+      "id": "aiOPH08OWNERTran",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Cliente ja esta com etiqueta ISA. Vou verificar se esta disponivel para receber este atendimento.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH09OWNERWeb1",
+      "position": {
+        "x": 2250,
+        "y": 7130
+      },
+      "id": "aiOPH09OWNERMsg1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "WebhookActionModel",
+      "uri": "https://utalk-status-webhook-production.up.railway.app/direct-available?memberId=ZaZlLHFmogpzC4xO",
+      "method": "Get",
+      "headers": [],
+      "responseMessageMapper": [],
+      "requestContent": null,
+      "onSuccess": "aiOPH09OWNEROkay",
+      "onFail": "aiOwnCond000005X",
+      "position": {
+        "x": 2600,
+        "y": 7130
+      },
+      "id": "aiOPH09OWNERWeb1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "ISA esta disponivel. O atendimento volta para a responsavel da etiqueta.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH09OWNERTran",
+      "position": {
+        "x": 2950,
+        "y": 7130
+      },
+      "id": "aiOPH09OWNEROkay",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZaZlLHFmogpzC4xO"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": false,
+      "nextStepId": "aiMWaitIsa000001",
+      "onFail": "aiOwnCond000005X",
+      "position": {
+        "x": 3300,
+        "y": 7130
+      },
+      "id": "aiOPH09OWNERTran",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiOwnCond000006X",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "SectorConditionalModel",
+              "sectors": [
+                "aSRq-Q8ELj-uto7s"
+              ],
+              "operator": "Any"
+            },
+            {
+              "_t": "TagConditionalModel",
+              "chatTags": [],
+              "contactTags": [
+                "aRcUv3AZQLndGPqS"
+              ],
+              "operator": "Equals"
+            }
+          ],
+          "onSuccess": "aiOPH10OWNERMsg1",
+          "name": "JULIA"
+        }
+      ],
+      "position": {
+        "x": 5490,
+        "y": 4550
+      },
+      "id": "aiOwnCond000005X",
+      "createdAtUTC": "2026-06-06T05:31:08Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiOwnCond000007X",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "SectorConditionalModel",
+              "sectors": [
+                "aSRq-Q8ELj-uto7s"
+              ],
+              "operator": "Any"
+            },
+            {
+              "_t": "TagConditionalModel",
+              "chatTags": [],
+              "contactTags": [
+                "aRcVICUhmYerxl6F"
+              ],
+              "operator": "Equals"
+            }
+          ],
+          "onSuccess": "aiOPH11OWNERMsg1",
+          "name": "KENIA"
+        }
+      ],
+      "position": {
+        "x": 5850,
+        "y": 4550
+      },
+      "id": "aiOwnCond000006X",
+      "createdAtUTC": "2026-06-06T05:31:08Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiK87hUbFkASONgq",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "SectorConditionalModel",
+              "sectors": [
+                "aSRq-Q8ELj-uto7s"
+              ],
+              "operator": "Any"
+            },
+            {
+              "_t": "TagConditionalModel",
+              "chatTags": [],
+              "contactTags": [
+                "aRcU4SUhmYerxbuc"
+              ],
+              "operator": "Equals"
+            }
+          ],
+          "onSuccess": "aiOPH12OWNERMsg1",
+          "name": "BRUNA"
+        }
+      ],
+      "position": {
+        "x": 6210,
+        "y": 4550
+      },
+      "id": "aiOwnCond000007X",
+      "createdAtUTC": "2026-06-06T05:31:08Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Cliente ja esta com etiqueta JULIA. Vou verificar se esta disponivel para receber este atendimento.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH10OWNERWeb1",
+      "position": {
+        "x": 2250,
+        "y": 7390
+      },
+      "id": "aiOPH10OWNERMsg1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "WebhookActionModel",
+      "uri": "https://utalk-status-webhook-production.up.railway.app/direct-available?memberId=ZoWIY_xoe7uoAAFQ",
+      "method": "Get",
+      "headers": [],
+      "responseMessageMapper": [],
+      "requestContent": null,
+      "onSuccess": "aiOPH10OWNEROkay",
+      "onFail": "aiOwnCond000006X",
+      "position": {
+        "x": 2600,
+        "y": 7390
+      },
+      "id": "aiOPH10OWNERWeb1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "JULIA esta disponivel. O atendimento volta para a responsavel da etiqueta.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH10OWNERTran",
+      "position": {
+        "x": 2950,
+        "y": 7390
+      },
+      "id": "aiOPH10OWNEROkay",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZoWIY_xoe7uoAAFQ"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": false,
+      "nextStepId": "aiMWaitJul000001",
+      "onFail": "aiOwnCond000006X",
+      "position": {
+        "x": 3300,
+        "y": 7390
+      },
+      "id": "aiOPH10OWNERTran",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Cliente ja esta com etiqueta KENIA. Vou verificar se esta disponivel para receber este atendimento.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH11OWNERWeb1",
+      "position": {
+        "x": 2250,
+        "y": 7650
+      },
+      "id": "aiOPH11OWNERMsg1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "WebhookActionModel",
+      "uri": "https://utalk-status-webhook-production.up.railway.app/direct-available?memberId=Z26n85VVIK64B6I2",
+      "method": "Get",
+      "headers": [],
+      "responseMessageMapper": [],
+      "requestContent": null,
+      "onSuccess": "aiOPH11OWNEROkay",
+      "onFail": "aiOwnCond000007X",
+      "position": {
+        "x": 2600,
+        "y": 7650
+      },
+      "id": "aiOPH11OWNERWeb1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "KENIA esta disponivel. O atendimento volta para a responsavel da etiqueta.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH11OWNERTran",
+      "position": {
+        "x": 2950,
+        "y": 7650
+      },
+      "id": "aiOPH11OWNEROkay",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "Z26n85VVIK64B6I2"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": false,
+      "nextStepId": "aiMWaitKen000001",
+      "onFail": "aiOwnCond000007X",
+      "position": {
+        "x": 3300,
+        "y": 7650
+      },
+      "id": "aiOPH11OWNERTran",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Cliente ja esta com etiqueta BRUNA. Vou verificar se esta disponivel para receber este atendimento.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH12OWNERWeb1",
+      "position": {
+        "x": 2250,
+        "y": 7910
+      },
+      "id": "aiOPH12OWNERMsg1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "WebhookActionModel",
+      "uri": "https://utalk-status-webhook-production.up.railway.app/direct-available?memberId=ZzUQwM9nj2l-H5hc",
+      "method": "Get",
+      "headers": [],
+      "responseMessageMapper": [],
+      "requestContent": null,
+      "onSuccess": "aiOPH12OWNEROkay",
+      "onFail": "aiK87hUbFkASONgq",
+      "position": {
+        "x": 2600,
+        "y": 7910
+      },
+      "id": "aiOPH12OWNERWeb1",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "BRUNA esta disponivel. O atendimento volta para a responsavel da etiqueta.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiOPH12OWNERTran",
+      "position": {
+        "x": 2950,
+        "y": 7910
+      },
+      "id": "aiOPH12OWNEROkay",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZzUQwM9nj2l-H5hc"
+        ],
+        "strategy": "Direct"
+      },
+      "onlyMembersAvailable": false,
+      "nextStepId": "aiMWaitBru000001",
+      "onFail": "aiK87hUbFkASONgq",
+      "position": {
+        "x": 3300,
+        "y": 7910
+      },
+      "id": "aiOPH12OWNERTran",
+      "createdAtUTC": "2026-06-06T03:08:15Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Global",
+      "onSuccess": "aiPartnerNote001",
+      "onFail": "ahWHlp-bJKqv3Z25",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "TagConditionalModel",
+              "chatTags": [],
+              "contactTags": [
+                "aG67LR9r7uYtRuW7"
+              ],
+              "operator": "Equals"
+            }
+          ],
+          "onSuccess": null,
+          "name": "Cliente parceiro"
+        }
+      ],
+      "position": {
+        "x": 1850,
+        "y": 4550
+      },
+      "id": "aiPartnerGate001",
+      "createdAtUTC": "2026-06-06T08:30:38Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "Cliente marcado como Parceiro. Vou seguir pela fila PH, sem usar etiqueta antiga de atendente, para evitar transferencia errada.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aiK87hUbFkASONgq",
+      "position": {
+        "x": 2050,
+        "y": 4850
+      },
+      "id": "aiPartnerNote001",
+      "createdAtUTC": "2026-06-06T08:30:38Z"
+    }
+  ],
+  "lastSnapshotId": "aibrvQ5UPCL_tE3Y",
+  "channels": [
+    {
+      "id": "ZZRS4Jl_JmIQyDKA"
+    },
+    {
+      "id": "ZZRTMpwSM4RTFNHr"
+    },
+    {
+      "id": "ZZRSyJl_JmIQyAWW"
+    },
+    {
+      "id": "aJtKOl4daaS-nrAB"
+    }
+  ],
+  "title": "teste - TELEVENDAS - Palhoca",
+  "order": 2.5,
+  "final": false,
+  "active": true,
+  "groupIds": [],
+  "updatedAtUTC": "2026-06-08T16:20:13.702Z",
+  "executionsCount": 9,
+  "executionsDateUTC": "2026-06-08T16:44:35.263Z",
+  "snapshotTitle": "Valida dono da etiqueta PH - 2026-06-08T16:20:13.570Z",
+  "id": "aiAw0vJQCsVttEzC",
+  "createdAtUTC": "2026-06-03T13:49:06.156Z"
+}
