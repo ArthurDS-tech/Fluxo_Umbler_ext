@@ -57,6 +57,29 @@ Agora, se o cliente entra por Sao Jose, o fluxo so respeita as donas de Sao Jose
 |---|---|
 | `aiPartnerGate001` | Verifica etiqueta `Parceiro` |
 | `aiPartnerNote001` | Nota interna para parceiro |
+
+## Notas visuais no editor
+
+Os tres fluxos tambem possuem cards de comentario dentro do editor da Umbler.
+
+Esses cards nao transferem, nao etiquetam, nao enviam mensagem e nao mudam o caminho do cliente. Eles servem apenas para documentar o que cada area faz.
+
+Areas documentadas:
+
+- entrada do cliente;
+- cliente parceiro;
+- cliente com atendente marcada;
+- fila da unidade;
+- veiculo apreendido ou patio;
+- coleta do servico;
+- esperando;
+- fora do horario.
+
+Script usado para aplicar ou atualizar essas notas:
+
+```bash
+UMBLER_API_TOKEN="..." UMBLER_ORGANIZATION_ID="ZQG4wFMHGHuTs59F" node scripts/apply-flow-comment-notes.js
+```
 | `ahWHlp-bJKqv3Z25` | Verifica se existe etiqueta de dona valida |
 | `aiK87hUbFkASONgq` | Inicio da fila normal |
 

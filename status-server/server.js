@@ -6,6 +6,7 @@ const PORT = Number(process.env.PORT || 3000);
 const API_KEY = process.env.STATUS_API_KEY || "";
 const DATA_FILE = process.env.DATA_FILE || path.join(__dirname, "status-data.json");
 const BODY_LIMIT_BYTES = 1024 * 64;
+const LOG_LIMIT = Number(process.env.LOG_LIMIT || 1000);
 const QUEUES = {
   main: [
   "ZzUQwM9nj2l-H5hc", // BRUNA
@@ -32,7 +33,10 @@ const MEMBER_NAMES = {
   ZrzsX_BLm_zYqujY: "ADRIELLI",
   Z5e_UnhziN5VdCCp: "MICHELI MAIA",
   ZuGqFp5N9i3HAKOn: "AMANDA",
-  ZaWboNQwFgY3oMeT: "ROBSON"
+  ZaWboNQwFgY3oMeT: "ROBSON",
+  ZjjGI2sLFms4kT6b: "EVYLIN",
+  "ZQxoyBkRFwc7X-Vk": "CRISTIANE",
+  ZyJUBxlZDTR81qdF: "ESTER"
 };
 const BUSINESS_HOURS = {
   timeZone: "America/Sao_Paulo",
@@ -43,6 +47,7 @@ const BUSINESS_HOURS = {
 const dataStore = loadDataStore();
 const statusMap = dataStore.statuses;
 const queueStates = dataStore.queues;
+const eventLogs = dataStore.logs;
 let remarketing = null;
 let remarketingEnv = null;
 let remarketingRunning = false;
@@ -62,13 +67,15 @@ function loadDataStore() {
     if (parsed.statuses && typeof parsed.statuses === "object" && !Array.isArray(parsed.statuses)) {
       return {
         statuses: parsed.statuses,
-        queues: normalizeQueueStates(parsed.queues || parsed.queue)
+        queues: normalizeQueueStates(parsed.queues || parsed.queue),
+        logs: normalizeLogs(parsed.logs)
       };
     }
 
     return {
       statuses: parsed,
-      queues: normalizeQueueStates(null)
+      queues: normalizeQueueStates(null),
+      logs: []
     };
   } catch (error) {
     console.warn(`[status-server] Nao foi possivel ler ${DATA_FILE}: ${error.message}`);
@@ -79,7 +86,8 @@ function loadDataStore() {
 function createEmptyDataStore() {
   return {
     statuses: {},
-    queues: normalizeQueueStates(null)
+    queues: normalizeQueueStates(null),
+    logs: []
   };
 }
 
@@ -114,7 +122,8 @@ function saveDataStore() {
       JSON.stringify(
         {
           statuses: statusMap,
-          queues: queueStates
+          queues: queueStates,
+          logs: eventLogs
         },
         null,
         2
@@ -123,6 +132,50 @@ function saveDataStore() {
   } catch (error) {
     console.error(`[status-server] Nao foi possivel salvar ${DATA_FILE}: ${error.message}`);
   }
+}
+
+function normalizeLogs(value) {
+  if (!Array.isArray(value)) return [];
+  return value
+    .filter((item) => item && typeof item === "object")
+    .slice(-LOG_LIMIT);
+}
+
+function addLog(entry) {
+  const log = {
+    id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    at: new Date().toISOString(),
+    kind: entry.kind || "info",
+    title: entry.title || "Registro do sistema",
+    text: entry.text || "",
+    branch: entry.branch || null,
+    memberId: entry.memberId || null,
+    memberName: entry.memberName || (entry.memberId ? MEMBER_NAMES[entry.memberId] || entry.memberId : null),
+    chatId: entry.chatId || null,
+    contactPhone: entry.contactPhone || null,
+    result: entry.result || null
+  };
+
+  eventLogs.push(log);
+  if (eventLogs.length > LOG_LIMIT) {
+    eventLogs.splice(0, eventLogs.length - LOG_LIMIT);
+  }
+  saveDataStore();
+  return log;
+}
+
+function getLogsSnapshot(options = {}) {
+  const limit = Math.max(1, Math.min(Number(options.limit || 200), LOG_LIMIT));
+  const chatId = String(options.chatId || "").trim();
+  const memberId = normalizeMemberId(options.memberId);
+  const branch = options.branch ? getBranchKey(options.branch) : "";
+
+  return eventLogs
+    .filter((item) => !chatId || item.chatId === chatId)
+    .filter((item) => !memberId || item.memberId === memberId)
+    .filter((item) => !branch || item.branch === branch)
+    .slice(-limit)
+    .reverse();
 }
 
 function getBranchKey(value) {
@@ -317,7 +370,15 @@ function getRemarketingStatus() {
 }
 
 async function runRemarketingTick(source = "manual", envOverrides = {}) {
-  if (remarketingRunning) return { skipped: true, reason: "remarketing_already_running" };
+  if (remarketingRunning) {
+    addLog({
+      kind: "warn",
+      title: "Remarketing ja estava rodando",
+      text: "Uma nova verificacao foi ignorada porque a anterior ainda nao tinha terminado.",
+      result: "skipped"
+    });
+    return { skipped: true, reason: "remarketing_already_running" };
+  }
 
   const mod = getRemarketing();
   const env = getRemarketingEnv(envOverrides);
@@ -338,6 +399,12 @@ async function runRemarketingTick(source = "manual", envOverrides = {}) {
       errors: summary.errors
     };
     remarketingLastError = null;
+    addLog({
+      kind: summary.errors ? "warn" : "success",
+      title: "Remarketing verificado",
+      text: `${summary.checked} cadastro(s) avaliados, ${summary.sent} mensagem(ns) enviada(s), ${summary.skipped} ignorado(s) e ${summary.errors} erro(s).`,
+      result: summary.errors ? "warning" : "success"
+    });
     console.log(
       `[remarketing] checked=${summary.checked} sent=${summary.sent} skipped=${summary.skipped} errors=${summary.errors}`
     );
@@ -347,6 +414,12 @@ async function runRemarketingTick(source = "manual", envOverrides = {}) {
       at: new Date().toISOString(),
       message: error.message
     };
+    addLog({
+      kind: "error",
+      title: "Remarketing com erro",
+      text: error.message,
+      result: "error"
+    });
     console.error(`[remarketing] error: ${error.message}`);
     return { error: error.message };
   } finally {
@@ -429,6 +502,18 @@ const server = http.createServer(async (req, res) => {
         execute: payload.execute === undefined ? "false" : String(payload.execute)
       });
       const result = await mod.runOnce(env);
+      addLog({
+        kind: result?.error ? "error" : "success",
+        title: "Teste de remarketing por telefone",
+        text: result?.error
+          ? result.error
+          : `Telefone testado. Resultado: ${result?.validation?.reason || "verificacao concluida"}.`,
+        chatId: result?.chatId || null,
+        contactPhone: payload.phone || payload.testPhone || "",
+        memberId: result?.selectedAttendant?.memberId || null,
+        memberName: result?.selectedAttendant?.name || null,
+        result: result?.error ? "error" : "success"
+      });
       sendJson(res, 200, result);
     } catch (error) {
       sendJson(res, 500, { ok: false, error: error.message });
@@ -444,6 +529,23 @@ const server = http.createServer(async (req, res) => {
       storedMembers: Object.keys(statusMap).length,
       queues: Object.fromEntries(Object.keys(QUEUES).map((branch) => [branch, getQueueSnapshot(branch)])),
       businessHours: isBusinessOpen()
+    });
+    return;
+  }
+
+  if (req.method === "GET" && url.pathname === "/logs") {
+    if (!hasWriteAccess(req)) {
+      sendJson(res, 401, { error: "Nao autorizado" });
+      return;
+    }
+
+    sendJson(res, 200, {
+      logs: getLogsSnapshot({
+        limit: url.searchParams.get("limit"),
+        chatId: url.searchParams.get("chatId"),
+        memberId: url.searchParams.get("memberId"),
+        branch: url.searchParams.get("branch")
+      })
     });
     return;
   }
@@ -486,6 +588,22 @@ const server = http.createServer(async (req, res) => {
     }
 
     const canReceive = businessHours.open && (inQueue ? available && isNextInQueue : available);
+    addLog({
+      kind: canReceive ? "success" : "warn",
+      title: "Fila consultada",
+      text: canReceive
+        ? `${MEMBER_NAMES[memberId] || memberId} estava disponivel e era a vez dela.`
+        : !businessHours.open
+          ? "O atendimento chegou fora do horario definido."
+          : available
+          ? `${MEMBER_NAMES[memberId] || memberId} estava disponivel, mas ainda nao era a vez dela.`
+          : `${MEMBER_NAMES[memberId] || memberId} estava indisponivel.`,
+      branch,
+      memberId,
+      chatId: url.searchParams.get("chatId"),
+      contactPhone: url.searchParams.get("phone"),
+      result: canReceive ? "accepted" : "skipped"
+    });
     sendJson(res, canReceive ? 200 : 409, {
       memberId,
       branch,
@@ -517,6 +635,19 @@ const server = http.createServer(async (req, res) => {
     const available = statusMap[memberId] !== false;
     const businessHours = isBusinessOpen();
     const canReceive = businessHours.open && available;
+    addLog({
+      kind: canReceive ? "success" : "warn",
+      title: "Atendente especifica consultada",
+      text: canReceive
+        ? `${MEMBER_NAMES[memberId] || memberId} estava disponivel dentro do horario.`
+        : !businessHours.open
+          ? "O atendimento chegou fora do horario definido."
+          : `${MEMBER_NAMES[memberId] || memberId} estava indisponivel.`,
+      memberId,
+      chatId: url.searchParams.get("chatId"),
+      contactPhone: url.searchParams.get("phone"),
+      result: canReceive ? "accepted" : "skipped"
+    });
 
     sendJson(res, canReceive ? 200 : 409, {
       memberId,
@@ -553,6 +684,13 @@ const server = http.createServer(async (req, res) => {
 
       statusMap[memberId] = available;
       saveDataStore();
+      addLog({
+        kind: available ? "success" : "warn",
+        title: "Disponibilidade alterada",
+        text: `${MEMBER_NAMES[memberId] || memberId} marcou ${available ? "disponivel" : "indisponivel"}.`,
+        memberId,
+        result: available ? "available" : "unavailable"
+      });
 
       console.log(
         `[${new Date().toISOString()}] ${memberId} -> ${available ? "disponivel" : "indisponivel"}`
@@ -622,6 +760,16 @@ const server = http.createServer(async (req, res) => {
       state.lastAssignedMemberId = null;
       state.lastAssignedAtUTC = null;
       saveDataStore();
+      addLog({
+        kind: "warn",
+        title: "Fila reposicionada",
+        text: memberId
+          ? `A fila ${branch} foi ajustada para comecar por ${MEMBER_NAMES[memberId] || memberId}.`
+          : `A fila ${branch} foi reiniciada pelo primeiro nome da lista.`,
+        branch,
+        memberId: memberId || null,
+        result: "reset"
+      });
       sendJson(res, 200, { queue: getQueueSnapshot(branch) });
     } catch {
       sendJson(res, 400, { error: "JSON invalido" });
@@ -639,6 +787,7 @@ server.listen(PORT, "0.0.0.0", () => {
   console.log("[status-server] GET  /available?memberId=ID_DA_ATENDENTE");
   console.log("[status-server] GET  /direct-available?memberId=ID_DA_ATENDENTE");
   console.log("[status-server] GET  /queue");
+  console.log("[status-server] GET  /logs");
   console.log("[status-server] GET  /remarketing/health");
   console.log("[status-server] POST /remarketing/tick");
   console.log("[status-server] POST /remarketing/run-phone");

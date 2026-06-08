@@ -99,7 +99,10 @@ Funcao:
 - mostrar cliente, unidade, canal, responsavel atual e situacao;
 - mostrar a linha do tempo do atendimento em linguagem simples;
 - destacar transferencias, etiquetas, mensagens, notas internas e entrada em esperando;
+- mostrar registros do nosso sistema, como decisao da fila, disponibilidade, remarketing e ajustes de fila;
 - copiar um resumo para conferencias internas;
 - imprimir o historico.
 
-Essa pagina usa o mesmo token UTalk informado no navegador. Ela nao muda fluxo, nao transfere atendimento e nao altera etiqueta. Serve apenas para consulta e validacao.
+Essa pagina usa o mesmo token UTalk informado no navegador. Token, organizacao, ultimo chat digitado e filtro ficam salvos no proprio navegador para nao precisar preencher tudo de novo.
+
+Ela nao muda fluxo, nao transfere atendimento e nao altera etiqueta. Serve apenas para consulta e validacao.

@@ -18,6 +18,23 @@ module.exports = async function handler(req, res) {
     const memberId = String(req.query?.memberId || "").trim();
     const queueRequested = String(req.query?.queue || "").trim() === "1";
     const allRequested = String(req.query?.all || "").trim() === "1";
+    const logsRequested = String(req.query?.logs || "").trim() === "1";
+
+    if (logsRequested) {
+      const params = new URLSearchParams();
+      for (const key of ["limit", "chatId", "memberId", "branch"]) {
+        const value = String(req.query?.[key] || "").trim();
+        if (value) params.set(key, value);
+      }
+      await proxyStatusRequest(res, {
+        url: `${statusBase}/logs${params.toString() ? `?${params}` : ""}`,
+        method: "GET",
+        headers: {
+          "X-API-Key": statusKey
+        }
+      });
+      return;
+    }
 
     if (queueRequested) {
       const branch = String(req.query?.branch || "main").trim() || "main";

@@ -113,6 +113,29 @@
   gap: 10px;
 }
 
+.system-log-head {
+  align-items: flex-end;
+  border-top: 1px solid var(--line);
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 18px;
+}
+
+.system-log-head h2 {
+  margin-bottom: 4px;
+}
+
+.system-log-head p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.system-timeline .timeline-item {
+  border-left-color: #6f7c8f;
+}
+
 .timeline-item {
   border: 1px solid var(--line);
   border-left: 4px solid var(--blue);

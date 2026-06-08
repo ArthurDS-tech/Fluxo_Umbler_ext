@@ -46,6 +46,8 @@ const recentList = document.getElementById("recent-list");
 const chatStatus = document.getElementById("chat-status");
 const chatSummary = document.getElementById("chat-summary");
 const timeline = document.getElementById("timeline");
+const systemLogCount = document.getElementById("system-log-count");
+const systemTimeline = document.getElementById("system-timeline");
 const copyButton = document.getElementById("btn-copy-log");
 const printButton = document.getElementById("btn-print-log");
 
@@ -54,6 +56,7 @@ const state = {
   organizationId: DEFAULT_ORGANIZATION_ID,
   recentChats: [],
   recentFilter: "",
+  systemLogs: [],
   selectedChat: null,
   selectedEvents: []
 };
@@ -75,8 +78,12 @@ printButton.addEventListener("click", () => window.print());
 chatInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") searchChat();
 });
+for (const input of [tokenInput, orgInput, chatInput]) {
+  input.addEventListener("input", saveSessionFromInputs);
+}
 recentFilterInput.addEventListener("input", () => {
   state.recentFilter = recentFilterInput.value;
+  saveSessionFromInputs();
   renderRecent(state.recentChats);
 });
 
@@ -94,6 +101,7 @@ async function searchChat() {
   try {
     const chat = await fetchChat(chatId);
     renderChat(chat);
+    await loadSystemLogs(chat.id);
     saveSession();
     setMessage("Historico carregado.", "ok");
   } catch (error) {
@@ -112,6 +120,7 @@ async function loadRecentChats() {
     const chats = await fetchRecentChats();
     state.recentChats = chats;
     renderRecent(chats);
+    await loadSystemLogs();
     saveSession();
     setMessage("Recentes carregados.", "ok");
   } catch (error) {
@@ -155,6 +164,31 @@ async function requestUtalk(payload) {
   return data;
 }
 
+async function fetchSystemLogs(chatId = "") {
+  const params = new URLSearchParams({ logs: "1", limit: "250" });
+  if (chatId) params.set("chatId", chatId);
+
+  const response = await fetch(`/api/status?${params}`);
+  const text = await response.text();
+  const data = text ? JSON.parse(text) : null;
+  if (!response.ok) throw new Error(data?.error || data?.detail || response.status);
+  return data?.logs || [];
+}
+
+async function loadSystemLogs(chatId = "") {
+  try {
+    let logs = await fetchSystemLogs(chatId);
+    if (chatId && !logs.length) {
+      logs = await fetchSystemLogs();
+    }
+    state.systemLogs = logs;
+    renderSystemLogs(logs, Boolean(chatId));
+  } catch (error) {
+    systemLogCount.textContent = "nao carregou";
+    systemTimeline.innerHTML = `<p class="empty">Nao consegui carregar os registros do nosso sistema. ${escapeHtml(friendlyError(error))}</p>`;
+  }
+}
+
 function renderRecent(chats) {
   const filtered = filterRecent(chats);
   recentCount.textContent = `${filtered.length} encontrados`;
@@ -196,6 +230,34 @@ function renderChat(chat) {
   copyButton.disabled = false;
   printButton.disabled = false;
   renderRecent(state.recentChats);
+}
+
+function renderSystemLogs(logs, searchedChat = false) {
+  systemLogCount.textContent = `${logs.length} registro${logs.length === 1 ? "" : "s"}`;
+  if (!logs.length) {
+    systemTimeline.innerHTML = searchedChat
+      ? '<p class="empty">Nao ha registro do nosso sistema ligado diretamente a este chat. A linha do tempo da Umbler acima continua valida.</p>'
+      : '<p class="empty">Nenhum registro do nosso sistema encontrado.</p>';
+    return;
+  }
+
+  systemTimeline.innerHTML = logs.map((log) => renderEvent(systemLogEvent(log))).join("");
+}
+
+function systemLogEvent(log) {
+  const details = [
+    ["Unidade", branchName(log.branch)],
+    ["Atendente", log.memberName || memberName(log.memberId)],
+    ["Resultado", resultName(log.result)]
+  ].filter(([, value]) => value && value !== "-");
+
+  return {
+    at: log.at,
+    title: log.title || "Registro do nosso sistema",
+    text: log.text || "Registro salvo.",
+    kind: log.kind === "error" ? "warn" : log.kind === "success" ? "success" : "soft",
+    details
+  };
 }
 
 function renderSummaryCards(chat) {
@@ -351,7 +413,10 @@ async function copyCurrentSummary() {
     `Responsavel atual: ${responsibleName(chat)}`,
     `Situacao: ${chat.waiting ? "Em esperando" : chat.open ? "Aberto" : "Finalizado"}`,
     "",
-    ...state.selectedEvents.map((event) => `${formatDate(event.at)} - ${event.title}: ${event.text || "-"}`)
+    ...state.selectedEvents.map((event) => `${formatDate(event.at)} - ${event.title}: ${event.text || "-"}`),
+    "",
+    "Registros do nosso sistema",
+    ...state.systemLogs.map((log) => `${formatDate(log.at)} - ${log.title || "Registro"}: ${log.text || "-"}`)
   ];
 
   try {
@@ -439,6 +504,27 @@ function unitName(chat) {
   return "Outras";
 }
 
+function branchName(branch) {
+  if (branch === "main") return "Florianopolis";
+  if (branch === "sj") return "Sao Jose";
+  if (branch === "ph") return "Palhoca";
+  return "-";
+}
+
+function resultName(result) {
+  const names = {
+    accepted: "Atendimento aceito",
+    skipped: "Pulou para proxima etapa",
+    available: "Disponivel",
+    unavailable: "Indisponivel",
+    reset: "Fila ajustada",
+    success: "Concluido",
+    warning: "Verificar",
+    error: "Erro"
+  };
+  return names[result] || result || "-";
+}
+
 function normalizeItems(data) {
   if (Array.isArray(data)) return data;
   return data?.items || data?.chats || data?.data || [];
@@ -503,8 +589,17 @@ function setMessage(text, type = "") {
 function saveSession() {
   localStorage.setItem(LOG_SESSION_KEY, JSON.stringify({
     token: state.token,
-    organizationId: state.organizationId
+    organizationId: state.organizationId,
+    chat: chatInput.value.trim(),
+    recentFilter: recentFilterInput.value.trim()
   }));
+}
+
+function saveSessionFromInputs() {
+  state.token = tokenInput.value.trim();
+  state.organizationId = orgInput.value.trim() || DEFAULT_ORGANIZATION_ID;
+  state.recentFilter = recentFilterInput.value.trim();
+  saveSession();
 }
 
 function loadSavedSession() {
@@ -512,6 +607,9 @@ function loadSavedSession() {
     const saved = JSON.parse(localStorage.getItem(LOG_SESSION_KEY) || "{}");
     tokenInput.value = saved.token || "";
     orgInput.value = saved.organizationId || DEFAULT_ORGANIZATION_ID;
+    chatInput.value = saved.chat || "";
+    recentFilterInput.value = saved.recentFilter || "";
+    state.recentFilter = recentFilterInput.value;
   } catch {
     orgInput.value = DEFAULT_ORGANIZATION_ID;
   }
