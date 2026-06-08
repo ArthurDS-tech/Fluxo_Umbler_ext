@@ -10,8 +10,8 @@ const REQUIRED_CHANNELS = [
   "ZQxHaZ4vN7FoyHm7",
   "ZQxHphkRFwc7FJ2W",
   "ZZRSn5wSM4RTE7KJ",
-  "ZZRSWJl_JmIQx0UE",
-  "ZQxHJhkRFwc7E0bT",
+  "aicOVx099okrepMI",
+  "aibCkWoD3AhLiWE2",
   "ZwWSUqYuIZ8I3hxt",
   "ZtXHk4I_xBAd46pH",
   "ZQxHlJ4vN7FoyPqG"
