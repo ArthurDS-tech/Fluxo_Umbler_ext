@@ -251,13 +251,16 @@ Regra planejada:
 
 Mais detalhes em `FLUXO_ETIQUETAS_ATENDENTES.md`.
 
-Validacao aplicada em Sao Jose e Palhoca:
+Validacao aplicada no fluxo principal, Sao Jose e Palhoca:
 
+- Principal valida etiquetas nesta ordem: Ana -> Kenia -> Julia -> Isa -> Bruna.
 - Sao Jose valida etiquetas nesta ordem: Adrielli -> Micheli -> Amanda -> Robson -> Ana -> Isa -> Julia -> Kenia -> Bruna.
 - Palhoca valida etiquetas nesta ordem: Amanda -> Robson -> Adrielli -> Micheli -> Ana -> Isa -> Julia -> Kenia -> Bruna.
+- O card de entrada primeiro pergunta se o cliente ja tem etiqueta de atendente.
 - Se a dona da etiqueta estiver disponivel, o fluxo transfere direto para ela e marca a conversa como `esperando`.
 - Se a dona da etiqueta nao estiver disponivel, o fluxo continua ate cair na fila normal da unidade.
-- Validacao por API em 2026-06-08: os dois fluxos estao ativos, com 199 cards, 0 conexoes quebradas e todos os webhooks/transferencias apontando para as atendentes corretas.
+- Cliente sem etiqueta cai direto na fila normal.
+- Validacao por API em 2026-06-08: fluxo principal ativo com 179 cards, Sao Jose e Palhoca ativos com 199 cards cada, 0 conexoes quebradas e todos os webhooks/transferencias apontando para as atendentes corretas.
 
 ## Esperando Apos Transferencia
 

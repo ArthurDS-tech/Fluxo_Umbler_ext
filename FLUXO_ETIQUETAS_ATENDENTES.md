@@ -2,7 +2,7 @@
 
 Data: 2026-06-05
 
-Atualizado em 2026-06-08: a validacao por dona da etiqueta foi aplicada tambem nos fluxos Sao Jose e Palhoca.
+Atualizado em 2026-06-08: a validacao por dona da etiqueta foi aplicada no fluxo principal e tambem nos fluxos Sao Jose e Palhoca.
 
 ## Regra correta
 
@@ -75,9 +75,15 @@ Estes cards verificam se o cliente tem etiqueta de uma atendente:
 
 Cada caminho acima precisa chamar `direct-available` antes de transferir para a dona da etiqueta.
 
-## Fluxos Sao Jose e Palhoca
+## Fluxo principal, Sao Jose e Palhoca
 
-Os fluxos de Sao Jose e Palhoca receberam a mesma regra de dona da etiqueta.
+Os fluxos receberam a mesma regra de dona da etiqueta.
+
+Principal:
+
+- URL: `https://app-utalk.umbler.com/settings/chatbots/editor/ahWgp29Q4NlgpyeU`
+- Ordem de validacao: Ana -> Kenia -> Julia -> Isa -> Bruna.
+- Se nenhuma dona da etiqueta puder receber, cai na fila principal.
 
 Sao Jose:
 
@@ -93,8 +99,10 @@ Palhoca:
 
 Validacao por API em 2026-06-08:
 
+- Principal ativo, 179 cards, 0 conexoes quebradas.
 - Sao Jose ativo, 199 cards, 0 conexoes quebradas.
 - Palhoca ativo, 199 cards, 0 conexoes quebradas.
+- O card de entrada foi corrigido: com etiqueta vai para a dona; sem etiqueta vai para a fila normal.
 - Todos os caminhos por etiqueta usam `/direct-available`.
 - Todas as transferencias apontam para a atendente correta e depois colocam a conversa em `esperando`.
 
@@ -122,7 +130,7 @@ Exemplo com cliente da Kenia:
 
 ## Observacao sobre API
 
-A API de leitura e gravacao da Umbler confirmou os cards e ids acima nos fluxos Sao Jose e Palhoca.
+A API de leitura e gravacao da Umbler confirmou os cards e ids acima nos fluxos Principal, Sao Jose e Palhoca.
 
 O script usado para aplicar a regra foi:
 

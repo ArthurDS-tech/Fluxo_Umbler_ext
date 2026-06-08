@@ -170,6 +170,10 @@ Palhoca: https://app-utalk.umbler.com/settings/chatbots/editor/aiAw0vJQCsVttEzC
 
 Validacao dos fluxos por unidade:
 
+- Principal ativo.
+- Principal com 179 cards e 0 conexoes quebradas.
+- Principal valida a dona da etiqueta antes da fila normal.
+- Principal valida nesta ordem: Ana -> Kenia -> Julia -> Isa -> Bruna.
 - Sao Jose ativo.
 - Sao Jose com canais `SJ - Adrielli` e `SJ - Micheli`.
 - Sao Jose com 199 cards e 0 conexoes quebradas.
@@ -184,9 +188,10 @@ Validacao dos fluxos por unidade:
 - Sao Jose valida nesta ordem: Adrielli -> Micheli -> Amanda -> Robson -> Ana -> Isa -> Julia -> Kenia -> Bruna.
 - Palhoca valida nesta ordem: Amanda -> Robson -> Adrielli -> Micheli -> Ana -> Isa -> Julia -> Kenia -> Bruna.
 - Nos caminhos por etiqueta, o webhook usa `/direct-available`, para nao consumir a vez da fila.
+- O card de entrada foi corrigido: com etiqueta vai para a dona; sem etiqueta vai para a fila normal.
 - Se a dona da etiqueta estiver disponivel, o atendimento volta para ela e entra em `esperando`.
 - Se a dona da etiqueta estiver indisponivel, o fluxo segue para a proxima etiqueta e depois para a fila da unidade.
-- Validacao por API em 2026-06-08 confirmou: 199 cards em cada fluxo, 0 referencias quebradas, ordem correta e transferencias diretas para as 9 atendentes mapeadas.
+- Validacao por API em 2026-06-08 confirmou: principal com 179 cards, Sao Jose e Palhoca com 199 cards cada, 0 referencias quebradas, ordem correta e transferencias diretas para as atendentes mapeadas.
 
 Validacoes feitas por API:
 
@@ -221,7 +226,7 @@ Regra de etiqueta da atendente:
 Situacao de aplicacao:
 
 - A leitura por API confirmou todos os cards e ids.
-- Em 2026-06-08 a gravacao direta por API foi aplicada nos fluxos Sao Jose e Palhoca com `scripts/apply-owner-validation-branch-flows.js`.
+- Em 2026-06-08 a gravacao direta por API foi aplicada nos fluxos Principal, Sao Jose e Palhoca com `scripts/apply-owner-validation-branch-flows.js`.
 - Os backups do estado anterior ficaram em `backups/`.
 - O fluxo principal permanece como referencia da estrutura original.
 

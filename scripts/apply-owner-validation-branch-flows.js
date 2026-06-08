@@ -7,15 +7,24 @@ const API_BASE = process.env.UMBLER_API_BASE_URL || "https://app-utalk.umbler.co
 const STATUS_BASE = "https://utalk-status-webhook-production.up.railway.app";
 
 const FLOWS = {
+  main: {
+    id: "ahWgp29Q4NlgpyeU",
+    label: "Principal",
+    prefix: "MN",
+    queueStart: "aiK87hUbFkASONgq",
+    preferred: ["ana", "kenia", "julia", "isa", "bruna"]
+  },
   sj: {
     id: "aiBQZyxNLsXpDDwS",
     label: "SJ",
+    prefix: "SJ",
     queueStart: "aiK87hUbFkASONgq",
     preferred: ["adrielli", "micheli", "amanda", "robson", "ana", "isa", "julia", "kenia", "bruna"]
   },
   ph: {
     id: "aiAw0vJQCsVttEzC",
     label: "PH",
+    prefix: "PH",
     queueStart: "aiK87hUbFkASONgq",
     preferred: ["amanda", "robson", "adrielli", "micheli", "ana", "isa", "julia", "kenia", "bruna"]
   }
@@ -115,8 +124,8 @@ function makeConditional(id, owner, onSuccess, onFail, index) {
   };
 }
 
-function makeOwnerSteps(flowKey, ownerKey, owner, nextFailId, index) {
-  const prefix = `aiO${flowKey.toUpperCase()}${String(index + 1).padStart(2, "0")}OWNER`;
+function makeOwnerSteps(flowPrefix, ownerKey, owner, nextFailId, index) {
+  const prefix = `aiO${flowPrefix}${String(index + 1).padStart(2, "0")}OWNER`;
   const messageId = `${prefix}Msg1`;
   const webhookId = `${prefix}Web1`;
   const successId = `${prefix}Okay`;
@@ -181,12 +190,13 @@ function applyOwnerValidation(bot, flowKey, config) {
   const stepsById = byId(steps);
   const ownerKeys = config.preferred;
   const ownerSteps = [];
+  const flowPrefix = config.prefix || flowKey.toUpperCase();
 
   const ownerStepData = ownerKeys.map((ownerKey, index) => {
     const owner = OWNERS[ownerKey];
     const nextConditionalId = OWNER_CONDITIONAL_IDS[index + 1] || config.queueStart;
     const nextFailId = index === ownerKeys.length - 1 ? config.queueStart : nextConditionalId;
-    const data = makeOwnerSteps(flowKey, ownerKey, owner, nextFailId, index);
+    const data = makeOwnerSteps(flowPrefix, ownerKey, owner, nextFailId, index);
     ownerSteps.push(...data.steps);
     return { ownerKey, owner, conditionalId: OWNER_CONDITIONAL_IDS[index], messageId: data.messageId, nextFailId, index };
   });
@@ -208,9 +218,24 @@ function applyOwnerValidation(bot, flowKey, config) {
   }
 
   const gate = stepsById.get(TAG_GATE_ID);
-  if (gate?.conditionalGroups?.[1]?.conditionals?.[0]) {
-    gate.onFail = OWNER_CONDITIONAL_IDS[0];
-    gate.conditionalGroups[1].conditionals[0].contactTags = ownerKeys.map((key) => OWNERS[key].tagId);
+  if (gate) {
+    gate.strategy = "Global";
+    gate.onSuccess = OWNER_CONDITIONAL_IDS[0];
+    gate.onFail = config.queueStart;
+    gate.conditionalGroups = [
+      {
+        conditionals: [
+          {
+            _t: "TagConditionalModel",
+            chatTags: [],
+            contactTags: ownerKeys.map((key) => OWNERS[key].tagId),
+            operator: "Equals"
+          }
+        ],
+        onSuccess: null,
+        name: "Cliente com etiqueta de atendente"
+      }
+    ];
   }
 
   for (const id of ["aiMWaitAna000001", "aiMWaitIsa000001", "aiMWaitJul000001", "aiMWaitBru000001", "aiMWaitKen000001"]) {
