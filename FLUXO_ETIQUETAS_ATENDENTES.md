@@ -2,6 +2,8 @@
 
 Data: 2026-06-05
 
+Atualizado em 2026-06-08: a validacao por dona da etiqueta foi aplicada tambem nos fluxos Sao Jose e Palhoca.
+
 ## Regra correta
 
 O fluxo nao deve ser aleatorio.
@@ -54,6 +56,10 @@ Nao trocar os cards da fila normal. A fila normal deve continuar usando:
 | Isa | `ZaZlLHFmogpzC4xO` | `aRcX9elTi7VLfbiN` |
 | Julia | `ZoWIY_xoe7uoAAFQ` | `aRcUv3AZQLndGPqS` |
 | Kenia | `Z26n85VVIK64B6I2` | `aRcVICUhmYerxl6F` |
+| Adrielli | `ZrzsX_BLm_zYqujY` | `aRcXOulTi7VLe25M` |
+| Micheli | `Zafi39QwFgY3PIe3` | `aRcXlpId9HOMVvSO` |
+| Amanda | `ZuGqFp5N9i3HAKOn` | `aRcc7SUhmYer23sK` |
+| Robson | `ZaWboNQwFgY3oMeT` | `aRcc0yUhmYer2zTn` |
 
 ## Cards de etiqueta encontrados
 
@@ -68,6 +74,29 @@ Estes cards verificam se o cliente tem etiqueta de uma atendente:
 | Bruna | `ahW9FnK4-0jVxYZy` | `aiK87hUbFkASONgq` |
 
 Cada caminho acima precisa chamar `direct-available` antes de transferir para a dona da etiqueta.
+
+## Fluxos Sao Jose e Palhoca
+
+Os fluxos de Sao Jose e Palhoca receberam a mesma regra de dona da etiqueta.
+
+Sao Jose:
+
+- URL: `https://app-utalk.umbler.com/settings/chatbots/editor/aiBQZyxNLsXpDDwS`
+- Ordem de validacao: Adrielli -> Micheli -> Amanda -> Robson -> Ana -> Isa -> Julia -> Kenia -> Bruna.
+- Se nenhuma dona da etiqueta puder receber, cai na fila `sj`.
+
+Palhoca:
+
+- URL: `https://app-utalk.umbler.com/settings/chatbots/editor/aiAw0vJQCsVttEzC`
+- Ordem de validacao: Amanda -> Robson -> Adrielli -> Micheli -> Ana -> Isa -> Julia -> Kenia -> Bruna.
+- Se nenhuma dona da etiqueta puder receber, cai na fila `ph`.
+
+Validacao por API em 2026-06-08:
+
+- Sao Jose ativo, 199 cards, 0 conexoes quebradas.
+- Palhoca ativo, 199 cards, 0 conexoes quebradas.
+- Todos os caminhos por etiqueta usam `/direct-available`.
+- Todas as transferencias apontam para a atendente correta e depois colocam a conversa em `esperando`.
 
 ## Limpeza de etiquetas
 
@@ -93,12 +122,10 @@ Exemplo com cliente da Kenia:
 
 ## Observacao sobre API
 
-A API de leitura da Umbler confirmou os cards e ids acima.
+A API de leitura e gravacao da Umbler confirmou os cards e ids acima nos fluxos Sao Jose e Palhoca.
 
-A gravacao direta via API recusou o payload exportado com erro:
+O script usado para aplicar a regra foi:
 
 ```text
-No initial event step was found
+scripts/apply-owner-validation-branch-flows.js
 ```
-
-Por seguranca, o fluxo ativo nao foi sobrescrito por tentativa. O ajuste deve ser aplicado pelo editor visual da Umbler ou por um payload de editor confirmado pela propria plataforma.

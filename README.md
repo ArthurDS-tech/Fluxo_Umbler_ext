@@ -237,6 +237,10 @@ As etiquetas definem quem e a dona atual do cliente:
 | Isa | `aRcX9elTi7VLfbiN` |
 | Julia | `aRcUv3AZQLndGPqS` |
 | Kenia | `aRcVICUhmYerxl6F` |
+| Adrielli | `aRcXOulTi7VLe25M` |
+| Micheli | `aRcXlpId9HOMVvSO` |
+| Amanda | `aRcc7SUhmYer23sK` |
+| Robson | `aRcc0yUhmYer2zTn` |
 
 Regra planejada:
 
@@ -246,6 +250,14 @@ Regra planejada:
 - Pátio vai para Isa. Se Isa estiver indisponivel, fica no esperando dela.
 
 Mais detalhes em `FLUXO_ETIQUETAS_ATENDENTES.md`.
+
+Validacao aplicada em Sao Jose e Palhoca:
+
+- Sao Jose valida etiquetas nesta ordem: Adrielli -> Micheli -> Amanda -> Robson -> Ana -> Isa -> Julia -> Kenia -> Bruna.
+- Palhoca valida etiquetas nesta ordem: Amanda -> Robson -> Adrielli -> Micheli -> Ana -> Isa -> Julia -> Kenia -> Bruna.
+- Se a dona da etiqueta estiver disponivel, o fluxo transfere direto para ela e marca a conversa como `esperando`.
+- Se a dona da etiqueta nao estiver disponivel, o fluxo continua ate cair na fila normal da unidade.
+- Validacao por API em 2026-06-08: os dois fluxos estao ativos, com 199 cards, 0 conexoes quebradas e todos os webhooks/transferencias apontando para as atendentes corretas.
 
 ## Esperando Apos Transferencia
 
