@@ -72,17 +72,11 @@ Atendimento de patio continua sendo caso especial.
 - Patio vai para Isa.
 - Se Isa estiver indisponivel, o atendimento fica no esperando dela.
 
-## Sobre o erro 409 no historico
+## Sobre a fila limpa
 
-O `409 Conflict` no historico do fluxo e esperado.
+O fluxo nao precisa mais mostrar uma sequencia de `409 Conflict` para escolher atendente.
 
-Ele significa:
-
-```text
-Essa atendente nao deve receber agora. Pule para a proxima.
-```
-
-Quando a pessoa correta da fila responde com sucesso, o fluxo transfere o atendimento.
+Agora ele chama o Sistema do Arthur uma unica vez. O sistema escolhe a proxima atendente disponivel, transfere o atendimento pela Umbler e o fluxo segue mostrando apenas a decisao final.
 
 ## Documentacao
 

@@ -34,6 +34,7 @@ https://utalk-status-webhook-production.up.railway.app
 | `POST /status` | Alterar disponibilidade |
 | `GET /available?branch=...&memberId=...` | Verificar fila e avancar a vez se for sucesso |
 | `GET /direct-available?memberId=...` | Verificar uma atendente sem mexer na fila |
+| `GET /assign-queue?branch=...&chatId=...` | Escolher e transferir pela fila sem mostrar erros intermediarios |
 | `GET /queue?branch=sj` | Consultar fila SJ |
 | `POST /queue/reset` | Resetar a fila |
 | `GET /status/all` | Status e filas para painel admin |
@@ -44,6 +45,8 @@ https://utalk-status-webhook-production.up.railway.app
 `/available` usa fila. Ele so retorna sucesso se a atendente estiver disponivel e for a vez dela.
 
 `/direct-available` nao usa fila. Ele so olha se aquela pessoa esta disponivel. E usado quando o cliente precisa voltar para a dona da etiqueta.
+
+`/assign-queue` e a rota usada pelos fluxos para a fila limpa. Ela escolhe a proxima atendente disponivel, transfere o atendimento pela Umbler e devolve sucesso para o fluxo. Assim a equipe ve apenas a decisao final, sem a sequencia visual de `409 Conflict`.
 
 ## Variaveis de ambiente
 

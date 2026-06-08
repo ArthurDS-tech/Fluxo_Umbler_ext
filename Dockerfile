@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY status-server/package.json ./package.json
 COPY status-server/server.js ./server.js
+COPY status-server/remarketing ./remarketing
 
 ENV NODE_ENV=production
 ENV PORT=3000

@@ -5,6 +5,9 @@ const path = require("path");
 const PORT = Number(process.env.PORT || 3000);
 const API_KEY = process.env.STATUS_API_KEY || "";
 const DATA_FILE = process.env.DATA_FILE || path.join(__dirname, "status-data.json");
+const UMBLER_API_BASE = (process.env.UMBLER_API_BASE_URL || "https://app-utalk.umbler.com/api").replace(/\/$/, "");
+const UMBLER_API_TOKEN = process.env.UMBLER_API_TOKEN || "";
+const UMBLER_ORGANIZATION_ID = process.env.UMBLER_ORGANIZATION_ID || "ZQG4wFMHGHuTs59F";
 const BODY_LIMIT_BYTES = 1024 * 64;
 const LOG_LIMIT = Number(process.env.LOG_LIMIT || 1000);
 const QUEUES = {
@@ -280,6 +283,160 @@ function sendJson(res, statusCode, body) {
     "Cache-Control": "no-store"
   });
   res.end(JSON.stringify(body));
+}
+
+async function requestUmbler(pathname, options = {}) {
+  if (!UMBLER_API_TOKEN) {
+    return {
+      ok: false,
+      status: 0,
+      data: { error: "UMBLER_API_TOKEN nao configurado" }
+    };
+  }
+
+  const url = new URL(`${UMBLER_API_BASE}${pathname}`);
+  if (!url.searchParams.has("organizationId")) {
+    url.searchParams.set("organizationId", UMBLER_ORGANIZATION_ID);
+  }
+
+  const method = options.method || "GET";
+  const response = await fetch(url, {
+    method,
+    headers: {
+      Authorization: `Bearer ${UMBLER_API_TOKEN}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      ...(options.headers || {})
+    },
+    body: method === "GET" ? undefined : JSON.stringify(options.body || {})
+  });
+  const text = await response.text();
+  let data = null;
+  try {
+    data = text ? JSON.parse(text) : null;
+  } catch {
+    data = { raw: text };
+  }
+
+  return {
+    ok: response.ok,
+    status: response.status,
+    data
+  };
+}
+
+async function assignChatInUmbler(chatId, memberId) {
+  return requestUmbler(`/v1/chats/${encodeURIComponent(chatId)}/`, {
+    method: "PUT",
+    body: {
+      open: true,
+      waiting: true,
+      memberId
+    }
+  });
+}
+
+function looksLikeUnresolvedVariable(value) {
+  return !value || String(value).includes("{{") || String(value).includes("}}");
+}
+
+async function assignQueueChat({ branch, chatId, phone }) {
+  const branchKey = getBranchKey(branch);
+  const queue = getQueueForBranch(branchKey);
+  const state = getQueueState(branchKey);
+  const businessHours = isBusinessOpen();
+  const next = getAvailableQueueMember(branchKey);
+  const selected = next || {
+    memberId: queue[state.currentIndex] || queue[0],
+    index: state.currentIndex || 0,
+    offset: 0
+  };
+  const selectedName = MEMBER_NAMES[selected.memberId] || selected.memberId;
+  const canReceive = Boolean(next);
+  const mode = canReceive ? "assigned_available" : businessHours.open ? "waiting_no_available" : "waiting_outside_hours";
+
+  if (looksLikeUnresolvedVariable(chatId)) {
+    addLog({
+      kind: "error",
+      title: "Fila limpa sem conversa",
+      text: "A Umbler nao enviou o ID da conversa para o Sistema do Arthur. O fluxo antigo deve ser revisado.",
+      branch: branchKey,
+      contactPhone: phone,
+      result: "missing_chat"
+    });
+    const result = {
+      ok: false,
+      branch: branchKey,
+      canReceive: false,
+      mode: "missing_chat",
+      reason: "ID da conversa nao recebido."
+    };
+    result.data = { ...result };
+    return result;
+  }
+
+  const assignRes = await assignChatInUmbler(chatId, selected.memberId);
+  if (!assignRes.ok) {
+    addLog({
+      kind: "error",
+      title: "Fila limpa nao conseguiu transferir",
+      text: `Tentei direcionar para ${selectedName}, mas a Umbler retornou status ${assignRes.status}.`,
+      branch: branchKey,
+      memberId: selected.memberId,
+      chatId,
+      contactPhone: phone,
+      result: "assign_error"
+    });
+    const result = {
+      ok: false,
+      branch: branchKey,
+      memberId: selected.memberId,
+      memberName: selectedName,
+      canReceive,
+      mode,
+      reason: `Falha ao transferir na Umbler: ${assignRes.status}`,
+      response: assignRes.data
+    };
+    result.data = { ...result };
+    return result;
+  }
+
+  if (canReceive) {
+    assignQueueMember(selected.memberId, selected.index, branchKey);
+  }
+
+  addLog({
+    kind: canReceive ? "success" : "warn",
+    title: "Fila limpa definida",
+    text: canReceive
+      ? `O Sistema do Arthur escolheu ${selectedName} como proxima da fila.`
+      : businessHours.open
+        ? `Nenhuma atendente disponivel na fila ${branchKey}. O atendimento ficou em esperando com ${selectedName}.`
+        : `Fora do horario. O atendimento ficou em esperando com ${selectedName}.`,
+    branch: branchKey,
+    memberId: selected.memberId,
+    chatId,
+    contactPhone: phone,
+    result: canReceive ? "accepted" : "waiting"
+  });
+
+  const result = {
+    ok: true,
+    branch: branchKey,
+    memberId: selected.memberId,
+    memberName: selectedName,
+    canReceive,
+    mode,
+    reason: canReceive
+      ? "Atendente escolhida e fila avancada."
+      : businessHours.open
+        ? "Sem atendentes disponiveis; atendimento ficou em esperando."
+        : "Fora do horario; atendimento ficou em esperando.",
+    businessHours,
+    queue: getQueueSnapshot(branchKey)
+  };
+  result.data = { ...result };
+  return result;
 }
 
 function setCors(req, res) {
@@ -574,6 +731,17 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  if (req.method === "GET" && url.pathname === "/assign-queue") {
+    const result = await assignQueueChat({
+      branch: url.searchParams.get("branch"),
+      chatId: url.searchParams.get("chatId"),
+      phone: url.searchParams.get("phone")
+    });
+
+    sendJson(res, result.ok ? 200 : 500, result);
+    return;
+  }
+
   if (req.method === "GET" && url.pathname === "/available") {
     const memberId = normalizeMemberId(url.searchParams.get("memberId"));
     const branchParam = url.searchParams.get("branch");
@@ -799,6 +967,7 @@ server.listen(PORT, "0.0.0.0", () => {
   console.log("[status-server] GET  /status?memberId=ID_DA_ATENDENTE");
   console.log("[status-server] GET  /available?memberId=ID_DA_ATENDENTE");
   console.log("[status-server] GET  /direct-available?memberId=ID_DA_ATENDENTE");
+  console.log("[status-server] GET  /assign-queue?branch=main&chatId=ID_DA_CONVERSA");
   console.log("[status-server] GET  /queue");
   console.log("[status-server] GET  /logs");
   console.log("[status-server] GET  /remarketing/health");

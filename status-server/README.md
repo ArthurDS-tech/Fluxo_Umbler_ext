@@ -84,7 +84,15 @@ Resposta:
 }
 ```
 
-Para a fila circular do fluxo, use:
+Para a fila limpa do fluxo, use:
+
+```txt
+GET https://SEU-DOMINIO.up.railway.app/assign-queue?branch=main&chatId=ID_DA_CONVERSA
+```
+
+Essa rota escolhe a proxima atendente disponivel, transfere a conversa pela Umbler e avanca a fila quando a transferencia acontece. Assim o historico do chat mostra somente a decisao final.
+
+Para diagnostico individual antigo, ainda existe:
 
 ```txt
 GET https://SEU-DOMINIO.up.railway.app/available?memberId=ID_DA_ATENDENTE
@@ -95,7 +103,7 @@ Essa rota retorna:
 - `200` quando a atendente pode receber e e a vez dela.
 - `409 Conflict` quando o fluxo deve pular para a proxima atendente.
 
-O `409` aparece no historico da Umbler, mas nao quebra o atendimento. Ele e o sinal usado pelo card de webhook para seguir pelo caminho de falha e testar a proxima atendente.
+Essa rota nao deve ser usada como entrada normal da fila, para evitar `409 Conflict` visivel para a equipe.
 
 Para as unidades de Sao Jose e Palhoca, informe a unidade na URL:
 

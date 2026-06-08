@@ -49,6 +49,6 @@ Adiciona etiqueta e coloca em esperando
 
 - Mudar para indisponivel nao move chats atuais.
 - Mudar para disponivel nao tira chats do esperando.
-- O fluxo pode mostrar `409 Conflict` no historico. Isso e esperado na fila.
+- A fila normal usa um unico card do Sistema do Arthur e nao deve mostrar a sequencia de `409 Conflict`.
 - Etiquetas antigas nao sao apagadas.
 - Em SJ/PH, etiquetas de outra unidade nao decidem transferencia.

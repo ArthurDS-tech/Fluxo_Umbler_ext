@@ -2,11 +2,11 @@
 
 ## Aparece `409 Conflict` no historico
 
-Isso e esperado.
+Na fila principal atual isso nao deve mais aparecer como parte normal da distribuicao.
 
-O fluxo usa o retorno `409` para pular uma atendente que nao deve receber naquele momento.
+O fluxo chama o Sistema do Arthur uma unica vez pela rota `/assign-queue`. Essa rota escolhe a responsavel e transfere pela Umbler sem testar atendente por atendente no historico.
 
-So vira problema se todas retornarem `409` e o chat nao cair em nenhuma espera.
+Se voltar a aparecer `409 Conflict` na fila normal, confira se algum card antigo de webhook voltou a ser usado como entrada da fila.
 
 ## Cliente de SJ caiu em Julia ou Bruna
 
