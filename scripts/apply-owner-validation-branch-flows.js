@@ -242,6 +242,8 @@ function applyOwnerValidation(bot, flowKey, config) {
   const ownerSteps = [];
   const flowPrefix = config.prefix || flowKey.toUpperCase();
 
+  bot.triggers = ["ChatCreatedByContact", "Manual"];
+
   if (Array.isArray(config.channels)) {
     bot.channels = config.channels.map((id) => ({ id }));
   }
@@ -263,6 +265,13 @@ function applyOwnerValidation(bot, flowKey, config) {
       for (const group of step.conditionalGroups) {
         if (group.onSuccess === TAG_GATE_ID) group.onSuccess = PARTNER_GATE_ID;
       }
+    }
+
+    if (
+      step._t === "SetWaitingStateActionModel" &&
+      (step.nextStepId === TAG_GATE_ID || step.nextStepId === PARTNER_GATE_ID)
+    ) {
+      step.nextStepId = null;
     }
   }
 
