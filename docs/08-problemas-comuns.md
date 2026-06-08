@@ -14,7 +14,7 @@ Isso acontecia quando o fluxo de SJ aceitava etiqueta antiga de outra unidade.
 
 Regra atual:
 
-- SJ so respeita Evylin, Adrielli e Micheli Maia.
+- SJ so respeita Evylin, Adrielli e Micheli.M.
 - Etiquetas Julia/Bruna continuam no contato, mas nao decidem rota em SJ.
 
 ## Cliente de PH caiu em Bruna
@@ -50,12 +50,12 @@ Hoje:
 
 ## Micheli nao recebe na fila SJ
 
-Confirmar se o Railway esta com o ID de Micheli Maia atual.
+Confirmar se o Railway esta com o ID de Micheli.M atual.
 
 Fila correta:
 
 ```text
-Adrielli -> Micheli Maia
+Adrielli -> Micheli.M
 ```
 
 Se aparecer `MICHELI` antigo, redeploy do `status-server`.

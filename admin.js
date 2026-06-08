@@ -51,7 +51,7 @@ const MEMBER_NAMES = {
   Z26n85VVIK64B6I2: "KENIA",
   ZaZkfnFmogpzCidw: "ANA",
   ZrzsX_BLm_zYqujY: "ADRIELLI",
-  Z5e_UnhziN5VdCCp: "MICHELI MAIA",
+  Z5e_UnhziN5VdCCp: "MICHELI.M",
   ZuGqFp5N9i3HAKOn: "AMANDA",
   ZaWboNQwFgY3oMeT: "ROBSON"
 };

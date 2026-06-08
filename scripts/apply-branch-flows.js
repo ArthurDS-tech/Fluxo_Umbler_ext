@@ -14,7 +14,7 @@ const FLOWS = {
     channels: ["ZaAgdeJmQyTgQhTs", "ZZRR85l_JmIQxo0T"],
     attendants: [
       { name: "ADRIELLI", memberId: "ZrzsX_BLm_zYqujY", tagId: "aRcXOulTi7VLe25M" },
-      { name: "MICHELI", memberId: "Zafi39QwFgY3PIe3", tagId: "aRcXlpId9HOMVvSO" }
+      { name: "MICHELI.M", memberId: "Z5e_UnhziN5VdCCp", tagId: "aRcXlpId9HOMVvSO" }
     ]
   },
   ph: {

@@ -22,7 +22,7 @@ https://utalk-status-webhook-production.up.railway.app
 | Branch | Unidade | Ordem |
 |---|---|---|
 | `main` | Principal | Bruna -> Isa -> Julia -> Kenia -> Ana |
-| `sj` | Sao Jose | Adrielli -> Micheli Maia |
+| `sj` | Sao Jose | Adrielli -> Micheli.M |
 | `ph` | Palhoca | Amanda -> Robson |
 
 ## Endpoints principais

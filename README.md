@@ -36,7 +36,7 @@ As filas ficam em `status-server/server.js`.
 | Unidade | Ordem |
 |---|---|
 | Principal | Bruna -> Isa -> Julia -> Kenia -> Ana |
-| Sao Jose | Adrielli -> Micheli Maia |
+| Sao Jose | Adrielli -> Micheli.M |
 | Palhoca | Amanda -> Robson |
 
 Cada unidade tem sua propria fila. Um atendimento de Sao Jose nao muda a vez de Palhoca nem a vez da fila Principal.
@@ -50,7 +50,7 @@ Mas cada fluxo so respeita as etiquetas da sua unidade:
 | Fluxo | Etiquetas respeitadas como dona |
 |---|---|
 | Principal | Cristiane, Ester, Ana, Kenia, Julia, Isa, Bruna |
-| Sao Jose | Evylin, Adrielli, Micheli Maia |
+| Sao Jose | Evylin, Adrielli, Micheli.M |
 | Palhoca | Amanda, Robson |
 
 Exemplo: se um contato entra por Sao Jose com etiqueta antiga `Julia`, o fluxo de Sao Jose nao manda para Julia. Ele ignora essa etiqueta para decisao de rota e segue para a fila SJ.
@@ -142,7 +142,7 @@ Ultima validacao registrada:
 - Canal `Particular - Sao Jose` dentro do fluxo SJ.
 - Canal `Particular - Palhoca` dentro do fluxo PH.
 - Regra de parceiro ativa nos tres fluxos.
-- Fila SJ publicada no Railway usando `Adrielli -> Micheli Maia`.
+- Fila SJ publicada no Railway usando `Adrielli -> Micheli.M`.
 - Fila PH publicada no Railway usando `Amanda -> Robson`.
 
 Mais detalhes em `VALIDACAO_COMPLETA.md`.

@@ -17,7 +17,7 @@ const QUEUES = {
   ],
   sj: [
     "ZrzsX_BLm_zYqujY", // ADRIELLI
-    "Z5e_UnhziN5VdCCp" // MICHELI MAIA
+    "Z5e_UnhziN5VdCCp" // MICHELI.M
   ],
   ph: [
     "ZuGqFp5N9i3HAKOn", // AMANDA
@@ -31,7 +31,7 @@ const MEMBER_NAMES = {
   Z26n85VVIK64B6I2: "KENIA",
   ZaZkfnFmogpzCidw: "ANA",
   ZrzsX_BLm_zYqujY: "ADRIELLI",
-  Z5e_UnhziN5VdCCp: "MICHELI MAIA",
+  Z5e_UnhziN5VdCCp: "MICHELI.M",
   ZuGqFp5N9i3HAKOn: "AMANDA",
   ZaWboNQwFgY3oMeT: "ROBSON",
   ZjjGI2sLFms4kT6b: "EVYLIN",
@@ -576,7 +576,8 @@ const server = http.createServer(async (req, res) => {
 
   if (req.method === "GET" && url.pathname === "/available") {
     const memberId = normalizeMemberId(url.searchParams.get("memberId"));
-    const branch = getBranchKey(url.searchParams.get("branch"));
+    const branchParam = url.searchParams.get("branch");
+    const branch = getBranchKey(branchParam);
 
     if (!memberId) {
       sendJson(res, 400, { error: "memberId obrigatorio" });
@@ -594,7 +595,8 @@ const server = http.createServer(async (req, res) => {
       assignQueueMember(memberId, next.index, branch);
     }
 
-    const canReceive = businessHours.open && (inQueue ? available && isNextInQueue : available);
+    const requiresQueue = Boolean(branchParam);
+    const canReceive = businessHours.open && (requiresQueue || inQueue ? inQueue && available && isNextInQueue : available);
     addLog({
       kind: canReceive ? "success" : "warn",
       title: "Fila consultada",
@@ -602,6 +604,8 @@ const server = http.createServer(async (req, res) => {
         ? `${MEMBER_NAMES[memberId] || memberId} estava disponivel e era a vez dela.`
         : !businessHours.open
           ? "O atendimento chegou fora do horario definido."
+          : requiresQueue && !inQueue
+          ? `${MEMBER_NAMES[memberId] || memberId} nao faz parte da fila ${branch}.`
           : available
           ? `${MEMBER_NAMES[memberId] || memberId} estava disponivel, mas ainda nao era a vez dela.`
           : `${MEMBER_NAMES[memberId] || memberId} estava indisponivel.`,
@@ -621,6 +625,8 @@ const server = http.createServer(async (req, res) => {
         ? "Atendente disponivel e na vez da fila."
         : !businessHours.open
           ? "Fora do horario de atendimento."
+          : requiresQueue && !inQueue
+          ? "Atendente nao faz parte da fila desta unidade."
           : available
           ? "Atendente disponivel, mas ainda nao e a vez dela na fila."
           : "Atendente indisponivel.",

@@ -61,7 +61,7 @@ const OWNERS = {
   kenia: { name: "KENIA", memberId: "Z26n85VVIK64B6I2", tagId: "aRcVICUhmYerxl6F", waitingId: "aiMWaitKen000001" },
   bruna: { name: "BRUNA", memberId: "ZzUQwM9nj2l-H5hc", tagId: "aRcU4SUhmYerxbuc", waitingId: "aiMWaitBru000001" },
   adrielli: { name: "ADRIELLI", memberId: "ZrzsX_BLm_zYqujY", tagId: "aRcXOulTi7VLe25M", waitingId: GENERIC_WAITING_ID },
-  micheli: { name: "MICHELI MAIA", memberId: "Z5e_UnhziN5VdCCp", tagId: "aRcXlpId9HOMVvSO", waitingId: "aiMWaitIsa000001" },
+  micheli: { name: "MICHELI.M", memberId: "Z5e_UnhziN5VdCCp", tagId: "aRcXlpId9HOMVvSO", waitingId: "aiMWaitIsa000001" },
   amanda: { name: "AMANDA", memberId: "ZuGqFp5N9i3HAKOn", tagId: "aRcc7SUhmYer23sK", waitingId: GENERIC_WAITING_ID },
   robson: { name: "ROBSON", memberId: "ZaWboNQwFgY3oMeT", tagId: "aRcc0yUhmYer2zTn", waitingId: "aiMWaitIsa000001" },
   evylin: { name: "EVYLIN", memberId: "ZjjGI2sLFms4kT6b", tagId: "aRcXLHAZQLndHdD8", waitingId: GENERIC_WAITING_ID },

@@ -42,7 +42,7 @@
 | Unidade | Etiquetas |
 |---|---|
 | Principal | Cristiane, Ester, Ana, Kenia, Julia, Isa, Bruna |
-| Sao Jose | Evylin, Adrielli, Micheli Maia |
+| Sao Jose | Evylin, Adrielli, Micheli.M |
 | Palhoca | Amanda, Robson |
 
 ## Por que separar por unidade

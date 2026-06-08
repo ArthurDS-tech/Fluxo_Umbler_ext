@@ -16,8 +16,8 @@ const FLOWS = {
   sj: {
     id: "aiBQZyxNLsXpDDwS",
     label: "Sao Jose",
-    queue: "Adrielli -> Micheli Maia",
-    ownerRule: "Evylin, Adrielli e Micheli Maia",
+    queue: "Adrielli -> Micheli.M",
+    ownerRule: "Evylin, Adrielli e Micheli.M",
     patio: "Servico de veiculo preso segue pela fila da unidade, conforme regra deste fluxo."
   },
   ph: {
