@@ -22,7 +22,7 @@ module.exports = async function handler(req, res) {
 
     if (logsRequested) {
       const params = new URLSearchParams();
-      for (const key of ["limit", "chatId", "memberId", "branch"]) {
+      for (const key of ["limit", "chatId", "contactPhone", "phone", "memberId", "branch"]) {
         const value = String(req.query?.[key] || "").trim();
         if (value) params.set(key, value);
       }

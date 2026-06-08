@@ -101,7 +101,7 @@ async function searchChat() {
   try {
     const chat = await fetchChat(chatId);
     renderChat(chat);
-    await loadSystemLogs(chat.id);
+    await loadSystemLogs(chat);
     saveSession();
     setMessage("Historico carregado.", "ok");
   } catch (error) {
@@ -164,9 +164,10 @@ async function requestUtalk(payload) {
   return data;
 }
 
-async function fetchSystemLogs(chatId = "") {
+async function fetchSystemLogs(filters = {}) {
   const params = new URLSearchParams({ logs: "1", limit: "250" });
-  if (chatId) params.set("chatId", chatId);
+  if (filters.chatId) params.set("chatId", filters.chatId);
+  if (filters.contactPhone) params.set("contactPhone", filters.contactPhone);
 
   const response = await fetch(`/api/status?${params}`);
   const text = await response.text();
@@ -175,14 +176,29 @@ async function fetchSystemLogs(chatId = "") {
   return data?.logs || [];
 }
 
-async function loadSystemLogs(chatId = "") {
+async function loadSystemLogs(chat = null) {
   try {
-    let logs = await fetchSystemLogs(chatId);
-    if (chatId && !logs.length) {
-      logs = await fetchSystemLogs();
+    const chatId = typeof chat === "string" ? chat : chat?.id || "";
+    const phone = typeof chat === "object" ? chat?.contact?.phoneNumber || "" : "";
+    const exactLogs = chatId ? await fetchSystemLogs({ chatId }) : [];
+    const phoneLogs = phone ? await fetchSystemLogs({ contactPhone: phone }) : [];
+    const combined = mergeLogs(exactLogs, phoneLogs);
+
+    if (chatId && combined.length) {
+      state.systemLogs = combined;
+      renderSystemLogs(combined, {
+        searchedChat: true,
+        matched: exactLogs.length ? "chat" : "phone"
+      });
+      return;
     }
-    state.systemLogs = logs;
-    renderSystemLogs(logs, Boolean(chatId));
+
+    const generalLogs = await fetchSystemLogs();
+    state.systemLogs = generalLogs;
+    renderSystemLogs(generalLogs, {
+      searchedChat: Boolean(chatId),
+      matched: chatId ? "general" : "general"
+    });
   } catch (error) {
     systemLogCount.textContent = "nao carregou";
     systemTimeline.innerHTML = `<p class="empty">Nao consegui carregar os registros do nosso sistema. ${escapeHtml(friendlyError(error))}</p>`;
@@ -232,7 +248,8 @@ function renderChat(chat) {
   renderRecent(state.recentChats);
 }
 
-function renderSystemLogs(logs, searchedChat = false) {
+function renderSystemLogs(logs, options = {}) {
+  const { searchedChat = false, matched = "general" } = options;
   systemLogCount.textContent = `${logs.length} registro${logs.length === 1 ? "" : "s"}`;
   if (!logs.length) {
     systemTimeline.innerHTML = searchedChat
@@ -241,7 +258,13 @@ function renderSystemLogs(logs, searchedChat = false) {
     return;
   }
 
-  systemTimeline.innerHTML = logs.map((log) => renderEvent(systemLogEvent(log))).join("");
+  const header = searchedChat && matched === "general"
+    ? '<p class="log-context">Nao encontrei registros do nosso sistema ligados diretamente a este chat. Abaixo estao os registros gerais mais recentes.</p>'
+    : searchedChat && matched === "phone"
+      ? '<p class="log-context">Nao encontrei pelo ID do chat, mas encontrei registros do nosso sistema pelo telefone deste contato.</p>'
+      : "";
+
+  systemTimeline.innerHTML = `${header}${logs.map((log) => renderEvent(systemLogEvent(log))).join("")}`;
 }
 
 function systemLogEvent(log) {
@@ -262,6 +285,7 @@ function systemLogEvent(log) {
 
 function renderSummaryCards(chat) {
   const cards = [
+    ["ID do chat", chat.id || "-"],
     ["Cliente", contactName(chat)],
     ["Telefone", chat.contact?.phoneNumber || "-"],
     ["Unidade", unitName(chat)],
@@ -318,7 +342,12 @@ function buildTimeline(chat) {
       at: item.createdAt,
       title: "Bot executado",
       text: botSummary(item),
-      kind: item.status === "Complete" ? "success" : "warn"
+      kind: item.status === "Complete" ? "success" : "warn",
+      details: [
+        ["Execucao", item.botInstanceId || "-"],
+        ["Fluxo", item.botTitle || "-"],
+        ["Situacao", item.status === "Complete" ? "Concluido" : "Em andamento"]
+      ]
     });
   }
 
@@ -341,8 +370,11 @@ function buildTimeline(chat) {
   }
 
   const messages = normalizeMessages(chat);
+  for (const msg of [chat.firstContactMessage, chat.firstMemberReplyMessage, chat.message]) {
+    addUniqueMessageEvent(events, msg);
+  }
   for (const msg of messages) {
-    addEvent(events, messageEvent(msg));
+    addUniqueMessageEvent(events, msg);
   }
 
   if (chat.waiting) {
@@ -355,7 +387,16 @@ function buildTimeline(chat) {
   }
 
   if (chat.lastMessage && !messages.some((msg) => msg.id === chat.lastMessage.id)) {
-    addEvent(events, messageEvent(chat.lastMessage));
+    addUniqueMessageEvent(events, chat.lastMessage);
+  }
+
+  if (chat.closedAtUTC) {
+    addEvent(events, {
+      at: chat.closedAtUTC,
+      title: "Atendimento finalizado",
+      text: "O atendimento foi finalizado na Umbler.",
+      kind: "soft"
+    });
   }
 
   return events
@@ -385,6 +426,11 @@ function addEvent(events, event) {
   events.push(event);
 }
 
+function addUniqueMessageEvent(events, msg) {
+  if (!msg?.id || events.some((event) => event.messageId === msg.id)) return;
+  events.push({ ...messageEvent(msg), messageId: msg.id });
+}
+
 function renderEvent(event) {
   const details = event.details?.length
     ? `<div class="log-grid">${event.details.map(([label, value]) => `
@@ -407,6 +453,7 @@ async function copyCurrentSummary() {
   const chat = state.selectedChat;
   const lines = [
     "Historico do atendimento",
+    `ID do chat: ${chat.id || "-"}`,
     `Cliente: ${contactName(chat)}`,
     `Telefone: ${chat.contact?.phoneNumber || "-"}`,
     `Unidade: ${unitName(chat)}`,
@@ -492,6 +539,16 @@ function filterRecent(chats) {
 function normalizeMessages(chat) {
   const messages = chat.messages || chat.latestMessages || [];
   return Array.isArray(messages) ? messages : [];
+}
+
+function mergeLogs(...groups) {
+  const byId = new Map();
+  for (const group of groups) {
+    for (const log of group || []) {
+      if (log?.id) byId.set(log.id, log);
+    }
+  }
+  return [...byId.values()].sort((a, b) => dateValue(b.at) - dateValue(a.at));
 }
 
 function unitName(chat) {

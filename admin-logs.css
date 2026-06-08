@@ -136,6 +136,16 @@
   border-left-color: #6f7c8f;
 }
 
+.log-context {
+  background: #fff7df;
+  border: 1px solid #f0d58a;
+  border-radius: 8px;
+  color: #665016;
+  font-size: 14px;
+  margin: 0;
+  padding: 10px 12px;
+}
+
 .timeline-item {
   border: 1px solid var(--line);
   border-left: 4px solid var(--blue);

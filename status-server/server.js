@@ -167,11 +167,13 @@ function addLog(entry) {
 function getLogsSnapshot(options = {}) {
   const limit = Math.max(1, Math.min(Number(options.limit || 200), LOG_LIMIT));
   const chatId = String(options.chatId || "").trim();
+  const contactPhone = normalizePhone(options.contactPhone || options.phone);
   const memberId = normalizeMemberId(options.memberId);
   const branch = options.branch ? getBranchKey(options.branch) : "";
 
   return eventLogs
     .filter((item) => !chatId || item.chatId === chatId)
+    .filter((item) => !contactPhone || normalizePhone(item.contactPhone) === contactPhone)
     .filter((item) => !memberId || item.memberId === memberId)
     .filter((item) => !branch || item.branch === branch)
     .slice(-limit)
@@ -446,6 +448,10 @@ function normalizeMemberId(value) {
   return typeof value === "string" ? value.trim() : "";
 }
 
+function normalizePhone(value) {
+  return String(value || "").replace(/\D/g, "");
+}
+
 const server = http.createServer(async (req, res) => {
   setCors(req, res);
 
@@ -543,6 +549,7 @@ const server = http.createServer(async (req, res) => {
       logs: getLogsSnapshot({
         limit: url.searchParams.get("limit"),
         chatId: url.searchParams.get("chatId"),
+        contactPhone: url.searchParams.get("contactPhone") || url.searchParams.get("phone"),
         memberId: url.searchParams.get("memberId"),
         branch: url.searchParams.get("branch")
       })

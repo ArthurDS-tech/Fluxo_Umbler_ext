@@ -100,6 +100,7 @@ Funcao:
 - mostrar a linha do tempo do atendimento em linguagem simples;
 - destacar transferencias, etiquetas, mensagens, notas internas e entrada em esperando;
 - mostrar registros do nosso sistema, como decisao da fila, disponibilidade, remarketing e ajustes de fila;
+- ao buscar um chat, procurar registros pelo ID do chat e pelo telefone do contato;
 - copiar um resumo para conferencias internas;
 - imprimir o historico.
 
