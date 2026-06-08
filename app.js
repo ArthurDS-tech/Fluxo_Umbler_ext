@@ -82,19 +82,12 @@ async function setAvailability(available) {
   try {
     if (!available) {
       await updateRemoteAvailability(false);
-
-      const chats = await fetchOpenChats();
-      const results = await Promise.allSettled(
-        chats.map((chat) => updateChatWaiting(chat.id, true))
-      );
-      state.waitingChats = chats
-        .filter((_, index) => results[index].status === "fulfilled")
-        .map((chat) => chat.id);
       state.available = false;
+      state.waitingChats = [];
       saveSession();
       updateStatusUi();
       setMessage(
-        `Indisponivel. ${state.waitingChats.length} chat(s) colocados em espera. Novos contatos serao bloqueados no fluxo.`,
+        "Indisponivel. Seus chats atuais continuam exatamente onde estao. Novos contatos serao redirecionados.",
         "ok"
       );
       return;
@@ -149,38 +142,6 @@ async function fetchRemoteAvailability(memberId = state.memberId) {
   }
 
   return data?.available === true;
-}
-
-async function fetchOpenChats() {
-  const data = await apiRequest({
-    token: state.token,
-    path: "/v1/chats/",
-    organizationId: state.organizationId,
-    query: {
-      ChatState: "Open",
-      "Members.Rule": "Any",
-      "Members.Values": state.memberId,
-      Take: "100"
-    }
-  });
-
-  const chats = Array.isArray(data) ? data : data.items || [];
-  return chats.filter((chat) => isChatAssignedToMember(chat, state.memberId));
-}
-
-function updateChatWaiting(chatId, waiting) {
-  return apiRequest({
-    token: state.token,
-    path: `/v1/chats/${chatId}/`,
-    organizationId: state.organizationId,
-    method: "PUT",
-    body: { waiting }
-  });
-}
-
-function isChatAssignedToMember(chat, memberId) {
-  if (!chat || !memberId) return false;
-  return chat.organizationMember?.id === memberId;
 }
 
 async function apiRequest(payload) {

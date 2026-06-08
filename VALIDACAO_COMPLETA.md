@@ -297,6 +297,24 @@ Validacao apos salvar:
 - Snapshot: `Adiciona etiquetas por atendente apos transferencia`.
 - Foram criados 25 cards de etiqueta de atendente: 5 transferencias x 5 atendentes possiveis.
 
+Atualizacao em 2026-06-08:
+
+- Os 5 pontos de transferencia do fluxo de avisos deixaram de usar o rodizio interno da Umbler.
+- Esses pontos agora usam a fila Railway principal: Bruna -> Isa -> Julia -> Kenia -> Ana.
+- Se uma atendente nao estiver disponivel ou estiver fora do horario, o fluxo tenta a proxima da fila.
+- Validacao por API confirmou: fluxo com 159 cards, 0 conexoes quebradas e 5 entradas de transferencia usando `/available?memberId=...`.
+- O fluxo permanece com o mesmo estado de ativacao que ja estava configurado na Umbler.
+
+## Extensao de disponibilidade
+
+Atualizacao em 2026-06-08:
+
+- A extensao e a pagina web nao alteram mais o campo `waiting` dos chats quando a atendente clica em `Disponivel` ou `Indisponivel`.
+- `Indisponivel` agora apenas bloqueia novos atendimentos na fila.
+- `Disponivel` agora apenas libera novos atendimentos na fila.
+- Os chats que ja estavam em `esperando` continuam em `esperando`.
+- Os chats que estavam em atendimento continuam em atendimento.
+
 Transferencias migradas:
 
 | Card de transferencia | Comportamento |

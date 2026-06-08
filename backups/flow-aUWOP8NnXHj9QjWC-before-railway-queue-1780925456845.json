@@ -1,0 +1,1675 @@
+{
+  "_t": "FlowchartBotModel",
+  "triggers": [
+    "Manual",
+    "ContactMessage"
+  ],
+  "manualTriggers": [
+    "Início"
+  ],
+  "steps": [
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "SE FECHAR, ADICIONAR ETIQUETA DE (POSITIVO FINAL 6).",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aURfG-4I-DwxWS_p",
+      "position": {
+        "x": 4500,
+        "y": 0
+      },
+      "id": "acPtdxu8lud4ONFk",
+      "createdAtUTC": "2026-03-25T14:13:11Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "ag9WpXMEEBQj4U6x",
+        "ah7So_JQCsVt28uC"
+      ],
+      "nextStepId": "aUVRxjMOTb2Wpeg0",
+      "position": {
+        "x": 3400,
+        "y": 200
+      },
+      "id": "aURc5sMr4m_1gOAO",
+      "createdAtUTC": "2025-12-18T19:58:30Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "aURc9U_Muiw87Klo",
+      "position": {
+        "x": 3800,
+        "y": 200
+      },
+      "id": "aUVRxjMOTb2Wpeg0",
+      "createdAtUTC": "2025-12-19T13:23:18Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZaZkfnFmogpzCidw",
+          "ZaZlLHFmogpzC4xO",
+          "ZoWIY_xoe7uoAAFQ",
+          "Z26n85VVIK64B6I2",
+          "ZzUQwM9nj2l-H5hc"
+        ],
+        "strategy": "RoundRobin"
+      },
+      "onlyMembersAvailable": true,
+      "nextStepId": "aiN0000000000001",
+      "onFail": "aURfG-4I-DwxWS_p",
+      "position": {
+        "x": 4200,
+        "y": 200
+      },
+      "id": "aURc9U_Muiw87Klo",
+      "createdAtUTC": "2025-12-18T19:58:45Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "aUkwyjt8op5R7j07",
+      "position": {
+        "x": 4800,
+        "y": 200
+      },
+      "id": "aURfG-4I-DwxWS_p",
+      "createdAtUTC": "2025-12-18T20:07:55Z"
+    },
+    {
+      "_t": "FlowchartBotManualStartedEventModel",
+      "hidden": false,
+      "triggerName": "Início",
+      "variables": [],
+      "nextStepId": "aUU0C67zys2xoEcP",
+      "position": {
+        "x": 400,
+        "y": 700
+      },
+      "id": "aURc3IqhK2HSsKit",
+      "createdAtUTC": "2025-12-18T19:58:20Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "CASO O CLIENTE RESPONDA, POR GENTILEZA, ADICIONAR INFORMAÇÃO NO SISTEMA DO PEDIDOS.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aUU7muOzTJMIYa3W",
+      "position": {
+        "x": 4450,
+        "y": 700
+      },
+      "id": "acPuHJnKfac5PirK",
+      "createdAtUTC": "2026-03-25T14:15:56Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "ag9WvHMEEBQj4dJ5"
+      ],
+      "nextStepId": "aURe7jJiTTbHt2rB",
+      "position": {
+        "x": 3400,
+        "y": 800
+      },
+      "id": "aURdXXTGUO1Y5gtI",
+      "createdAtUTC": "2025-12-18T20:00:29Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "aURfFLh15w-MSAD2",
+      "position": {
+        "x": 3750,
+        "y": 800
+      },
+      "id": "aURe7jJiTTbHt2rB",
+      "createdAtUTC": "2025-12-18T20:07:10Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZaZkfnFmogpzCidw",
+          "ZzUQwM9nj2l-H5hc",
+          "ZaZlLHFmogpzC4xO",
+          "ZoWIY_xoe7uoAAFQ",
+          "Z26n85VVIK64B6I2"
+        ],
+        "strategy": "RoundRobin"
+      },
+      "onlyMembersAvailable": true,
+      "nextStepId": "aiN0000000000011",
+      "onFail": "aUU7muOzTJMIYa3W",
+      "position": {
+        "x": 4100,
+        "y": 800
+      },
+      "id": "aURfFLh15w-MSAD2",
+      "createdAtUTC": "2025-12-18T20:07:48Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": false,
+      "nextStepId": null,
+      "position": {
+        "x": 4850,
+        "y": 800
+      },
+      "id": "aUU7muOzTJMIYa3W",
+      "createdAtUTC": "2025-12-19T11:48:42Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 5200,
+        "y": 800
+      },
+      "id": "aUkwyjt8op5R7j07",
+      "createdAtUTC": "2025-12-22T11:51:38Z"
+    },
+    {
+      "_t": "TemplateMessageStepModel",
+      "templateId": "acU2tUtzxC530Mtc",
+      "organizationFileId": "afj5ah4MbkjJTsl4",
+      "params": [
+        "{{#Ou}} {{Contato.Proprietario}} | Cliente {{/Ou}}",
+        "*Ana Paula*",
+        "{{#Ou}} {{Contato.Veiculo}} | *Marca/Modelo* {{/Ou}}",
+        "{{#Ou}} {{Contato.Placa}} | *ABC1234* {{/Ou}}",
+        "{{#Ou}} {{Contato.Datavencimento}} | *Junho* {{/Ou}}",
+        "{{#Ou}} {{Contato.DataPagamento}} | *09/06/2026* {{/Ou}}"
+      ],
+      "options": [
+        {
+          "buttonText": "Receber informações.",
+          "stepId": "aURc5sMr4m_1gOAO",
+          "postbackText": null
+        },
+        {
+          "buttonText": "Falar em outro momento.",
+          "stepId": "aUVRFrg3U5DLKWdK",
+          "postbackText": null
+        },
+        {
+          "buttonText": "Não, obrigado.",
+          "stepId": "aURdXXTGUO1Y5gtI",
+          "postbackText": null
+        }
+      ],
+      "noWaitResponse": false,
+      "carousel": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "onResponseFail": "acPZLTWmyAkZ26v8",
+      "onTimeout": "aURdXXTGUO1Y5gtI",
+      "timeout": "05:00:00",
+      "position": {
+        "x": 1900,
+        "y": 1100
+      },
+      "id": "aURmOzsIp6gPjPB-",
+      "createdAtUTC": "2025-12-18T20:38:19Z"
+    },
+    {
+      "_t": "DayOfTheWeekStepModel",
+      "stepsForDaysOfTheWeek": [
+        "aUU0D_R8J9hI2RxG",
+        "aUU0YG9ucOvijtmT",
+        "aUU0YG9ucOvijtmT",
+        "aUU0YG9ucOvijtmT",
+        "aUU0YG9ucOvijtmT",
+        "aUU0YG9ucOvijtmT",
+        "aUU0D_R8J9hI2RxG"
+      ],
+      "timeZone": "America/Sao_Paulo",
+      "position": {
+        "x": 0,
+        "y": 1150
+      },
+      "id": "aUU0C67zys2xoEcP",
+      "createdAtUTC": "2025-12-19T11:16:27Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Global",
+      "onSuccess": "aUU0pAWuvhdGb_iE",
+      "onFail": "acbduSyGqjLbDI2X",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "SectorConditionalModel",
+              "sectors": [
+                "aSRq-Q8ELj-uto7s"
+              ],
+              "operator": "Any"
+            },
+            {
+              "_t": "TagConditionalModel",
+              "chatTags": [
+                "ZamSilkIEj5AHGzS",
+                "ZkuI5Zh3NfLcbIAR",
+                "ZbFRWygH8-Yod3Xr",
+                "ZdSnom537tdGCMtw",
+                "aG67LR9r7uYtRuW7",
+                "ahhpwygL9gMh06YL",
+                "afyOik9n3SHs62EG"
+              ],
+              "contactTags": [
+                "ZamSilkIEj5AHGzS",
+                "ZdSnom537tdGCMtw",
+                "ZbFRWygH8-Yod3Xr",
+                "ZkuI5Zh3NfLcbIAR",
+                "aG67LR9r7uYtRuW7",
+                "ahhpwygL9gMh06YL",
+                "afyOik9n3SHs62EG"
+              ],
+              "operator": "NotContains"
+            }
+          ],
+          "onSuccess": null,
+          "name": "Televendas"
+        }
+      ],
+      "position": {
+        "x": 850,
+        "y": 1150
+      },
+      "id": "acbdnIHA61TQXmof",
+      "createdAtUTC": "2026-03-27T19:42:20Z"
+    },
+    {
+      "_t": "SectorTransferActionModel",
+      "sectorId": "aSRq-Q8ELj-uto7s",
+      "strategy": "Direct",
+      "onlyAllowedMember": false,
+      "nextStepId": "aURmOzsIp6gPjPB-",
+      "onFail": null,
+      "position": {
+        "x": 1450,
+        "y": 1150
+      },
+      "id": "aUU0pAWuvhdGb_iE",
+      "createdAtUTC": "2025-12-19T11:19:00Z"
+    },
+    {
+      "_t": "TimeOfDayStepModel",
+      "ranges": [
+        {
+          "range": {
+            "start": "08:00:00",
+            "end": "18:00:00"
+          },
+          "stepId": "acbdnIHA61TQXmof"
+        },
+        {
+          "range": {
+            "start": "18:00:00",
+            "end": "08:00:00"
+          },
+          "stepId": "aUU0D_R8J9hI2RxG"
+        }
+      ],
+      "timeZone": "America/Sao_Paulo",
+      "position": {
+        "x": 450,
+        "y": 1200
+      },
+      "id": "aUU0YG9ucOvijtmT",
+      "createdAtUTC": "2025-12-19T11:17:52Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "SE FECHAR, ADICIONAR ETIQUETA DE (POSITIVO FINAL 5).",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aUVRZaR1w7Ys1gQg",
+      "position": {
+        "x": 4600,
+        "y": 1250
+      },
+      "id": "acPuNc6qvIhVB_KA",
+      "createdAtUTC": "2026-03-25T14:16:21Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "aUkwyjt8op5R7j07",
+      "position": {
+        "x": 5000,
+        "y": 1350
+      },
+      "id": "aUVRZaR1w7Ys1gQg",
+      "createdAtUTC": "2025-12-19T13:21:41Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "ag9WpXMEEBQj4U6x"
+      ],
+      "nextStepId": "aUWFvY5rViUlskhp",
+      "position": {
+        "x": 3550,
+        "y": 1400
+      },
+      "id": "aUWFOSs4mlw7hfJo",
+      "createdAtUTC": "2025-12-19T17:02:49Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "aUVRWxqSNap8qUS5",
+      "position": {
+        "x": 3900,
+        "y": 1400
+      },
+      "id": "aUWFvY5rViUlskhp",
+      "createdAtUTC": "2025-12-19T17:05:01Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "ag9XmqNkLimw27Xb"
+      ],
+      "nextStepId": "aUVRc1lRS2uJq8ZB",
+      "position": {
+        "x": 2850,
+        "y": 1450
+      },
+      "id": "aUVRFrg3U5DLKWdK",
+      "createdAtUTC": "2025-12-19T13:20:22Z"
+    },
+    {
+      "_t": "WaitingActionModel",
+      "interval": {
+        "_t": "WaitingActionFixedIntervalModel",
+        "interval": "01:00:00"
+      },
+      "nextStepId": "aUWFOSs4mlw7hfJo",
+      "contactResponseStepId": "aUWFOSs4mlw7hfJo",
+      "position": {
+        "x": 3200,
+        "y": 1450
+      },
+      "id": "aUVRc1lRS2uJq8ZB",
+      "createdAtUTC": "2025-12-19T13:21:55Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZaZkfnFmogpzCidw",
+          "ZzUQwM9nj2l-H5hc",
+          "ZaZlLHFmogpzC4xO",
+          "Z26n85VVIK64B6I2",
+          "ZoWIY_xoe7uoAAFQ"
+        ],
+        "strategy": "RoundRobin"
+      },
+      "onlyMembersAvailable": true,
+      "nextStepId": "aiN0000000000021",
+      "onFail": "aUVRZaR1w7Ys1gQg",
+      "position": {
+        "x": 4250,
+        "y": 1450
+      },
+      "id": "aUVRWxqSNap8qUS5",
+      "createdAtUTC": "2025-12-19T13:21:31Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "CONTATO COM ETIQUETAS DE: POSITIVO, INTERNO, GRUPOS, DESP DE FORA, NÃO MANDAR AVISOS E PARCEIROS *NÃO VÃO RECEBER TAMPLATE DE AVISO*.",
+      "footer": null,
+      "isPrivate": true,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": null,
+      "position": {
+        "x": 1150,
+        "y": 1550
+      },
+      "id": "acbduSyGqjLbDI2X",
+      "createdAtUTC": "2026-03-27T19:42:49Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZaZkfnFmogpzCidw",
+          "ZzUQwM9nj2l-H5hc",
+          "ZaZlLHFmogpzC4xO",
+          "Z26n85VVIK64B6I2",
+          "ZoWIY_xoe7uoAAFQ"
+        ],
+        "strategy": "RoundRobin"
+      },
+      "onlyMembersAvailable": true,
+      "nextStepId": "aiN0000000000031",
+      "onFail": "acPZS9eSQze0hE9n",
+      "position": {
+        "x": 3250,
+        "y": 1950
+      },
+      "id": "acPZPNfC2blZIjeQ",
+      "createdAtUTC": "2026-03-25T12:46:52Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "acPZPNfC2blZIjeQ",
+      "position": {
+        "x": 2700,
+        "y": 2100
+      },
+      "id": "acPZLTWmyAkZ26v8",
+      "createdAtUTC": "2026-03-25T12:46:37Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 4000,
+        "y": 2100
+      },
+      "id": "acPZS9eSQze0hE9n",
+      "createdAtUTC": "2026-03-25T12:47:07Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [
+        "ZRwNL2tSzyaJPLwJ"
+      ],
+      "contactTags": [],
+      "nextStepId": "aUU-yfYuYBCA_6KQ",
+      "position": {
+        "x": 700,
+        "y": 2500
+      },
+      "id": "aUU0D_R8J9hI2RxG",
+      "createdAtUTC": "2025-12-19T11:16:31Z"
+    },
+    {
+      "_t": "MemberTransferActionModel",
+      "target": "All",
+      "options": {
+        "memberIds": [
+          "ZaZkfnFmogpzCidw",
+          "ZaZlLHFmogpzC4xO",
+          "ZoWIY_xoe7uoAAFQ",
+          "Z26n85VVIK64B6I2",
+          "ZzUQwM9nj2l-H5hc"
+        ],
+        "strategy": "RoundRobin"
+      },
+      "onlyMembersAvailable": true,
+      "nextStepId": "aiN0000000000041",
+      "onFail": "aUVGrPRdi6aM1kzM",
+      "position": {
+        "x": 1050,
+        "y": 2600
+      },
+      "id": "aUU-yfYuYBCA_6KQ",
+      "createdAtUTC": "2025-12-19T12:02:17Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "*Bem-vindo(a) ao Despachante Marcelino!* 💙\n\nA Auto Fácil agora é Despachante Marcelino, mantendo o mesmo atendimento rápido e seguro para a documentação do seu veículo! 🚙💨",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aUU-5eC_rfpjN53N",
+      "position": {
+        "x": 1900,
+        "y": 2800
+      },
+      "id": "aUU-2GIeZmXv9eYJ",
+      "createdAtUTC": "2025-12-19T12:02:32Z"
+    },
+    {
+      "_t": "SendMessageActionModel",
+      "organizationFileId": null,
+      "message": "🕒 No momento estamos fora do nosso horário de atendimento.\nAtendemos de *segunda a sexta-feira, das 08h às 18h.*",
+      "footer": null,
+      "isPrivate": false,
+      "buttons": [],
+      "waitForDelivery": false,
+      "onDeliveryFail": null,
+      "confirmationTimeout": null,
+      "nextStepId": "aUVGuTUadnp-Kw1R",
+      "position": {
+        "x": 2250,
+        "y": 2800
+      },
+      "id": "aUU-5eC_rfpjN53N",
+      "createdAtUTC": "2025-12-19T12:02:45Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": null,
+      "position": {
+        "x": 2650,
+        "y": 2800
+      },
+      "id": "aUVGuTUadnp-Kw1R",
+      "createdAtUTC": "2025-12-19T12:36:09Z"
+    },
+    {
+      "_t": "SetWaitingStateActionModel",
+      "waiting": true,
+      "nextStepId": "aUU-2GIeZmXv9eYJ",
+      "position": {
+        "x": 1500,
+        "y": 2850
+      },
+      "id": "aUVGrPRdi6aM1kzM",
+      "createdAtUTC": "2025-12-19T12:35:56Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000003",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZaZkfnFmogpzCidw"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000002",
+          "name": "ANA"
+        }
+      ],
+      "position": {
+        "x": 4550,
+        "y": 80
+      },
+      "id": "aiN0000000000001",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcUrulTi7VLdefG"
+      ],
+      "nextStepId": "acPtdxu8lud4ONFk",
+      "position": {
+        "x": 4550,
+        "y": 260
+      },
+      "id": "aiN0000000000002",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000005",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZaZlLHFmogpzC4xO"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000004",
+          "name": "ISA"
+        }
+      ],
+      "position": {
+        "x": 4850,
+        "y": 80
+      },
+      "id": "aiN0000000000003",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcX9elTi7VLfbiN"
+      ],
+      "nextStepId": "acPtdxu8lud4ONFk",
+      "position": {
+        "x": 4850,
+        "y": 260
+      },
+      "id": "aiN0000000000004",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000007",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZoWIY_xoe7uoAAFQ"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000006",
+          "name": "JULIA"
+        }
+      ],
+      "position": {
+        "x": 5150,
+        "y": 80
+      },
+      "id": "aiN0000000000005",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcUv3AZQLndGPqS"
+      ],
+      "nextStepId": "acPtdxu8lud4ONFk",
+      "position": {
+        "x": 5150,
+        "y": 260
+      },
+      "id": "aiN0000000000006",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000009",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZzUQwM9nj2l-H5hc"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000008",
+          "name": "BRUNA"
+        }
+      ],
+      "position": {
+        "x": 5450,
+        "y": 80
+      },
+      "id": "aiN0000000000007",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcU4SUhmYerxbuc"
+      ],
+      "nextStepId": "acPtdxu8lud4ONFk",
+      "position": {
+        "x": 5450,
+        "y": 260
+      },
+      "id": "aiN0000000000008",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "acPtdxu8lud4ONFk",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "Z26n85VVIK64B6I2"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000010",
+          "name": "KENIA"
+        }
+      ],
+      "position": {
+        "x": 5750,
+        "y": 80
+      },
+      "id": "aiN0000000000009",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcVICUhmYerxl6F"
+      ],
+      "nextStepId": "acPtdxu8lud4ONFk",
+      "position": {
+        "x": 5750,
+        "y": 260
+      },
+      "id": "aiN0000000000010",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000013",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZaZkfnFmogpzCidw"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000012",
+          "name": "ANA"
+        }
+      ],
+      "position": {
+        "x": 4450,
+        "y": 680
+      },
+      "id": "aiN0000000000011",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcUrulTi7VLdefG"
+      ],
+      "nextStepId": "acPuHJnKfac5PirK",
+      "position": {
+        "x": 4450,
+        "y": 860
+      },
+      "id": "aiN0000000000012",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000015",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZaZlLHFmogpzC4xO"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000014",
+          "name": "ISA"
+        }
+      ],
+      "position": {
+        "x": 4750,
+        "y": 680
+      },
+      "id": "aiN0000000000013",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcX9elTi7VLfbiN"
+      ],
+      "nextStepId": "acPuHJnKfac5PirK",
+      "position": {
+        "x": 4750,
+        "y": 860
+      },
+      "id": "aiN0000000000014",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000017",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZoWIY_xoe7uoAAFQ"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000016",
+          "name": "JULIA"
+        }
+      ],
+      "position": {
+        "x": 5050,
+        "y": 680
+      },
+      "id": "aiN0000000000015",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcUv3AZQLndGPqS"
+      ],
+      "nextStepId": "acPuHJnKfac5PirK",
+      "position": {
+        "x": 5050,
+        "y": 860
+      },
+      "id": "aiN0000000000016",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000019",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZzUQwM9nj2l-H5hc"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000018",
+          "name": "BRUNA"
+        }
+      ],
+      "position": {
+        "x": 5350,
+        "y": 680
+      },
+      "id": "aiN0000000000017",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcU4SUhmYerxbuc"
+      ],
+      "nextStepId": "acPuHJnKfac5PirK",
+      "position": {
+        "x": 5350,
+        "y": 860
+      },
+      "id": "aiN0000000000018",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "acPuHJnKfac5PirK",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "Z26n85VVIK64B6I2"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000020",
+          "name": "KENIA"
+        }
+      ],
+      "position": {
+        "x": 5650,
+        "y": 680
+      },
+      "id": "aiN0000000000019",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcVICUhmYerxl6F"
+      ],
+      "nextStepId": "acPuHJnKfac5PirK",
+      "position": {
+        "x": 5650,
+        "y": 860
+      },
+      "id": "aiN0000000000020",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000023",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZaZkfnFmogpzCidw"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000022",
+          "name": "ANA"
+        }
+      ],
+      "position": {
+        "x": 4600,
+        "y": 1330
+      },
+      "id": "aiN0000000000021",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcUrulTi7VLdefG"
+      ],
+      "nextStepId": "acPuNc6qvIhVB_KA",
+      "position": {
+        "x": 4600,
+        "y": 1510
+      },
+      "id": "aiN0000000000022",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000025",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZaZlLHFmogpzC4xO"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000024",
+          "name": "ISA"
+        }
+      ],
+      "position": {
+        "x": 4900,
+        "y": 1330
+      },
+      "id": "aiN0000000000023",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcX9elTi7VLfbiN"
+      ],
+      "nextStepId": "acPuNc6qvIhVB_KA",
+      "position": {
+        "x": 4900,
+        "y": 1510
+      },
+      "id": "aiN0000000000024",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000027",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZoWIY_xoe7uoAAFQ"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000026",
+          "name": "JULIA"
+        }
+      ],
+      "position": {
+        "x": 5200,
+        "y": 1330
+      },
+      "id": "aiN0000000000025",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcUv3AZQLndGPqS"
+      ],
+      "nextStepId": "acPuNc6qvIhVB_KA",
+      "position": {
+        "x": 5200,
+        "y": 1510
+      },
+      "id": "aiN0000000000026",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000029",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZzUQwM9nj2l-H5hc"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000028",
+          "name": "BRUNA"
+        }
+      ],
+      "position": {
+        "x": 5500,
+        "y": 1330
+      },
+      "id": "aiN0000000000027",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcU4SUhmYerxbuc"
+      ],
+      "nextStepId": "acPuNc6qvIhVB_KA",
+      "position": {
+        "x": 5500,
+        "y": 1510
+      },
+      "id": "aiN0000000000028",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "acPuNc6qvIhVB_KA",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "Z26n85VVIK64B6I2"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000030",
+          "name": "KENIA"
+        }
+      ],
+      "position": {
+        "x": 5800,
+        "y": 1330
+      },
+      "id": "aiN0000000000029",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcVICUhmYerxl6F"
+      ],
+      "nextStepId": "acPuNc6qvIhVB_KA",
+      "position": {
+        "x": 5800,
+        "y": 1510
+      },
+      "id": "aiN0000000000030",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000033",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZaZkfnFmogpzCidw"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000032",
+          "name": "ANA"
+        }
+      ],
+      "position": {
+        "x": 3600,
+        "y": 1830
+      },
+      "id": "aiN0000000000031",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcUrulTi7VLdefG"
+      ],
+      "nextStepId": "acPZS9eSQze0hE9n",
+      "position": {
+        "x": 3600,
+        "y": 2010
+      },
+      "id": "aiN0000000000032",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000035",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZaZlLHFmogpzC4xO"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000034",
+          "name": "ISA"
+        }
+      ],
+      "position": {
+        "x": 3900,
+        "y": 1830
+      },
+      "id": "aiN0000000000033",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcX9elTi7VLfbiN"
+      ],
+      "nextStepId": "acPZS9eSQze0hE9n",
+      "position": {
+        "x": 3900,
+        "y": 2010
+      },
+      "id": "aiN0000000000034",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000037",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZoWIY_xoe7uoAAFQ"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000036",
+          "name": "JULIA"
+        }
+      ],
+      "position": {
+        "x": 4200,
+        "y": 1830
+      },
+      "id": "aiN0000000000035",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcUv3AZQLndGPqS"
+      ],
+      "nextStepId": "acPZS9eSQze0hE9n",
+      "position": {
+        "x": 4200,
+        "y": 2010
+      },
+      "id": "aiN0000000000036",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000039",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZzUQwM9nj2l-H5hc"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000038",
+          "name": "BRUNA"
+        }
+      ],
+      "position": {
+        "x": 4500,
+        "y": 1830
+      },
+      "id": "aiN0000000000037",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcU4SUhmYerxbuc"
+      ],
+      "nextStepId": "acPZS9eSQze0hE9n",
+      "position": {
+        "x": 4500,
+        "y": 2010
+      },
+      "id": "aiN0000000000038",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "acPZS9eSQze0hE9n",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "Z26n85VVIK64B6I2"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000040",
+          "name": "KENIA"
+        }
+      ],
+      "position": {
+        "x": 4800,
+        "y": 1830
+      },
+      "id": "aiN0000000000039",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcVICUhmYerxl6F"
+      ],
+      "nextStepId": "acPZS9eSQze0hE9n",
+      "position": {
+        "x": 4800,
+        "y": 2010
+      },
+      "id": "aiN0000000000040",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000043",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZaZkfnFmogpzCidw"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000042",
+          "name": "ANA"
+        }
+      ],
+      "position": {
+        "x": 1400,
+        "y": 2480
+      },
+      "id": "aiN0000000000041",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcUrulTi7VLdefG"
+      ],
+      "nextStepId": "aUVGrPRdi6aM1kzM",
+      "position": {
+        "x": 1400,
+        "y": 2660
+      },
+      "id": "aiN0000000000042",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000045",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZaZlLHFmogpzC4xO"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000044",
+          "name": "ISA"
+        }
+      ],
+      "position": {
+        "x": 1700,
+        "y": 2480
+      },
+      "id": "aiN0000000000043",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcX9elTi7VLfbiN"
+      ],
+      "nextStepId": "aUVGrPRdi6aM1kzM",
+      "position": {
+        "x": 1700,
+        "y": 2660
+      },
+      "id": "aiN0000000000044",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000047",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZoWIY_xoe7uoAAFQ"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000046",
+          "name": "JULIA"
+        }
+      ],
+      "position": {
+        "x": 2000,
+        "y": 2480
+      },
+      "id": "aiN0000000000045",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcUv3AZQLndGPqS"
+      ],
+      "nextStepId": "aUVGrPRdi6aM1kzM",
+      "position": {
+        "x": 2000,
+        "y": 2660
+      },
+      "id": "aiN0000000000046",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aiN0000000000049",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "ZzUQwM9nj2l-H5hc"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000048",
+          "name": "BRUNA"
+        }
+      ],
+      "position": {
+        "x": 2300,
+        "y": 2480
+      },
+      "id": "aiN0000000000047",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcU4SUhmYerxbuc"
+      ],
+      "nextStepId": "aUVGrPRdi6aM1kzM",
+      "position": {
+        "x": 2300,
+        "y": 2660
+      },
+      "id": "aiN0000000000048",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "ConditionalActionModel",
+      "strategy": "Group",
+      "onSuccess": null,
+      "onFail": "aUVGrPRdi6aM1kzM",
+      "conditionalGroups": [
+        {
+          "conditionals": [
+            {
+              "_t": "MemberConditionalModel",
+              "members": [
+                "Z26n85VVIK64B6I2"
+              ],
+              "operator": "Any"
+            }
+          ],
+          "onSuccess": "aiN0000000000050",
+          "name": "KENIA"
+        }
+      ],
+      "position": {
+        "x": 2600,
+        "y": 2480
+      },
+      "id": "aiN0000000000049",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    },
+    {
+      "_t": "TagActionModel",
+      "option": "Add",
+      "tags": [],
+      "contactTags": [
+        "aRcVICUhmYerxl6F"
+      ],
+      "nextStepId": "aUVGrPRdi6aM1kzM",
+      "position": {
+        "x": 2600,
+        "y": 2660
+      },
+      "id": "aiN0000000000050",
+      "createdAtUTC": "2026-06-06T01:16:03Z"
+    }
+  ],
+  "lastSnapshotId": "aiMR59dz8vaJcpWM",
+  "channels": [],
+  "title": "*** FLUXO AVISOS TELEVENDAS ***",
+  "order": -4,
+  "final": false,
+  "active": false,
+  "groupIds": [],
+  "updatedAtUTC": "2026-06-05T18:13:59.124Z",
+  "executionsCount": 75,
+  "executionsDateUTC": "2026-06-08T13:03:50.39Z",
+  "snapshotTitle": "Adiciona etiquetas por atendente apos transferencia",
+  "id": "aUWOP8NnXHj9QjWC",
+  "createdAtUTC": "2025-12-19T17:41:19.481Z"
+}

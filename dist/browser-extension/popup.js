@@ -1,6 +1,7 @@
 const API = "https://app-utalk.umbler.com/api";
 const STATUS_API = "https://utalk-status-webhook-production.up.railway.app/status";
 const STATUS_API_KEY = "utalk-status-2026-railway";
+const DEFAULT_ORGANIZATION_ID = "ZQG4wFMHGHuTs59F";
 const SESSION_KEYS = [
   "utalk_token",
   "utalk_org",
@@ -20,8 +21,8 @@ const elStatusBadge = document.getElementById("status-badge");
 const elStatusText  = document.getElementById("status-text");
 const elHint        = document.getElementById("hint-text");
 
-// ── Guarda chats que foram colocados em espera pela extensão
-// para poder restaurá-los ao voltar a disponível
+// Mantido apenas para compatibilidade com instalações antigas.
+// A extensão não altera mais a coluna "esperando" dos chats.
 const WAITING_KEY = "utalk_waiting_chats";
 
 // ── Init ───────────────────────────────────────────────────
@@ -40,7 +41,7 @@ chrome.storage.local.get(
       refreshRemoteAvailability(data.utalk_member_id);
     } else {
       document.getElementById("input-token").value = data.utalk_token || "";
-      document.getElementById("input-org").value = data.utalk_org || "";
+      document.getElementById("input-org").value = data.utalk_org || DEFAULT_ORGANIZATION_ID;
       show(elLogin);
     }
   }
@@ -49,7 +50,7 @@ chrome.storage.local.get(
 // ── Login ──────────────────────────────────────────────────
 document.getElementById("btn-login").addEventListener("click", async () => {
   const token = document.getElementById("input-token").value.trim();
-  const org   = document.getElementById("input-org").value.trim();
+  const org   = document.getElementById("input-org").value.trim() || DEFAULT_ORGANIZATION_ID;
 
   if (!token || !org) {
     setMsg("Preencha o token e o ID da organização.", "error");
@@ -90,7 +91,7 @@ document.getElementById("btn-logout").addEventListener("click", () => {
   chrome.storage.local.clear(() => {
     show(elLogin);
     document.getElementById("input-token").value = "";
-    document.getElementById("input-org").value = "";
+    document.getElementById("input-org").value = DEFAULT_ORGANIZATION_ID;
     setMsg("");
   });
 });
@@ -116,50 +117,18 @@ async function setAvailability(available) {
         if (!available) {
           await updateRemoteAvailability(utalk_member_id, false);
 
-          // ── INDISPONÍVEL ──────────────────────────────────
-          // Busca todos os chats abertos e atribuídos a esta atendente
-          const chats = await fetchOpenChats(utalk_token, utalk_org, utalk_member_id);
-
-          if (chats.length === 0) {
-            // Nenhum chat aberto — apenas salva o status
-            chrome.storage.local.set({
-              utalk_available: false,
-              [WAITING_KEY]: [],
-              utalk_saved_at: new Date().toISOString(),
-            });
-            updateBadge(false);
-            setMsg("⏸ Indisponível. Você não tinha chats abertos. Novos contatos serão pulados na fila.", "ok");
-            return;
-          }
-
-          // Coloca todos os chats em waiting: true
-          // Isso sinaliza ao bot da Umbler Talk para redistribuir novos contatos
-          const results = await Promise.allSettled(
-            chats.map((c) =>
-              apiPut(`/v1/chats/${c.id}/`, utalk_token, utalk_org, { waiting: true })
-            )
-          );
-
-          const succeeded = chats
-            .filter((_, i) => results[i].status === "fulfilled")
-            .map((c) => c.id);
-
-          // Salva os IDs que foram alterados para restaurar depois
           chrome.storage.local.set({
             utalk_available: false,
-            [WAITING_KEY]: succeeded,
+            [WAITING_KEY]: [],
             utalk_saved_at: new Date().toISOString(),
           });
 
           updateBadge(false);
           setMsg(
-            `⏸ Indisponível. ${succeeded.length} chat(s) colocados em espera. Novos contatos serão pulados na fila.`,
+            "⏸ Indisponível. Seus chats atuais continuam exatamente onde estão. Novos contatos serão redirecionados.",
             "ok"
           );
         } else {
-          // ── DISPONÍVEL ────────────────────────────────────
-          // Libera novos atendimentos sem tirar da coluna "esperando"
-          // os chats que ja estavam aguardando resposta.
           chrome.storage.local.set({
             utalk_available: true,
             [WAITING_KEY]: [],
@@ -232,33 +201,6 @@ function hasSavedSession(data) {
   return Boolean(data.utalk_token && data.utalk_org && data.utalk_member_id);
 }
 
-// ── Busca chats abertos da atendente ───────────────────────
-// GET /v1/chats/ filtrando por membro e estado aberto
-async function fetchOpenChats(token, org, memberId) {
-  const url = new URL(API + "/v1/chats/");
-  url.searchParams.set("organizationId", org);
-  url.searchParams.set("ChatState", "Open");
-  // Filtra apenas chats atribuídos a esta atendente
-  url.searchParams.set("Members.Rule", "Any");
-  url.searchParams.set("Members.Values", memberId);
-  url.searchParams.set("Take", "100");
-
-  const res = await fetch(url.toString(), {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-
-  if (!res.ok) throw new Error(res.status);
-  const data = await res.json();
-  // A API retorna paginado: { items: [...] } ou array direto
-  const chats = Array.isArray(data) ? data : (data.items || []);
-  return chats.filter((chat) => isChatAssignedToMember(chat, memberId));
-}
-
-function isChatAssignedToMember(chat, memberId) {
-  if (!chat || !memberId) return false;
-  return chat.organizationMember?.id === memberId;
-}
-
 // ── Helpers de UI ──────────────────────────────────────────
 function show(el) {
   [elLoading, elLogin, elMain].forEach((e) => (e.style.display = "none"));
@@ -302,17 +244,3 @@ async function apiGet(path, token, org) {
   return res.json();
 }
 
-async function apiPut(path, token, org, body) {
-  const url = new URL(API + path);
-  if (org) url.searchParams.set("organizationId", org);
-  const res = await fetch(url.toString(), {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) throw new Error(`${res.status} em ${path}`);
-  return res.status === 204 ? null : res.json().catch(() => null);
-}
