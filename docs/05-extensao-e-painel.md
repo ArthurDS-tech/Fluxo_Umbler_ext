@@ -82,3 +82,24 @@ Mostra:
 - impressao.
 
 O painel admin consulta a Umbler com o token informado no navegador e consulta filas pelo Railway.
+
+## Historico dos atendimentos
+
+URL:
+
+```text
+https://utalk-atendente-web.vercel.app/admin/logs
+```
+
+Funcao:
+
+- buscar um atendimento pelo link do chat;
+- listar atendimentos recentes;
+- pesquisar nos recentes por cliente, telefone, unidade ou atendente;
+- mostrar cliente, unidade, canal, responsavel atual e situacao;
+- mostrar a linha do tempo do atendimento em linguagem simples;
+- destacar transferencias, etiquetas, mensagens, notas internas e entrada em esperando;
+- copiar um resumo para conferencias internas;
+- imprimir o historico.
+
+Essa pagina usa o mesmo token UTalk informado no navegador. Ela nao muda fluxo, nao transfere atendimento e nao altera etiqueta. Serve apenas para consulta e validacao.

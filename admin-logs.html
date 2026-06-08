@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UTalk Logs</title>
+  <link rel="stylesheet" href="/admin.css">
+  <link rel="stylesheet" href="/admin-logs.css">
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <div>
+        <p class="eyebrow">UTalk Admin</p>
+        <h1>Historico dos atendimentos</h1>
+      </div>
+      <div class="header-actions">
+        <a class="link-button" href="/admin">Painel de fila</a>
+        <button id="btn-refresh" class="secondary" type="button">Atualizar</button>
+      </div>
+    </header>
+
+    <section class="toolbar logs-toolbar">
+      <label>
+        Token Umbler
+        <input id="input-token" type="password" autocomplete="off" placeholder="Cole o token de acesso">
+      </label>
+      <label>
+        Organizacao
+        <input id="input-org" type="text" value="ZQG4wFMHGHuTs59F" readonly>
+      </label>
+      <label>
+        Chat ou link
+        <input id="input-chat" type="text" autocomplete="off" placeholder="Cole o link do chat ou o codigo">
+      </label>
+      <button id="btn-search" class="primary" type="button">Buscar chat</button>
+      <button id="btn-recent" class="secondary" type="button">Ver recentes</button>
+    </section>
+
+    <p id="message" class="message" role="status" aria-live="polite"></p>
+
+    <section class="logs-layout">
+      <aside class="panel">
+        <div class="panel-title">
+          <h2>Atendimentos recentes</h2>
+          <span id="recent-count" class="muted">0 encontrados</span>
+        </div>
+        <label class="recent-filter">
+          Pesquisar nos recentes
+          <input id="input-recent-filter" type="search" autocomplete="off" placeholder="Nome, telefone, unidade ou atendente">
+        </label>
+        <div id="recent-list" class="recent-list">
+          <p class="empty">Carregue os recentes ou busque um chat.</p>
+        </div>
+      </aside>
+
+      <section class="panel">
+        <div class="panel-title">
+          <h2>Processo do atendimento</h2>
+          <span id="chat-status" class="muted">Nenhum chat selecionado</span>
+        </div>
+
+        <div id="chat-summary" class="log-summary"></div>
+
+        <div class="log-actions">
+          <button id="btn-copy-log" class="secondary" type="button" disabled>Copiar resumo</button>
+          <button id="btn-print-log" class="secondary" type="button" disabled>Imprimir</button>
+        </div>
+
+        <div id="timeline" class="timeline">
+          <p class="empty">A linha do tempo vai aparecer aqui.</p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="/admin-logs.js"></script>
+</body>
+</html>
