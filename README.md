@@ -13,6 +13,7 @@ Este repositorio contem tres partes:
 - Painel da atendente: `https://utalk-atendente-web.vercel.app/`
 - Painel admin: `https://utalk-atendente-web.vercel.app/admin`
 - Historico dos atendimentos: `https://utalk-atendente-web.vercel.app/admin/logs`
+- Mapa do fluxo principal: `https://utalk-atendente-web.vercel.app/admin/fluxo-principal`
 - Servidor Railway: `https://utalk-status-webhook-production.up.railway.app`
 - Fluxo Principal: `https://app-utalk.umbler.com/settings/chatbots/editor/ahWgp29Q4NlgpyeU`
 - Fluxo Sao Jose: `https://app-utalk.umbler.com/settings/chatbots/editor/aiBQZyxNLsXpDDwS`

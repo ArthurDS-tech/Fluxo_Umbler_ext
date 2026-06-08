@@ -1,0 +1,310 @@
+:root {
+  color-scheme: light;
+  --bg: #eef2f7;
+  --panel: #ffffff;
+  --text: #172033;
+  --muted: #647084;
+  --line: #d9dee8;
+  --blue: #1f6feb;
+  --blue-soft: #eaf3ff;
+  --green: #18864b;
+  --green-soft: #e4f7ed;
+  --amber: #a86600;
+  --amber-soft: #fff3d8;
+  --rose: #b4235a;
+  --rose-soft: #ffe8f1;
+  --violet: #6f4cc3;
+  --violet-soft: #f1edff;
+  --ink-soft: #f7f9fc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+}
+
+.flow-shell {
+  margin: 0 auto;
+  max-width: 1680px;
+  padding: 22px;
+}
+
+.flow-header {
+  align-items: flex-start;
+  display: flex;
+  gap: 18px;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.eyebrow {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0 0 4px;
+  text-transform: uppercase;
+}
+
+h1,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: 30px;
+  letter-spacing: 0;
+  line-height: 1.12;
+}
+
+.subtitle {
+  color: var(--muted);
+  line-height: 1.45;
+  margin-top: 8px;
+  max-width: 780px;
+}
+
+.header-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.link-button {
+  align-items: center;
+  background: #e6edf7;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--text);
+  display: inline-flex;
+  font-size: 14px;
+  font-weight: 700;
+  min-height: 40px;
+  padding: 0 14px;
+  text-decoration: none;
+}
+
+.flow-guide {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  margin-bottom: 14px;
+}
+
+.flow-guide article {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 12px 26px rgba(23, 32, 51, 0.05);
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+}
+
+.flow-guide strong {
+  font-size: 14px;
+}
+
+.flow-guide span {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.42;
+}
+
+.flow-canvas {
+  background:
+    linear-gradient(90deg, rgba(217, 222, 232, 0.7) 1px, transparent 1px),
+    linear-gradient(rgba(217, 222, 232, 0.7) 1px, transparent 1px),
+    #fbfcfe;
+  background-size: 28px 28px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 18px 42px rgba(23, 32, 51, 0.08);
+  height: calc(100vh - 190px);
+  min-height: 660px;
+  overflow: hidden;
+}
+
+.react-flow__attribution {
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.flow-node {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 10px 24px rgba(23, 32, 51, 0.08);
+  min-height: 96px;
+  padding: 12px;
+  width: 270px;
+}
+
+.flow-node .kind {
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  padding: 4px 8px;
+  text-transform: uppercase;
+}
+
+.flow-node h2 {
+  font-size: 16px;
+  line-height: 1.2;
+  margin: 0 0 7px;
+}
+
+.flow-node p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.42;
+}
+
+.flow-node ul {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.38;
+  margin: 8px 0 0;
+  padding-left: 17px;
+}
+
+.flow-node.start {
+  border-left: 5px solid var(--blue);
+}
+
+.flow-node.start .kind,
+.flow-node.service .kind {
+  background: var(--blue-soft);
+  color: #174ea6;
+}
+
+.flow-node.decision {
+  border-left: 5px solid var(--amber);
+}
+
+.flow-node.decision .kind {
+  background: var(--amber-soft);
+  color: #815100;
+}
+
+.flow-node.transfer {
+  border-left: 5px solid var(--green);
+}
+
+.flow-node.transfer .kind {
+  background: var(--green-soft);
+  color: #0f6838;
+}
+
+.flow-node.waiting {
+  border-left: 5px solid var(--rose);
+}
+
+.flow-node.waiting .kind {
+  background: var(--rose-soft);
+  color: #8c1d47;
+}
+
+.flow-node.service {
+  border-left: 5px solid var(--blue);
+}
+
+.flow-node.special {
+  border-left: 5px solid var(--violet);
+}
+
+.flow-node.special .kind {
+  background: var(--violet-soft);
+  color: #5334a3;
+}
+
+.flow-note {
+  background: #fffdf7;
+  border: 1px dashed #d8b05c;
+  border-radius: 8px;
+  box-shadow: 0 10px 24px rgba(23, 32, 51, 0.04);
+  padding: 13px;
+  width: 300px;
+}
+
+.flow-note strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 7px;
+}
+
+.flow-note p {
+  color: #665016;
+  font-size: 13px;
+  line-height: 1.44;
+}
+
+.flow-section {
+  align-items: center;
+  background: #172033;
+  border-radius: 8px;
+  color: #fff;
+  display: flex;
+  font-size: 14px;
+  font-weight: 700;
+  height: 46px;
+  justify-content: center;
+  width: 260px;
+}
+
+.react-flow__edge-path {
+  stroke-width: 2.2;
+}
+
+.react-flow__edge.positive .react-flow__edge-path {
+  stroke: var(--green);
+}
+
+.react-flow__edge.warning .react-flow__edge-path {
+  stroke: var(--amber);
+}
+
+.react-flow__edge.service-edge .react-flow__edge-path {
+  stroke: var(--blue);
+}
+
+.react-flow__edge-textbg {
+  fill: #fff;
+}
+
+.react-flow__edge-text {
+  fill: var(--text);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .flow-shell {
+    padding: 14px;
+  }
+
+  .flow-header {
+    display: grid;
+  }
+
+  .header-actions {
+    justify-content: flex-start;
+  }
+
+  .flow-guide {
+    grid-template-columns: 1fr;
+  }
+
+  .flow-canvas {
+    height: 74vh;
+    min-height: 560px;
+  }
+}

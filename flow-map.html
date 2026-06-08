@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa do Fluxo Principal</title>
+  <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.3.1",
+        "react-dom": "https://esm.sh/react-dom@18.3.1",
+        "react-dom/client": "https://esm.sh/react-dom@18.3.1/client"
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://esm.sh/@xyflow/react@12.6.4/dist/style.css">
+  <link rel="stylesheet" href="/flow-map.css">
+</head>
+<body>
+  <main class="flow-shell">
+    <header class="flow-header">
+      <div>
+        <p class="eyebrow">UTalk Admin</p>
+        <h1>Mapa do fluxo principal</h1>
+        <p class="subtitle">Visao organizada do caminho do cliente, com notas para a equipe entender cada etapa sem termos tecnicos.</p>
+      </div>
+      <nav class="header-actions">
+        <a href="/admin" class="link-button">Painel de fila</a>
+        <a href="/admin/logs" class="link-button">Historico</a>
+      </nav>
+    </header>
+
+    <section class="flow-guide">
+      <article>
+        <strong>Como ler</strong>
+        <span>Os cards azuis sao passos do cliente. Os verdes sao transferencias. Os amarelos sao decisoes. Os brancos com borda tracejada sao notas explicativas.</span>
+      </article>
+      <article>
+        <strong>Regra principal</strong>
+        <span>O sistema do Arthur decide se a atendente pode receber agora e mantem a fila em ordem.</span>
+      </article>
+      <article>
+        <strong>Ponto seguro</strong>
+        <span>Quando o fluxo chega em esperando, ele deve parar ali para a atendente continuar o atendimento.</span>
+      </article>
+    </section>
+
+    <section id="flow-root" class="flow-canvas" aria-label="Mapa visual do fluxo principal"></section>
+  </main>
+
+  <script type="module" src="/flow-map.js"></script>
+</body>
+</html>

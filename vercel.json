@@ -6,6 +6,10 @@
       "destination": "/admin-logs.html"
     },
     {
+      "source": "/admin/fluxo-principal",
+      "destination": "/flow-map.html"
+    },
+    {
       "source": "/admin",
       "destination": "/admin.html"
     },

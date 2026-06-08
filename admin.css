@@ -159,6 +159,20 @@ button:disabled {
   opacity: 0.55;
 }
 
+.link-button {
+  align-items: center;
+  background: #e8eef7;
+  border: 0;
+  border-radius: 6px;
+  color: var(--text);
+  display: inline-flex;
+  font-size: 14px;
+  font-weight: 700;
+  min-height: 42px;
+  padding: 0 16px;
+  text-decoration: none;
+}
+
 .primary {
   align-self: end;
   background: var(--blue);

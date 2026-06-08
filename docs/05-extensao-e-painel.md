@@ -107,3 +107,21 @@ Funcao:
 Essa pagina usa o mesmo token UTalk informado no navegador. Token, organizacao, ultimo chat digitado e filtro ficam salvos no proprio navegador para nao precisar preencher tudo de novo.
 
 Ela nao muda fluxo, nao transfere atendimento e nao altera etiqueta. Serve apenas para consulta e validacao.
+
+## Mapa do fluxo principal
+
+URL:
+
+```text
+https://utalk-atendente-web.vercel.app/admin/fluxo-principal
+```
+
+Funcao:
+
+- mostrar o fluxo principal em formato visual;
+- explicar cada etapa em linguagem simples;
+- mostrar a regra de parceiro, atendente marcada, fila, pátio, servicos e esperando;
+- usar cards de nota para orientar pessoas nao tecnicas;
+- permitir zoom, arrastar e navegar pelo mapa.
+
+O mapa usa React Flow apenas para visualizacao. Ele nao altera o fluxo da Umbler e nao muda nenhum atendimento.
