@@ -2,7 +2,7 @@
 
 Data: 2026-06-05
 
-Atualizado em 2026-06-08: a validacao por dona da etiqueta foi aplicada no fluxo principal e tambem nos fluxos Sao Jose e Palhoca.
+Atualizado em 2026-06-08: a validacao por dona da etiqueta foi aplicada no fluxo principal e tambem nos fluxos Sao Jose e Palhoca. Clientes com etiqueta `Parceiro` agora entram por uma regra propria antes da etiqueta de atendente.
 
 ## Regra correta
 
@@ -13,6 +13,7 @@ Quando o cliente ja tem etiqueta de uma atendente:
 - Se a atendente da etiqueta estiver disponivel, o cliente deve voltar para ela.
 - Se a atendente da etiqueta estiver indisponivel, em almoco ou fora do horario, o cliente deve cair na fila normal.
 - Se o cliente nao tiver etiqueta de atendente, o cliente deve cair na fila normal.
+- Se o cliente tiver etiqueta `Parceiro`, o fluxo nao usa etiqueta antiga de atendente. Ele adiciona uma nota interna e segue pela fila da unidade.
 - Patio continua sendo caso especial: vai para Isa. Se Isa estiver indisponivel, fica no esperando dela.
 
 ## Problema encontrado
@@ -57,7 +58,7 @@ Nao trocar os cards da fila normal. A fila normal deve continuar usando:
 | Julia | `ZoWIY_xoe7uoAAFQ` | `aRcUv3AZQLndGPqS` |
 | Kenia | `Z26n85VVIK64B6I2` | `aRcVICUhmYerxl6F` |
 | Adrielli | `ZrzsX_BLm_zYqujY` | `aRcXOulTi7VLe25M` |
-| Micheli | `Zafi39QwFgY3PIe3` | `aRcXlpId9HOMVvSO` |
+| Micheli Maia | `Z5e_UnhziN5VdCCp` | `aRcXlpId9HOMVvSO` |
 | Amanda | `ZuGqFp5N9i3HAKOn` | `aRcc7SUhmYer23sK` |
 | Robson | `ZaWboNQwFgY3oMeT` | `aRcc0yUhmYer2zTn` |
 
@@ -82,43 +83,40 @@ Os fluxos receberam a mesma regra de dona da etiqueta.
 Principal:
 
 - URL: `https://app-utalk.umbler.com/settings/chatbots/editor/ahWgp29Q4NlgpyeU`
-- Ordem de validacao: Ana -> Kenia -> Julia -> Isa -> Bruna.
+- Ordem de validacao: Cristiane -> Ester -> Ana -> Kenia -> Julia -> Isa -> Bruna.
 - Se nenhuma dona da etiqueta puder receber, cai na fila principal.
 
 Sao Jose:
 
 - URL: `https://app-utalk.umbler.com/settings/chatbots/editor/aiBQZyxNLsXpDDwS`
-- Ordem de validacao: Adrielli -> Micheli -> Amanda -> Robson -> Ana -> Isa -> Julia -> Kenia -> Bruna.
+- Ordem de validacao: Evylin -> Adrielli -> Micheli Maia.
 - Se nenhuma dona da etiqueta puder receber, cai na fila `sj`.
 
 Palhoca:
 
 - URL: `https://app-utalk.umbler.com/settings/chatbots/editor/aiAw0vJQCsVttEzC`
-- Ordem de validacao: Amanda -> Robson -> Adrielli -> Micheli -> Ana -> Isa -> Julia -> Kenia -> Bruna.
+- Ordem de validacao: Amanda -> Robson.
 - Se nenhuma dona da etiqueta puder receber, cai na fila `ph`.
 
 Validacao por API em 2026-06-08:
 
-- Principal ativo, 179 cards, 0 conexoes quebradas.
-- Sao Jose ativo, 199 cards, 0 conexoes quebradas.
-- Palhoca ativo, 199 cards, 0 conexoes quebradas.
+- Principal ativo, 216 cards, 0 conexoes quebradas.
+- Sao Jose ativo, 216 cards, 0 conexoes quebradas.
+- Palhoca ativo, 216 cards, 0 conexoes quebradas.
 - O card de entrada foi corrigido: com etiqueta vai para a dona; sem etiqueta vai para a fila normal.
 - Todos os caminhos por etiqueta usam `/direct-available`.
 - Todas as transferencias apontam para a atendente correta e depois colocam a conversa em `esperando`.
 
-## Limpeza de etiquetas
+## Regra de parceiro
 
-Antes de adicionar a etiqueta da atendente que recebeu o cliente, remover as cinco etiquetas de atendente:
+Parceiro e um caso diferente, porque pode falar com varias atendentes e carregar etiquetas antigas.
 
-- Ana: `aRcUrulTi7VLdefG`
-- Bruna: `aRcU4SUhmYerxbuc`
-- Isa: `aRcX9elTi7VLfbiN`
-- Julia: `aRcUv3AZQLndGPqS`
-- Kenia: `aRcVICUhmYerxl6F`
+Quando o contato tem a etiqueta `Parceiro`:
 
-Depois disso, adicionar somente a etiqueta da atendente que recebeu o cliente.
-
-Assim o cliente sempre fica com uma unica dona atual.
+- O fluxo adiciona uma nota interna explicando que e parceiro.
+- O fluxo nao usa etiqueta antiga de atendente para decidir a transferencia.
+- O atendimento vai para a fila da unidade.
+- As etiquetas antigas permanecem no contato, porque elas fazem parte do historico comercial.
 
 ## Resultado esperado
 
@@ -126,7 +124,12 @@ Exemplo com cliente da Kenia:
 
 - Kenia disponivel: transfere para Kenia, mesmo que a proxima da fila seja outra atendente.
 - Kenia indisponivel: cai na fila normal e vai para a proxima atendente disponivel.
-- Depois da transferencia: remove etiquetas antigas e deixa somente a etiqueta da atendente que ficou com o cliente.
+- Depois da transferencia: adiciona a etiqueta da atendente responsavel pelo atendimento atual, sem apagar etiquetas antigas.
+
+Exemplo com cliente de Sao Jose com etiqueta antiga Julia:
+
+- O fluxo de Sao Jose nao usa a etiqueta Julia como dona.
+- O atendimento segue pela fila de Sao Jose.
 
 ## Observacao sobre API
 

@@ -12,25 +12,30 @@ const FLOWS = {
     label: "Principal",
     prefix: "MN",
     queueStart: "aiK87hUbFkASONgq",
-    preferred: ["ana", "kenia", "julia", "isa", "bruna"]
+    preferred: ["cristiane", "ester", "ana", "kenia", "julia", "isa", "bruna"]
   },
   sj: {
     id: "aiBQZyxNLsXpDDwS",
     label: "SJ",
     prefix: "SJ",
     queueStart: "aiK87hUbFkASONgq",
-    preferred: ["adrielli", "micheli", "amanda", "robson", "ana", "isa", "julia", "kenia", "bruna"]
+    channels: ["ZaAgdeJmQyTgQhTs", "ZZRR85l_JmIQxo0T", "ZZRSipl_JmIQx5qg", "Zj4crV8ECNOxXLpX"],
+    preferred: ["evylin", "adrielli", "micheli"]
   },
   ph: {
     id: "aiAw0vJQCsVttEzC",
     label: "PH",
     prefix: "PH",
     queueStart: "aiK87hUbFkASONgq",
-    preferred: ["amanda", "robson", "adrielli", "micheli", "ana", "isa", "julia", "kenia", "bruna"]
+    channels: ["ZZRS4Jl_JmIQyDKA", "ZZRTMpwSM4RTFNHr", "ZZRSyJl_JmIQyAWW", "aJtKOl4daaS-nrAB"],
+    preferred: ["amanda", "robson"]
   }
 };
 
 const TAG_GATE_ID = "ahWHlp-bJKqv3Z25";
+const PARTNER_GATE_ID = "aiPartnerGate001";
+const PARTNER_NOTE_ID = "aiPartnerNote001";
+const PARTNER_TAG_ID = "aG67LR9r7uYtRuW7";
 const DAY_OF_WEEK_ID = "ZQxNip1kTeEJ-ORl";
 const GENERIC_WAITING_ID = "aiMWaitAna000001";
 
@@ -43,7 +48,10 @@ const OWNER_CONDITIONAL_IDS = [
   "aiOwnCond000001X",
   "aiOwnCond000002X",
   "aiOwnCond000003X",
-  "aiOwnCond000004X"
+  "aiOwnCond000004X",
+  "aiOwnCond000005X",
+  "aiOwnCond000006X",
+  "aiOwnCond000007X"
 ];
 
 const OWNERS = {
@@ -53,9 +61,12 @@ const OWNERS = {
   kenia: { name: "KENIA", memberId: "Z26n85VVIK64B6I2", tagId: "aRcVICUhmYerxl6F", waitingId: "aiMWaitKen000001" },
   bruna: { name: "BRUNA", memberId: "ZzUQwM9nj2l-H5hc", tagId: "aRcU4SUhmYerxbuc", waitingId: "aiMWaitBru000001" },
   adrielli: { name: "ADRIELLI", memberId: "ZrzsX_BLm_zYqujY", tagId: "aRcXOulTi7VLe25M", waitingId: GENERIC_WAITING_ID },
-  micheli: { name: "MICHELI", memberId: "Zafi39QwFgY3PIe3", tagId: "aRcXlpId9HOMVvSO", waitingId: "aiMWaitIsa000001" },
+  micheli: { name: "MICHELI MAIA", memberId: "Z5e_UnhziN5VdCCp", tagId: "aRcXlpId9HOMVvSO", waitingId: "aiMWaitIsa000001" },
   amanda: { name: "AMANDA", memberId: "ZuGqFp5N9i3HAKOn", tagId: "aRcc7SUhmYer23sK", waitingId: GENERIC_WAITING_ID },
-  robson: { name: "ROBSON", memberId: "ZaWboNQwFgY3oMeT", tagId: "aRcc0yUhmYer2zTn", waitingId: "aiMWaitIsa000001" }
+  robson: { name: "ROBSON", memberId: "ZaWboNQwFgY3oMeT", tagId: "aRcc0yUhmYer2zTn", waitingId: "aiMWaitIsa000001" },
+  evylin: { name: "EVYLIN", memberId: "ZjjGI2sLFms4kT6b", tagId: "aRcXLHAZQLndHdD8", waitingId: GENERIC_WAITING_ID },
+  cristiane: { name: "CRISTIANE", memberId: "ZQxoyBkRFwc7X-Vk", tagId: "aRcXpyUhmYerzT5-", waitingId: GENERIC_WAITING_ID },
+  ester: { name: "ESTER", memberId: "ZyJUBxlZDTR81qdF", tagId: "aRcXvSUhmYerzXRL", waitingId: GENERIC_WAITING_ID }
 };
 
 function requireEnv() {
@@ -121,6 +132,45 @@ function makeConditional(id, owner, onSuccess, onFail, index) {
     ],
     position: { x: 2250 + index * 360, y: 4550 },
     id
+  };
+}
+
+function makePartnerGate(queueStart) {
+  return {
+    _t: "ConditionalActionModel",
+    strategy: "Global",
+    onSuccess: PARTNER_NOTE_ID,
+    onFail: TAG_GATE_ID,
+    conditionalGroups: [
+      {
+        conditionals: [
+          {
+            _t: "TagConditionalModel",
+            chatTags: [],
+            contactTags: [PARTNER_TAG_ID],
+            operator: "Equals"
+          }
+        ],
+        onSuccess: null,
+        name: "Cliente parceiro"
+      }
+    ],
+    position: { x: 1850, y: 4550 },
+    id: PARTNER_GATE_ID
+  };
+}
+
+function makePartnerNote(queueStart, label) {
+  return {
+    _t: "SendMessageActionModel",
+    organizationFileId: null,
+    message:
+      `Cliente marcado como Parceiro. Vou seguir pela fila ${label}, sem usar etiqueta antiga de atendente, para evitar transferencia errada.`,
+    isPrivate: true,
+    buttons: [],
+    nextStepId: queueStart,
+    position: { x: 2050, y: 4850 },
+    id: PARTNER_NOTE_ID
   };
 }
 
@@ -191,6 +241,39 @@ function applyOwnerValidation(bot, flowKey, config) {
   const ownerKeys = config.preferred;
   const ownerSteps = [];
   const flowPrefix = config.prefix || flowKey.toUpperCase();
+
+  if (Array.isArray(config.channels)) {
+    bot.channels = config.channels.map((id) => ({ id }));
+  }
+
+  for (const step of steps) {
+    for (const key of ["nextStepId", "onSuccess", "onFail", "defaultNextStep"]) {
+      if (step[key] === TAG_GATE_ID) step[key] = PARTNER_GATE_ID;
+    }
+    if (Array.isArray(step.options)) {
+      for (const option of step.options) {
+        if (option.stepId === TAG_GATE_ID) option.stepId = PARTNER_GATE_ID;
+        if (option.nextStepId === TAG_GATE_ID) option.nextStepId = PARTNER_GATE_ID;
+      }
+    }
+    if (Array.isArray(step.stepsForDaysOfTheWeek)) {
+      step.stepsForDaysOfTheWeek = step.stepsForDaysOfTheWeek.map((id) => (id === TAG_GATE_ID ? PARTNER_GATE_ID : id));
+    }
+    if (Array.isArray(step.conditionalGroups)) {
+      for (const group of step.conditionalGroups) {
+        if (group.onSuccess === TAG_GATE_ID) group.onSuccess = PARTNER_GATE_ID;
+      }
+    }
+  }
+
+  const partnerGate = makePartnerGate(config.queueStart);
+  const partnerNote = makePartnerNote(config.queueStart, config.label);
+  const existingPartnerGate = stepsById.get(PARTNER_GATE_ID);
+  if (existingPartnerGate) Object.assign(existingPartnerGate, partnerGate);
+  else steps.push(partnerGate);
+  const existingPartnerNote = stepsById.get(PARTNER_NOTE_ID);
+  if (existingPartnerNote) Object.assign(existingPartnerNote, partnerNote);
+  else steps.push(partnerNote);
 
   const ownerStepData = ownerKeys.map((ownerKey, index) => {
     const owner = OWNERS[ownerKey];
@@ -365,6 +448,8 @@ async function main() {
       steps: saved.steps?.length || 0,
       missingRefs: validateBot(saved).length,
       tagGateOnFail: saved.steps?.find((step) => step.id === TAG_GATE_ID)?.onFail,
+      partnerGateOnFail: saved.steps?.find((step) => step.id === PARTNER_GATE_ID)?.onFail,
+      partnerGateOnSuccess: saved.steps?.find((step) => step.id === PARTNER_GATE_ID)?.onSuccess,
       backupPath
     });
   }

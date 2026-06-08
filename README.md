@@ -1,376 +1,146 @@
-# UTalk Atendente - Extensao de Disponibilidade
+# UTalk Atendente e Fluxos Umbler
 
-Extensao para Chrome/Edge e painel web simples para controlar quais atendentes podem receber novos atendimentos no fluxo da Umbler Talk.
+Sistema para controlar disponibilidade das atendentes, distribuir novos contatos por fila, respeitar etiquetas de dona quando fizer sentido e executar remarketing de clientes do site.
 
-O sistema usa:
+Este repositorio contem tres partes:
 
-- Extensao do navegador para a atendente marcar `Disponivel` ou `Indisponivel`.
-- Backend Railway para guardar disponibilidade e controlar a fila.
-- Fluxo Umbler para consultar a fila e transferir para a atendente correta.
-- Painel Vercel como alternativa fora da extensao.
+- Painel web e extensao da atendente.
+- Servidor Railway de status, fila e remarketing.
+- Scripts que aplicam e validam os fluxos da Umbler.
 
-## Estado Atual
+## Links principais
 
-Validado em 2026-06-05:
+- Painel da atendente: `https://utalk-atendente-web.vercel.app/`
+- Painel admin: `https://utalk-atendente-web.vercel.app/admin`
+- Servidor Railway: `https://utalk-status-webhook-production.up.railway.app`
+- Fluxo Principal: `https://app-utalk.umbler.com/settings/chatbots/editor/ahWgp29Q4NlgpyeU`
+- Fluxo Sao Jose: `https://app-utalk.umbler.com/settings/chatbots/editor/aiBQZyxNLsXpDDwS`
+- Fluxo Palhoca: `https://app-utalk.umbler.com/settings/chatbots/editor/aiAw0vJQCsVttEzC`
+- Fluxo Avisos Televendas: `https://app-utalk.umbler.com/settings/chatbots/editor/aUWOP8NnXHj9QjWC`
 
-- Fluxo Umbler ativo.
-- 159 cards no fluxo.
-- 0 conexoes quebradas.
-- Todas as atendentes estao disponiveis na fila.
-- Extensao com login permanente.
-- ID da organizacao ja preenchido: `ZQG4wFMHGHuTs59F`.
-- Repositorios GitHub publicados.
-- Conversas transferidas agora entram em `esperando` depois da etiqueta da atendente.
+## Como funciona em palavras simples
 
-## Como Funciona
+1. A atendente entra no painel ou extensao com o token UTalk.
+2. Ela marca `Disponivel` ou `Indisponivel`.
+3. O Railway guarda esse status.
+4. O fluxo da Umbler consulta o Railway antes de transferir um novo atendimento.
+5. Se a atendente estiver indisponivel, novos contatos pulam para outra pessoa da fila.
+6. Chats atuais nao sao movidos quando a atendente muda status.
 
-```text
-Atendente clica Indisponivel
-        |
-        v
-Extensao salva available=false no backend Railway
-        |
-        v
-Fluxo Umbler pula essa atendente nos novos contatos
-        |
-        v
-Chats atuais continuam com a mesma atendente
-```
+## Regra atual das filas
 
-Quando a atendente volta para `Disponivel`, a extensao salva `available=true` no Railway e ela volta a entrar na fila.
+As filas ficam em `status-server/server.js`.
 
-## Ordem da Fila
-
-A ordem da fila fica no backend Railway em `status-server/server.js`:
-
-```text
-BRUNA -> ISA -> JULIA -> KENIA -> ANA
-```
-
-IDs usados:
-
-| Atendente | Member ID |
+| Unidade | Ordem |
 |---|---|
-| Bruna | `ZzUQwM9nj2l-H5hc` |
-| Isa | `ZaZlLHFmogpzC4xO` |
-| Julia | `ZoWIY_xoe7uoAAFQ` |
-| Kenia | `Z26n85VVIK64B6I2` |
-| Ana | `ZaZkfnFmogpzCidw` |
+| Principal | Bruna -> Isa -> Julia -> Kenia -> Ana |
+| Sao Jose | Adrielli -> Micheli Maia |
+| Palhoca | Amanda -> Robson |
 
-## Sobre o 409 Conflict
+Cada unidade tem sua propria fila. Um atendimento de Sao Jose nao muda a vez de Palhoca nem a vez da fila Principal.
 
-O `409 Conflict` que aparece no historico do fluxo **nao quebra o atendimento**.
+## Regra atual das etiquetas
 
-Ele e usado de forma controlada para dizer ao fluxo:
+As etiquetas antigas continuam no contato. Elas nao sao apagadas, porque fazem parte do historico e ajudam a identificar a dona comercial.
+
+Mas cada fluxo so respeita as etiquetas da sua unidade:
+
+| Fluxo | Etiquetas respeitadas como dona |
+|---|---|
+| Principal | Cristiane, Ester, Ana, Kenia, Julia, Isa, Bruna |
+| Sao Jose | Evylin, Adrielli, Micheli Maia |
+| Palhoca | Amanda, Robson |
+
+Exemplo: se um contato entra por Sao Jose com etiqueta antiga `Julia`, o fluxo de Sao Jose nao manda para Julia. Ele ignora essa etiqueta para decisao de rota e segue para a fila SJ.
+
+## Regra de parceiro
+
+Se o contato tem a etiqueta `Parceiro`, o fluxo nao usa etiqueta antiga de atendente para decidir transferencia.
+
+Nesse caso:
+
+- adiciona uma nota interna no chat;
+- segue pela fila da unidade;
+- mantem as etiquetas antigas no contato.
+
+## Regra de patio
+
+Atendimento de patio continua sendo caso especial.
+
+- Patio vai para Isa.
+- Se Isa estiver indisponivel, o atendimento fica no esperando dela.
+
+## Sobre o erro 409 no historico
+
+O `409 Conflict` no historico do fluxo e esperado.
+
+Ele significa:
 
 ```text
 Essa atendente nao deve receber agora. Pule para a proxima.
 ```
 
-Exemplo esperado:
+Quando a pessoa correta da fila responde com sucesso, o fluxo transfere o atendimento.
 
-```text
-Bruna -> 409: pula para Isa
-Isa -> 409: pula para Julia
-Julia -> 409: pula para Kenia
-Kenia -> 200: transfere para Kenia
-```
+## Documentacao
 
-O cliente continua seguindo normalmente. Para remover esse texto visual do historico, seria necessario redesenhar a logica dos cards de fila na Umbler. Nao basta mudar o backend para retornar `200`, porque isso faria o fluxo transferir para a atendente errada.
+A documentacao principal fica na pasta `docs/`:
 
-## Extensao
+- `docs/01-visao-geral.md`: explicacao geral do sistema.
+- `docs/02-estrutura-do-projeto.md`: o que existe em cada pasta e arquivo.
+- `docs/03-fluxos-umbler.md`: regras dos fluxos Umbler.
+- `docs/04-servidor-railway.md`: backend, endpoints e filas.
+- `docs/05-extensao-e-painel.md`: painel web, extensao e painel admin.
+- `docs/06-remarketing.md`: como o remarketing funciona.
+- `docs/07-operacao-e-testes.md`: comandos de validacao e rotina de manutencao.
+- `docs/08-problemas-comuns.md`: diagnostico dos erros mais comuns.
 
-Arquivos principais:
+## Comandos uteis
 
-```text
-browser-extension/
-├── manifest.json
-├── popup.html
-├── popup.js
-└── content.js
-```
-
-Tambem existe um `manifest.json` na raiz para permitir carregar a pasta inteira no Chrome.
-
-### Instalar
-
-1. Abra `chrome://extensions`.
-2. Ative o modo do desenvolvedor.
-3. Clique em `Carregar sem compactacao`.
-4. Selecione a pasta da extensao.
-
-Pasta pronta local:
-
-```text
-C:\Users\arthur.schuster\Downloads\utalk-atendente-extensao-pronta
-```
-
-Zip local:
-
-```text
-C:\Users\arthur.schuster\Downloads\utalk-atendente-extensao.zip
-```
-
-### Login
-
-A atendente precisa colar somente o token da Umbler Talk.
-
-O ID da organizacao ja vem preenchido:
-
-```text
-ZQG4wFMHGHuTs59F
-```
-
-O login fica salvo permanentemente no `chrome.storage.local`. A extensao so pede login de novo se a atendente clicar em `Sair`, remover a extensao ou limpar os dados da extensao no navegador.
-
-## Painel Web
-
-URL publicada:
-
-```text
-https://utalk-atendente-web.vercel.app/
-```
-
-O painel usa a mesma regra da extensao e tambem mantem sessao salva no navegador.
-
-## Painel Admin
-
-URL publicada:
-
-```text
-https://utalk-atendente-web.vercel.app/admin
-```
-
-O painel admin e separado do painel da atendente. Ele nao altera chats nem filas; apenas consulta e mostra:
-
-- total de chats abertos;
-- total de clientes em `esperando`;
-- contagem de esperando por unidade;
-- fila atual de Florianopolis, Sao Jose e Palhoca;
-- proxima atendente de cada fila;
-- status disponivel/indisponivel das atendentes;
-- clientes em esperando com unidade, atendente, canal, tempo de espera, ultima mensagem e etiquetas.
-- relatorio CSV dos clientes em esperando;
-- resumo copiavel para acompanhamento;
-- impressao da tela;
-- filtro para ocultar grupos internos.
-
-O token Umbler usado no painel fica salvo somente no navegador.
-
-## Backend Railway
-
-URL:
-
-```text
-https://utalk-status-webhook-production.up.railway.app
-```
-
-Endpoints principais:
-
-```text
-GET /health
-GET /status?memberId=ID_DA_ATENDENTE
-POST /status
-GET /available?memberId=ID_DA_ATENDENTE
-GET /available?branch=sj&memberId=ID_DA_ATENDENTE
-GET /available?branch=ph&memberId=ID_DA_ATENDENTE
-GET /direct-available?memberId=ID_DA_ATENDENTE
-GET /queue
-GET /queue?branch=sj
-GET /queue?branch=ph
-POST /queue/reset
-```
-
-`/available` controla a fila circular. Quando retorna sucesso, a vez da fila avanca.
-
-`/direct-available` verifica apenas se uma atendente especifica esta disponivel, sem avancar a fila. E usado para casos como pátio/Isa ou cliente que deve voltar para uma atendente dona.
-
-Filas por unidade:
-
-- `main`: Bruna -> Isa -> Julia -> Kenia -> Ana.
-- `sj`: Adrielli -> Micheli.
-- `ph`: Amanda -> Robson.
-
-Cada unidade tem sua propria vez da fila. Um atendimento de Sao Jose nao muda a vez de Palhoca e nao muda a vez da fila principal.
-
-## Fluxo Umbler
-
-URL:
-
-```text
-https://app-utalk.umbler.com/settings/chatbots/editor/ahWgp29Q4NlgpyeU
-```
-
-Validacoes feitas:
-
-- Fluxo ativo.
-- 159 cards.
-- 0 conexoes quebradas.
-- Gatilhos manuais de teste presentes:
-  - `Teste Codex Fila`
-  - `Teste Codex Patio`
-- Webhooks de fila presentes.
-- Transferencias para as cinco atendentes presentes.
-- Pátio direcionado para Isa.
-
-Fluxos duplicados para unidades:
-
-- Sao Jose: `https://app-utalk.umbler.com/settings/chatbots/editor/aiBQZyxNLsXpDDwS`
-  - Canais: `SJ - Adrielli` e `SJ - Micheli`.
-  - Fila: Adrielli -> Micheli.
-  - Etiquetas: Adrielli e Micheli.
-- Palhoca: `https://app-utalk.umbler.com/settings/chatbots/editor/aiAw0vJQCsVttEzC`
-  - Canais: `PH - Amanda` e `PH - Robson`.
-  - Fila: Amanda -> Robson.
-  - Etiquetas: Amanda e Robson.
-
-Os dois fluxos usam a mesma estrutura do fluxo principal, mas chamam o backend com `branch=sj` ou `branch=ph` para manter as filas separadas.
-
-## Etiquetas de Atendente
-
-As etiquetas definem quem e a dona atual do cliente:
-
-| Atendente | Etiqueta |
-|---|---|
-| Ana | `aRcUrulTi7VLdefG` |
-| Bruna | `aRcU4SUhmYerxbuc` |
-| Isa | `aRcX9elTi7VLfbiN` |
-| Julia | `aRcUv3AZQLndGPqS` |
-| Kenia | `aRcVICUhmYerxl6F` |
-| Adrielli | `aRcXOulTi7VLe25M` |
-| Micheli | `aRcXlpId9HOMVvSO` |
-| Amanda | `aRcc7SUhmYer23sK` |
-| Robson | `aRcc0yUhmYer2zTn` |
-
-Regra planejada:
-
-- Cliente com etiqueta da atendente volta para ela se ela estiver disponivel.
-- Se ela estiver indisponivel, cai na fila normal.
-- Cliente sem etiqueta cai na fila normal.
-- Pátio vai para Isa. Se Isa estiver indisponivel, fica no esperando dela.
-
-Mais detalhes em `FLUXO_ETIQUETAS_ATENDENTES.md`.
-
-Validacao aplicada no fluxo principal, Sao Jose e Palhoca:
-
-- Principal valida etiquetas nesta ordem: Ana -> Kenia -> Julia -> Isa -> Bruna.
-- Sao Jose valida etiquetas nesta ordem: Adrielli -> Micheli -> Amanda -> Robson -> Ana -> Isa -> Julia -> Kenia -> Bruna.
-- Palhoca valida etiquetas nesta ordem: Amanda -> Robson -> Adrielli -> Micheli -> Ana -> Isa -> Julia -> Kenia -> Bruna.
-- O card de entrada primeiro pergunta se o cliente ja tem etiqueta de atendente.
-- Se a dona da etiqueta estiver disponivel, o fluxo transfere direto para ela e marca a conversa como `esperando`.
-- Se a dona da etiqueta nao estiver disponivel, o fluxo continua ate cair na fila normal da unidade.
-- Cliente sem etiqueta cai direto na fila normal.
-- Validacao por API em 2026-06-08: fluxo principal ativo com 179 cards, Sao Jose e Palhoca ativos com 199 cards cada, 0 conexoes quebradas e todos os webhooks/transferencias apontando para as atendentes corretas.
-
-## Esperando Apos Transferencia
-
-Depois da transferencia para uma atendente, o fluxo adiciona a etiqueta da atendente e em seguida marca a conversa como `esperando`.
-
-Esse ajuste garante que a conversa apareca no esperando da atendente depois da transferencia.
-
-Cards novos:
-
-| Atendente | Etiqueta | Esperando |
-|---|---|---|
-| Ana | `ahW9pz7NmL8V5lza` | `aiMWaitAna000001` |
-| Isa | `ahW-vaPXazLflJNR` | `aiMWaitIsa000001` |
-| Julia | `ahW-zsCLa1_pRkJi` | `aiMWaitJul000001` |
-| Bruna | `ahW-3ljj7yv7AP6i` | `aiMWaitBru000001` |
-| Kenia | `ahW-7_eIZfuAoxC5` | `aiMWaitKen000001` |
-
-## Fluxo de Avisos Televendas
-
-URL:
-
-```text
-https://app-utalk.umbler.com/settings/chatbots/editor/aUWOP8NnXHj9QjWC
-```
-
-Titulo:
-
-```text
-*** FLUXO AVISOS TELEVENDAS ***
-```
-
-Esse fluxo estava inativo e permaneceu inativo apos a migracao.
-
-Validacao apos migracao:
-
-- 84 cards.
-- 0 conexoes quebradas.
-- 5 transferencias migradas.
-- 25 cards novos para etiquetar a atendente correta.
-
-Regra aplicada:
-
-```text
-Transferir para grupo de atendentes
-        |
-        v
-Verificar qual atendente recebeu
-        |
-        v
-Adicionar etiqueta da atendente
-        |
-        v
-Voltar para o mesmo caminho original do fluxo
-```
-
-Etiquetas usadas:
-
-| Atendente | Etiqueta |
-|---|---|
-| Ana | `aRcUrulTi7VLdefG` |
-| Isa | `aRcX9elTi7VLfbiN` |
-| Julia | `aRcUv3AZQLndGPqS` |
-| Bruna | `aRcU4SUhmYerxbuc` |
-| Kenia | `aRcVICUhmYerxl6F` |
-
-## Remarketing
-
-O motor de remarketing esta preparado dentro do `status-server/remarketing/remarketing-flow.js`.
-
-Regras:
-
-- Le todas as tabelas de clientes configuradas.
-- Nao envia para cliente que ja abriu conversa depois do cadastro.
-- Usa o template aprovado `aiKrlq1GnW5qf0XK`.
-- Cliente comum entra pela fila Railway.
-- Pátio vai para Isa.
-- Nota interna nao mostra nome do cliente e nao usa a palavra `lead`.
-
-Observacao: as rotas de remarketing dependem de redeploy do Railway para ficarem publicas na URL atual.
-
-## Validacao Rapida
-
-Validar JavaScript:
+Validar JavaScript principal:
 
 ```bash
-node --check app.js
-node --check browser-extension/popup.js
-node --check api/status.js
-node --check api/utalk.js
+node --check scripts/apply-owner-validation-branch-flows.js
 node --check status-server/server.js
-node --check status-server/remarketing/remarketing-flow.js
+node --check admin.js
 ```
 
-Conferir fila:
+Aplicar os fluxos em modo teste, sem salvar na Umbler:
 
 ```bash
-curl -H "X-API-Key: utalk-status-2026-railway" \
-  https://utalk-status-webhook-production.up.railway.app/queue
+UMBLER_API_TOKEN="..." UMBLER_ORGANIZATION_ID="ZQG4wFMHGHuTs59F" node scripts/apply-owner-validation-branch-flows.js --dry-run
 ```
 
-## Repositorios
+Aplicar os fluxos de verdade:
 
-Projeto completo:
-
-```text
-https://github.com/ArthurDS-tech/Fluxo_Umbler_talk.git
+```bash
+UMBLER_API_TOKEN="..." UMBLER_ORGANIZATION_ID="ZQG4wFMHGHuTs59F" node scripts/apply-owner-validation-branch-flows.js
 ```
 
-Extensao separada:
+Deploy do servidor Railway:
 
-```text
-https://github.com/ArthurDS-tech/Fluxo_Umbler_ext.git
+```bash
+cd status-server
+railway up --detach --service utalk-status-webhook
 ```
+
+Consultar fila SJ:
+
+```bash
+curl "https://utalk-status-webhook-production.up.railway.app/queue?branch=sj" -H "x-api-key: <STATUS_API_KEY>"
+```
+
+## Estado validado
+
+Ultima validacao registrada:
+
+- Fluxo Principal ativo com 0 conexoes quebradas.
+- Fluxo Sao Jose ativo com 0 conexoes quebradas.
+- Fluxo Palhoca ativo com 0 conexoes quebradas.
+- Canal `Particular - Sao Jose` dentro do fluxo SJ.
+- Canal `Particular - Palhoca` dentro do fluxo PH.
+- Regra de parceiro ativa nos tres fluxos.
+- Fila SJ publicada no Railway usando `Adrielli -> Micheli Maia`.
+- Fila PH publicada no Railway usando `Amanda -> Robson`.
+
+Mais detalhes em `VALIDACAO_COMPLETA.md`.

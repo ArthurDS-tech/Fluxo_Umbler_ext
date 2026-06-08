@@ -14,6 +14,8 @@ Migracao de etiquetas por atendente no fluxo de avisos: 2026-06-05 15:14 BRT.
 
 Duplicacao dos fluxos Sao Jose e Palhoca com filas independentes: 2026-06-05 16:23 BRT.
 
+Atualizacao de parceiro e canal SJ: 2026-06-08 12:45 BRT.
+
 ## Resultado geral
 
 Validado com sucesso:
@@ -29,9 +31,11 @@ Validado com sucesso:
 - Todas as atendentes ativadas como disponiveis por API.
 - Comportamento `409 Conflict` documentado como pulo controlado de fila.
 - Apos transferir e adicionar etiqueta da atendente, o fluxo agora marca a conversa como `esperando`.
-- Fluxo Sao Jose ativo com fila propria Adrielli -> Micheli.
+- Fluxo Sao Jose ativo com fila propria Adrielli -> Micheli Maia.
 - Fluxo Palhoca ativo com fila propria Amanda -> Robson.
 - As filas `main`, `sj` e `ph` nao interferem uma na outra.
+- Cliente com etiqueta `Parceiro` agora recebe nota interna e segue pela fila da unidade, sem usar etiqueta antiga de atendente.
+- Canal `Particular - Sao Jose` agora esta no fluxo ativo de Sao Jose.
 
 ## Extensao e painel da atendente
 
@@ -91,15 +95,15 @@ BRUNA -> ISA -> JULIA -> KENIA -> ANA
 Filas por unidade:
 
 ```text
-Sao Jose: ADRIELLI -> MICHELI
+Sao Jose: ADRIELLI -> MICHELI MAIA
 Palhoca: AMANDA -> ROBSON
 ```
 
 Validacao publica das filas por unidade:
 
-- `GET /queue?branch=sj`: respondeu Adrielli e Micheli disponiveis.
+- `GET /queue?branch=sj`: respondeu Adrielli e Micheli Maia disponiveis.
 - `GET /queue?branch=ph`: respondeu Amanda e Robson disponiveis.
-- Simulacao SJ: Adrielli recebeu `200`, a fila avancou para Micheli, repetir Adrielli retornou `409`, Micheli recebeu `200`.
+- Simulacao SJ: Adrielli recebeu `200`, a fila avancou para Micheli Maia, repetir Adrielli retornou `409`, Micheli Maia recebeu `200`.
 - Simulacao PH: Amanda recebeu `200`, a fila avancou para Robson, repetir Amanda retornou `409`, Robson recebeu `200`.
 - Depois do teste, SJ foi resetado para Adrielli e PH foi resetado para Amanda.
 
@@ -148,10 +152,10 @@ Validacao local da aplicacao integrada:
 - Nota interna sem a palavra `lead`.
 - Registros de teste restantes no Supabase: 0.
 
-Bloqueio atual para ficar publico:
+Situacao publica atual:
 
-- O token Railway disponivel retornou `Unauthorized`.
-- Sem token Railway valido, nao foi possivel executar o redeploy do mesmo servico na URL publica.
+- O servico Railway foi redeployado e respondeu `/health`.
+- A fila SJ publicada foi validada com Adrielli -> Micheli Maia.
 
 ## Fluxo Umbler
 
@@ -171,27 +175,27 @@ Palhoca: https://app-utalk.umbler.com/settings/chatbots/editor/aiAw0vJQCsVttEzC
 Validacao dos fluxos por unidade:
 
 - Principal ativo.
-- Principal com 179 cards e 0 conexoes quebradas.
+- Principal com 216 cards e 0 conexoes quebradas.
 - Principal valida a dona da etiqueta antes da fila normal.
-- Principal valida nesta ordem: Ana -> Kenia -> Julia -> Isa -> Bruna.
+- Principal valida nesta ordem: Cristiane -> Ester -> Ana -> Kenia -> Julia -> Isa -> Bruna.
 - Sao Jose ativo.
-- Sao Jose com canais `SJ - Adrielli` e `SJ - Micheli`.
-- Sao Jose com 199 cards e 0 conexoes quebradas.
+- Sao Jose com canais `SJ - Adrielli`, `SJ - Micheli`, canal SJ extra e `Particular - Sao Jose`.
+- Sao Jose com 216 cards e 0 conexoes quebradas.
 - Sao Jose com webhooks `branch=sj`.
-- Sao Jose transfere e etiqueta Adrielli/Micheli.
+- Sao Jose transfere e etiqueta Adrielli/Micheli Maia.
 - Palhoca ativo.
 - Palhoca com canais `PH - Amanda` e `PH - Robson`.
-- Palhoca com 199 cards e 0 conexoes quebradas.
+- Palhoca com 216 cards e 0 conexoes quebradas.
 - Palhoca com webhooks `branch=ph`.
 - Palhoca transfere e etiqueta Amanda/Robson.
 - Sao Jose e Palhoca validam a dona da etiqueta antes da fila normal.
-- Sao Jose valida nesta ordem: Adrielli -> Micheli -> Amanda -> Robson -> Ana -> Isa -> Julia -> Kenia -> Bruna.
-- Palhoca valida nesta ordem: Amanda -> Robson -> Adrielli -> Micheli -> Ana -> Isa -> Julia -> Kenia -> Bruna.
+- Sao Jose valida nesta ordem: Evylin -> Adrielli -> Micheli Maia.
+- Palhoca valida nesta ordem: Amanda -> Robson.
 - Nos caminhos por etiqueta, o webhook usa `/direct-available`, para nao consumir a vez da fila.
 - O card de entrada foi corrigido: com etiqueta vai para a dona; sem etiqueta vai para a fila normal.
 - Se a dona da etiqueta estiver disponivel, o atendimento volta para ela e entra em `esperando`.
-- Se a dona da etiqueta estiver indisponivel, o fluxo segue para a proxima etiqueta e depois para a fila da unidade.
-- Validacao por API em 2026-06-08 confirmou: principal com 179 cards, Sao Jose e Palhoca com 199 cards cada, 0 referencias quebradas, ordem correta e transferencias diretas para as atendentes mapeadas.
+- Se a dona da etiqueta estiver indisponivel, o fluxo segue para a proxima etiqueta valida da unidade e depois para a fila da unidade.
+- Validacao por API em 2026-06-08 confirmou: principal, Sao Jose e Palhoca com 216 cards cada, 0 referencias quebradas, regra de parceiro ativa e transferencias diretas para as atendentes mapeadas.
 
 Validacoes feitas por API:
 
@@ -221,7 +225,7 @@ Regra de etiqueta da atendente:
 - O comportamento correto foi documentado em `FLUXO_ETIQUETAS_ATENDENTES.md`.
 - Cliente com etiqueta deve voltar para a atendente da etiqueta se ela estiver disponivel.
 - Se a atendente da etiqueta estiver indisponivel, o cliente deve cair na fila normal.
-- As etiquetas antigas de atendente devem ser removidas antes de adicionar a etiqueta da nova atendente.
+- As etiquetas antigas de atendente nao sao removidas, pois fazem parte do historico comercial.
 
 Situacao de aplicacao:
 

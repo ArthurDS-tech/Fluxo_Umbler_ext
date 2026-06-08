@@ -27,7 +27,7 @@ const UNITS = {
     name: "Sao Jose",
     branch: "sj",
     channels: new Set(["ZaAgdeJmQyTgQhTs", "ZZRR85l_JmIQxo0T", "ZZRSipl_JmIQx5qg", "Zj4crV8ECNOxXLpX"]),
-    members: new Set(["ZrzsX_BLm_zYqujY", "Zafi39QwFgY3PIe3"])
+    members: new Set(["ZrzsX_BLm_zYqujY", "Z5e_UnhziN5VdCCp"])
   },
   ph: {
     name: "Palhoca",
@@ -51,7 +51,7 @@ const MEMBER_NAMES = {
   Z26n85VVIK64B6I2: "KENIA",
   ZaZkfnFmogpzCidw: "ANA",
   ZrzsX_BLm_zYqujY: "ADRIELLI",
-  Zafi39QwFgY3PIe3: "MICHELI",
+  Z5e_UnhziN5VdCCp: "MICHELI MAIA",
   ZuGqFp5N9i3HAKOn: "AMANDA",
   ZaWboNQwFgY3oMeT: "ROBSON"
 };

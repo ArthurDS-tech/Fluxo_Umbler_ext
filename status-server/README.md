@@ -107,7 +107,7 @@ GET https://SEU-DOMINIO.up.railway.app/available?branch=ph&memberId=ID_DA_ATENDE
 Filas configuradas:
 
 - `main`: Bruna -> Isa -> Julia -> Kenia -> Ana.
-- `sj`: Adrielli -> Micheli.
+- `sj`: Adrielli -> Micheli Maia.
 - `ph`: Amanda -> Robson.
 
 Cada fila anda separada. Um atendimento de Palhoca nao interfere na vez de Sao Jose nem na fila principal.

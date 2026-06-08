@@ -16,7 +16,7 @@ const QUEUES = {
   ],
   sj: [
     "ZrzsX_BLm_zYqujY", // ADRIELLI
-    "Zafi39QwFgY3PIe3" // MICHELI
+    "Z5e_UnhziN5VdCCp" // MICHELI MAIA
   ],
   ph: [
     "ZuGqFp5N9i3HAKOn", // AMANDA
@@ -30,7 +30,7 @@ const MEMBER_NAMES = {
   Z26n85VVIK64B6I2: "KENIA",
   ZaZkfnFmogpzCidw: "ANA",
   ZrzsX_BLm_zYqujY: "ADRIELLI",
-  Zafi39QwFgY3PIe3: "MICHELI",
+  Z5e_UnhziN5VdCCp: "MICHELI MAIA",
   ZuGqFp5N9i3HAKOn: "AMANDA",
   ZaWboNQwFgY3oMeT: "ROBSON"
 };
